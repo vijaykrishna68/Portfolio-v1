@@ -8,9 +8,7 @@ export const THEME_MODES = {
 export const NAV_SCROLL_THRESHOLD = 40;
 
 export const NAV_LINKS = [
-  { label: "Work", href: "#work" },
-  { label: "Timeline", href: "#timeline" },
-  { label: "Journal", href: "#journal" },
-  { label: "Playground", href: "#playground" },
-  { label: "About", href: "#about" },
+  { label: "Projects", href: "/projects" },
+  { label: "Journal", href: "/journal" },
+  { label: "Playground", href: "/playground" },
 ] satisfies readonly NavLink[];

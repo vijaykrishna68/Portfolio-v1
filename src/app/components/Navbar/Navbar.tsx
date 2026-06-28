@@ -7,32 +7,15 @@ import { NAV_LINKS, NAV_SCROLL_THRESHOLD, THEME_MODES } from "../../lib/constant
 import { Container } from "../shared/Container";
 import type { ThemeMode } from "../../types/portfolio";
 import { INTERACTION } from "../../lib/interaction";
-import { useActiveSection } from "../../hooks/useActiveSection";
 
 type NavbarProps = {
   theme: ThemeMode;
   toggleTheme: () => void;
 };
 
-const HOME_SECTION_IDS = ["work", "timeline", "journal", "playground", "about"];
-
-const ROUTE_MAP: Record<string, string> = {
-  "#work": "/projects",
-  "#timeline": "/",
-  "#journal": "/journal",
-  "#playground": "/playground",
-  "#about": "/",
-};
-
 export function Navbar({ theme, toggleTheme }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
-  const isHome = pathname === "/";
-
-  const activeSection = useActiveSection({
-    ids: HOME_SECTION_IDS,
-    fallback: HOME_SECTION_IDS[0],
-  });
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > NAV_SCROLL_THRESHOLD);
@@ -42,9 +25,7 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
   }, []);
 
   function isActive(href: string): boolean {
-    if (isHome) return activeSection === href.slice(1);
-    const route = ROUTE_MAP[href];
-    return route !== "/" && pathname.startsWith(route);
+    return pathname === href || pathname.startsWith(href + "/");
   }
 
   function linkClassName(href: string) {
@@ -69,53 +50,31 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
     >
       <Container>
         <div className="h-[58px] flex items-center justify-between">
-          {isHome ? (
-            <a
-              href="#"
-              className="text-[17px] text-foreground hover:opacity-60 transition-opacity leading-none select-none"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              VK
-            </a>
-          ) : (
-            <Link
-              to="/"
-              className="text-[17px] text-foreground hover:opacity-60 transition-opacity leading-none select-none"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              VK
-            </Link>
-          )}
+          <Link
+            to="/"
+            className="text-[17px] text-foreground hover:opacity-60 transition-opacity leading-none select-none"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            VK
+          </Link>
 
           <div className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) =>
-              isHome ? (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  aria-current={isActive(link.href) ? "page" : undefined}
-                  className={linkClassName(link.href)}
-                >
-                  {link.label}
-                  <span className={underlineClassName(link.href)} />
-                </a>
-              ) : (
-                <Link
-                  key={link.label}
-                  to={ROUTE_MAP[link.href]}
-                  aria-current={isActive(link.href) ? "page" : undefined}
-                  className={linkClassName(link.href)}
-                >
-                  {link.label}
-                  <span className={underlineClassName(link.href)} />
-                </Link>
-              ),
-            )}
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                to={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={linkClassName(link.href)}
+              >
+                {link.label}
+                <span className={underlineClassName(link.href)} />
+              </Link>
+            ))}
           </div>
 
           <div className="flex items-center gap-3">
             <ButtonLink
-              href={isHome ? "#contact" : "/#contact"}
+              href="/#contact"
               variant="nav"
               className="hidden md:inline-flex"
             >

@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 
 import { Container } from "../shared/Container";
@@ -19,9 +20,13 @@ export function SelectedWork() {
               Three projects that shaped me.
             </h2>
           </div>
-          <span className="hidden md:block text-xs text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
-            2021 – Present
-          </span>
+          <Link
+            to="/projects"
+            className="hidden md:flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-foreground transition-colors group"
+          >
+            All projects
+            <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+          </Link>
         </div>
 
         <div>

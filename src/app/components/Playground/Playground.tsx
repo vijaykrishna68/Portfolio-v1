@@ -1,3 +1,6 @@
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router";
+
 import { Container } from "../shared/Container";
 import { SectionLabel } from "../shared/SectionLabel";
 import { getPlaygroundItems } from "../../lib/content";
@@ -20,6 +23,13 @@ export function Playground() {
               Tools, visualizations, and prototypes built to understand things better.
             </p>
           </div>
+          <Link
+            to="/playground"
+            className="hidden md:flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-foreground transition-colors group"
+          >
+            All experiments
+            <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+          </Link>
         </div>
 
         <div className="hidden md:grid grid-cols-4 grid-rows-2 gap-3 h-[520px]">
