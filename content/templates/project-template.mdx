@@ -1,0 +1,129 @@
+---
+type: project
+slug: your-project-slug
+title: "Project Title"
+description: "One sentence that explains what this project is and why it matters."
+status: draft
+publishedAt: "YYYY-MM-DD"
+tags: []
+cover: "./cover.png"
+coverAlt: "Description of the cover image"
+year: "YYYY – YYYY"
+challenge: "The core engineering problem in one or two sentences."
+technologies: []
+impact: "Quantified outcome. Numbers if possible."
+displayIndex: "04"
+displayLayout: default
+featured: false
+links:
+  github: ""
+  live: ""
+  writeup: ""
+---
+
+## Problem
+
+What was broken, missing, or painful before this project existed?
+What was the real-world cost of not having a solution?
+
+---
+
+## Background
+
+What context does the reader need to understand this project?
+Industry, system, constraints, team size, timeline.
+
+---
+
+## Constraints
+
+What could you NOT do?
+Technical constraints, time pressure, resource limits, compliance requirements.
+Constraints are often more interesting than the solution itself.
+
+---
+
+## Research
+
+What did you learn before writing code?
+Prior art, domain knowledge, experiments, dead ends you ruled out.
+
+---
+
+## Architecture
+
+High-level diagram or written walkthrough of the system design.
+Why does it look like this? What alternatives did you reject?
+
+```
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│   Ingestion  │───▶│  Processing  │───▶│    Storage   │
+└──────────────┘    └──────────────┘    └──────────────┘
+```
+
+---
+
+## Technical Decisions
+
+### Decision: [Name the decision]
+
+**Options considered:**
+- Option A — pros and cons
+- Option B — pros and cons
+
+**Chosen:** Option A
+
+**Why:** The reasoning. Not what you chose — why you chose it over the alternatives.
+
+---
+
+## Challenges
+
+What went wrong? What was harder than expected?
+Be specific. "It was complex" is not interesting. "The Kafka consumer group rebalance took 90 seconds and killed our SLA" is interesting.
+
+---
+
+## Tradeoffs
+
+What did you deliberately give up to get what you wanted?
+Speed vs. correctness. Simplicity vs. flexibility. Cost vs. reliability.
+
+---
+
+## Results
+
+What actually happened after you shipped?
+Metrics before and after. Anecdotes. Surprises.
+
+---
+
+## Lessons Learned
+
+What would you do differently?
+What would you do the same, but now you understand why it works?
+
+---
+
+## Future Improvements
+
+Not a wishlist — specific things that are worth doing next and why.
+
+---
+
+## Gallery
+
+{/* Cover image is automatic from frontmatter. Add supplemental images below. */}
+
+![Architecture diagram](./architecture.png)
+*Caption describing what this diagram shows*
+
+![Dashboard screenshot](./dashboard.png)
+*Caption describing the state shown*
+
+---
+
+## References
+
+- [Reference title](https://url) — one sentence on what this is and why it's relevant
+- Paper, RFC, blog post, or book that informed the design

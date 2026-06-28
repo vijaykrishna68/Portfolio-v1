@@ -1,0 +1,49 @@
+---
+type: project
+title: "Clinical Data Pipeline"
+description: "HIPAA-compliant ingestion pipeline for a healthtech startup, aggregating patient vitals from 12 IoT device types into a unified API consumed by clinicians and ML models in real time."
+status: published
+publishedAt: "2023-06-01"
+tags: ["Python", "FastAPI", "Apache Kafka", "TimescaleDB", "Docker"]
+year: "2022 – 2023"
+challenge: "Event sourcing architecture that supports historical replay for model training while maintaining the strict audit trail required for FDA compliance — without sacrificing real-time latency."
+technologies: ["Python", "FastAPI", "Apache Kafka", "TimescaleDB", "Docker"]
+impact: "Data latency dropped from 45 minutes to under 8 seconds for 1,200 daily active patients."
+cover: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1400&h=900&fit=crop&auto=format&q=80"
+coverAlt: "Healthcare technology interface showing patient data"
+displayIndex: "02"
+displayLayout: "flip"
+featured: false
+role: "Backend Engineer"
+hook: "Every second of latency between a patient's heartbeat and a clinician's screen is a second of diagnostic blindness."
+---
+
+## Problem
+
+The startup had 12 different IoT device types reporting patient vitals. Each device had its own binary protocol, its own clock drift characteristics, its own failure modes. The existing pipeline collected data on a 45-minute polling cycle — fine for long-term trend analysis, dangerous for real-time monitoring.
+
+Clinicians needed data within 10 seconds. ML models needed three years of historical data in a consistent format. The FDA required an immutable audit trail of every data transformation. These three requirements were in direct tension with each other.
+
+## Architecture
+
+We built an **event-sourced pipeline** with three distinct consumers:
+
+**Ingestion layer.** A FastAPI service with device-specific adapters translates each binary protocol into a canonical `VitalEvent` protobuf. Device clock drift is corrected using a Kalman filter calibrated per device type. Events land in Kafka with the original binary payload attached.
+
+**Real-time consumer.** A streaming consumer writes normalized vital readings to TimescaleDB hypertables. TimescaleDB's native time-series compression lets us store 18 months of readings in the same space that a vanilla PostgreSQL table would need for 3 months.
+
+**Historical replay.** The raw Kafka events are replicated to S3 (Kafka MirrorMaker 2). Model training jobs replay events through the same normalization pipeline — guaranteeing that training data and real-time data have identical transformations applied.
+
+## HIPAA and FDA Compliance
+
+The audit trail requirement shaped every design decision.
+
+We cannot modify an event after it lands in Kafka. The partition offset is the audit key. Every downstream transformation writes a new event with a `derivedFrom` pointer to the source offset. The FDA audit path is: "show me every transformation applied to reading X" — we walk the `derivedFrom` chain backwards.
+
+HIPAA required that PHI (patient health information) never appear in logs, metrics, or error messages. We wrote a custom Python logging filter that strips fields in a configured PHI field list before any log record is emitted. Prometheus metrics carry patient count but never patient identifiers.
+
+## Lessons Learned
+
+**Clock drift is the enemy.** Seven of twelve device types had clocks that drifted by up to 90 seconds per hour under heavy load. Naively trusting device timestamps would have made vitals appear to arrive in the wrong order. The Kalman filter took two weeks to tune correctly and made the data trustworthy.
+
+**Event sourcing is only as good as your schema evolution story.** Halfway through the project, one device type changed its packet structure in a firmware update. Because we stored the raw binary payload, we could replay historical events through a new adapter and backfill the normalization. Without that, we would have had a two-week gap in training data.

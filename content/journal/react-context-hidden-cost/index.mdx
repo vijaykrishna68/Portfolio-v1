@@ -1,0 +1,100 @@
+---
+type: journal
+title: "The Hidden Cost of React Context"
+description: "Context is a great concept but a frequent performance trap. Here's why it re-renders more than you expect, and what to reach for when your component tree grows."
+excerpt: "Context is a great concept but a frequent performance trap. Here's why it re-renders more than you expect, and what to reach for when your component tree grows."
+status: published
+publishedAt: "2025-06-12"
+tags: ["Frontend"]
+readTime: "8 min"
+featured: true
+---
+
+React Context is one of those APIs that looks simple, performs simply, and then silently destroys your app's performance once your component tree grows past a certain size.
+
+I've seen this pattern repeatedly: a team reaches for Context because it's the "React way" to share state, ships without profiling, and discovers six months later that every keystroke in a search input causes 40 components to re-render.
+
+Here's why it happens, and what to do about it.
+
+## How Context Actually Works
+
+The React docs describe Context as a way to "pass data through the component tree without having to pass props down manually at every level." That's true. What the docs don't emphasize is the re-render behavior.
+
+**Every consumer of a Context re-renders whenever the Context value changes.**
+
+This is the whole sentence. There are no exceptions. React does not do a deep equality check. React does not check whether the specific part of the value your component uses has changed. If the object reference changes — which happens on every re-render of the provider — every consumer re-renders.
+
+```tsx
+const ThemeContext = React.createContext({ theme: 'light', user: null })
+
+function App() {
+  const [theme, setTheme] = useState('light')
+  const [user, setUser] = useState(null)
+
+  // This object is created on every render of App.
+  // Every consumer re-renders whenever App re-renders.
+  return (
+    <ThemeContext.Provider value={{ theme, user }}>
+      <DeepTree />
+    </ThemeContext.Provider>
+  )
+}
+```
+
+Every render of `App` creates a new `{ theme, user }` object. New object reference means new Context value. Every `useContext(ThemeContext)` consumer re-renders, regardless of whether `theme` or `user` changed.
+
+## The Fix You Reach For First (And Why It's Often Wrong)
+
+The obvious fix is `useMemo`:
+
+```tsx
+const value = useMemo(() => ({ theme, user }), [theme, user])
+return <ThemeContext.Provider value={value}>
+```
+
+This works! Until it doesn't. `useMemo` stabilizes the reference when `theme` and `user` don't change. But any component that uses `useContext(ThemeContext)` will still re-render when either `theme` or `user` changes — even if that component only cares about `theme`.
+
+If your `UserAvatar` component calls `useContext(ThemeContext)` to get `user`, it re-renders whenever `theme` changes. Every time.
+
+## Context Splitting
+
+The correct solution for most cases is **context splitting**: separate contexts for values that change independently.
+
+```tsx
+const ThemeContext = React.createContext('light')
+const UserContext = React.createContext(null)
+
+function App() {
+  const [theme, setTheme] = useState('light')
+  const [user, setUser] = useState(null)
+
+  return (
+    <ThemeContext.Provider value={theme}>
+      <UserContext.Provider value={user}>
+        <DeepTree />
+      </UserContext.Provider>
+    </ThemeContext.Provider>
+  )
+}
+```
+
+Now `UserAvatar` only subscribes to `UserContext`. A theme change doesn't touch it.
+
+## When Context Is the Wrong Tool Entirely
+
+Context is designed for **low-frequency, wide-reach** data: the current user, the active theme, the locale. It's not designed for state that changes on user interaction.
+
+If you're putting shopping cart state, filter state, or any UI state that changes on keystrokes into Context — stop. Use a state manager designed for this: Zustand, Jotai, or even a well-structured useReducer with prop drilling for the relevant subtree.
+
+The performance model of these libraries is different. Zustand subscriptions are selector-based: a component only re-renders when the slice of state it selected changes, not when any state changes.
+
+## What I Actually Do
+
+For a new project, my default setup:
+
+- **Theme, locale, auth** → Context (rarely changes, needed everywhere)
+- **UI state** → local `useState` or lifted state as high as needed (not global)
+- **Server data** → React Query or SWR (handles caching, deduplication, and re-validation)
+- **Complex shared UI state** → Zustand, Jotai, or XState depending on complexity
+
+The rule of thumb: if the state changes when a user types or clicks, it probably doesn't belong in Context.

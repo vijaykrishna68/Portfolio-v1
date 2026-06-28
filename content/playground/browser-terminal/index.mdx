@@ -1,0 +1,51 @@
+---
+type: playground
+title: "Browser Terminal"
+description: "A fully functional terminal emulator in a browser tab."
+summary: "A fully functional terminal emulator in a browser tab."
+status: published
+publishedAt: "2025-02-01"
+tags: ["Prototype"]
+cover: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=600&h=500&fit=crop&auto=format&q=80"
+layout:
+  desktop: "col-start-3 col-span-1 row-start-1 row-span-1"
+  mobile: "col-span-1 row-span-1"
+---
+
+## Idea
+
+I wanted to understand what a terminal emulator actually does — not just use one, but understand the VT100 escape code parsing, the PTY protocol, the difference between a terminal and a shell.
+
+Most developers use terminals daily and treat them as black boxes. I wanted to open the box.
+
+## Experiment
+
+A WebSocket-backed terminal emulator using xterm.js for rendering and node-pty on the server side to spawn a real shell. The browser renders a real terminal; keypresses go over WebSocket to the server, which forwards them to the PTY; PTY output comes back over WebSocket and xterm.js renders it.
+
+The constraint: understand every layer, not just wire up libraries. I read the xterm.js source and the node-pty internals before writing a line of code.
+
+## Implementation
+
+The interesting part was handling terminal resize. When the browser window resizes, the terminal must tell the PTY to resize:
+
+```typescript
+terminal.onResize(({ cols, rows }) => {
+  ws.send(JSON.stringify({ type: 'resize', cols, rows }))
+})
+
+// Server side
+ws.on('message', (data) => {
+  const msg = JSON.parse(data)
+  if (msg.type === 'resize') {
+    pty.resize(msg.cols, msg.rows)
+  }
+})
+```
+
+Without this, programs that read terminal size (vim, htop, any TUI) render incorrectly because the PTY still thinks the terminal is 80×24.
+
+## Interesting Findings
+
+VT100 escape codes are wild. `\x1b[2J` clears the screen. `\x1b[?1049h` switches to the alternate screen buffer (what vim does when it opens). `\x1b[?1049l` switches back and restores the previous content.
+
+Every time you open vim and close it without seeing your previous terminal output get corrupted, you're benefiting from the alternate screen buffer. I never thought about how that worked until I built this.

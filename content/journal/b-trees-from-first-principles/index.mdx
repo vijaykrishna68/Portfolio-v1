@@ -1,0 +1,80 @@
+---
+type: journal
+title: "Understanding B-Trees From First Principles"
+description: "Why databases use B-Trees for indexes, starting from binary search trees and building up to why they win at disk I/O."
+excerpt: "Why databases use B-Trees for indexes, starting from binary search trees and building up to why they win at disk I/O."
+status: published
+publishedAt: "2025-05-03"
+tags: ["Databases"]
+readTime: "12 min"
+featured: false
+---
+
+I spent years knowing that databases use B-Trees for indexes without actually understanding *why*. "It's efficient" isn't an explanation. Here's the one I wish I had earlier.
+
+## Start With Binary Search Trees
+
+A binary search tree (BST) gives you O(log n) search because at each node, you eliminate half the remaining candidates. A sorted array of 1 million integers requires at most 20 comparisons to find any element.
+
+So why don't databases use BSTs for indexes?
+
+Two reasons: **balance** and **disk I/O**.
+
+A BST can become pathologically unbalanced. Insert a sorted sequence and you get a linked list. Self-balancing BSTs (AVL trees, red-black trees) solve this, but they don't solve the second problem.
+
+## The Disk I/O Problem
+
+Modern databases store data on disk. Reading from disk is roughly **100,000× slower** than reading from RAM. The fundamental unit of disk access is a **page** — typically 4KB or 16KB — not a single byte. When you read a node from disk, you read the entire page whether you needed one byte or 4,000 bytes.
+
+A BST node stores one key and two pointers. On disk, that's maybe 24 bytes out of a 4KB page. You're using less than 1% of each page you read. And traversing a BST with a million nodes might require 20 page reads — 20 round trips to disk.
+
+This is the insight that leads to B-Trees.
+
+## The B-Tree Insight
+
+What if each node stored *many* keys instead of one?
+
+A B-Tree node stores up to `2t - 1` keys (where `t` is the minimum degree, chosen to fill a page). A node with 100 keys has 101 child pointers. The tree is extraordinarily wide and extraordinarily shallow.
+
+A B-Tree with `t = 100` and 1 million records has height at most **3**. Finding any record requires at most 3 page reads — 3 disk accesses — instead of 20.
+
+```
+Height = ceil(log_t(n))
+t = 100, n = 1,000,000 → height = ceil(log_100(1,000,000)) = ceil(3) = 3
+```
+
+Each page read is expensive, but you read far fewer pages. The tree is designed around the cost model of the storage layer.
+
+## Insertions and the Split Invariant
+
+B-Trees maintain balance through **splits**. When a node fills up (reaches `2t - 1` keys), it splits into two nodes of `t - 1` keys each, and the median key moves up to the parent.
+
+This is where B-Trees get clever: the split is done **on the way down** during insertion, not after the fact. When you traverse down to insert a key, you pre-emptively split any full nodes you encounter. This means the parent always has room to accept the median key from a split child — no backtracking required.
+
+The invariant: every node except the root has between `t - 1` and `2t - 1` keys. The root has between 1 and `2t - 1` keys.
+
+## B+ Trees: What PostgreSQL Actually Uses
+
+PostgreSQL, MySQL, SQLite, and most databases use **B+ Trees** rather than B-Trees. The difference:
+
+- In a B-Tree, keys appear in internal nodes and leaf nodes. A search might terminate at an internal node.
+- In a B+ Tree, **all keys appear in leaf nodes**. Internal nodes contain only routing keys. Leaf nodes are linked in a doubly-linked list.
+
+The linked list of leaf nodes is the critical feature. It makes **range scans** efficient: find the leftmost matching key, then follow the linked list until the range is exhausted. No backtracking up the tree.
+
+```sql
+-- This range scan traverses the leaf linked list, not the full tree
+SELECT * FROM orders WHERE created_at BETWEEN '2025-01-01' AND '2025-03-31'
+```
+
+## What This Means for Index Design
+
+Understanding B+ Trees makes index design intuitive rather than cargo-culted:
+
+**Prefix queries use indexes, arbitrary substring queries don't.** The B+ Tree is sorted. `WHERE name LIKE 'John%'` can use an index because you find 'John' in the leaf list and scan forward. `WHERE name LIKE '%ohn%'` can't because there's no contiguous range to scan.
+
+**Composite index column order matters.** Index `(last_name, first_name)`. A query filtering on `last_name` alone uses the index. A query filtering on `first_name` alone doesn't — there's no contiguous range of `first_name` values in the tree because the primary sort key is `last_name`.
+
+**Index scans beat sequential scans at high selectivity, not low selectivity.** If your query matches 80% of the table, the planner correctly prefers a sequential scan: following 80% of the leaf pointers and doing random I/O is slower than just reading the table sequentially.
+
+The B-Tree is a beautiful piece of engineering. Once you understand what problem it's solving — minimizing disk I/O given a specific cost model — everything about its design follows logically.

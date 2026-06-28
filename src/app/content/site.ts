@@ -15,11 +15,11 @@ export const CURRENTLY_ITEMS = [
   { label: "Currently reading", value: "Designing Data Intensive Applications" },
 ] satisfies readonly CurrentlyStatusItem[];
 
-export const CONTACT_EMAIL = "vijay@example.com";
+export const CONTACT_EMAIL = "vijaykrishna.officialid@gmail.com";
 
 export const SOCIAL_LINKS = [
-  { icon: Github, label: "GitHub", href: "#" },
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
+  { icon: Github, label: "GitHub", href: "https://github.com/vijaykrishna68" },
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/contact-vijay-krishna/" },
   { icon: Mail, label: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-  { icon: FileText, label: "Resume", href: "#" },
+  { icon: FileText, label: "Resume", href: "https://drive.google.com/file/d/1HB-grRk-lIZqKmLckbGesmXflZGetyt8/view?usp=drive_link" },
 ] satisfies readonly SocialLink[];

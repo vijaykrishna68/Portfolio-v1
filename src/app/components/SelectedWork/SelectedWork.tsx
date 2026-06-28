@@ -1,10 +1,14 @@
+import { Link } from "react-router";
+
 import { Container } from "../shared/Container";
 import { SectionLabel } from "../shared/SectionLabel";
-import { projects } from "../../content/projects";
+import { getProjects } from "../../lib/content";
 
 import { ProjectCard } from "./ProjectCard";
 
 export function SelectedWork() {
+  const projects = getProjects();
+
   return (
     <section id="work" className="py-36 border-t border-border">
       <Container>
@@ -22,7 +26,9 @@ export function SelectedWork() {
 
         <div>
           {projects.map((project, index) => (
-            <ProjectCard key={project.num} project={project} isLast={index === projects.length - 1} />
+            <Link key={project.slug} to={`/projects/${project.slug}`} className="block">
+              <ProjectCard project={project} isLast={index === projects.length - 1} />
+            </Link>
           ))}
         </div>
       </Container>

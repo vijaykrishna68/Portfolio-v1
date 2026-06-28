@@ -1,0 +1,86 @@
+---
+type: journal
+title: "Why HashMaps Feel Magical"
+description: "From hash functions to collision resolution — a peek under the hood of one of computing's most elegant structures."
+excerpt: "From hash functions to collision resolution — a peek under the hood of one of computing's most elegant structures."
+status: published
+publishedAt: "2025-03-07"
+tags: ["CS Fundamentals"]
+readTime: "7 min"
+featured: false
+---
+
+HashMaps feel magical. You put a thing in, you get a thing out, and it's O(1) both ways. The magic disappears the moment you understand how they work — and once it disappears, you appreciate them even more.
+
+## The Core Idea
+
+A HashMap is a key-value store backed by an array. The trick is computing an array index from a key in O(1) time, without scanning the array.
+
+The function that does this is a **hash function**:
+
+```
+index = hash(key) % array_length
+```
+
+A good hash function:
+1. Always produces the same output for the same input
+2. Distributes outputs uniformly across the range
+3. Is fast to compute
+
+String hashing is a classic example. DJB2:
+
+```python
+def djb2(s: str) -> int:
+    h = 5381
+    for c in s:
+        h = ((h << 5) + h) + ord(c)
+    return h & 0xFFFFFFFF
+```
+
+The constants `5381` and `33` are empirically chosen to produce good distribution for ASCII strings. The result is an integer you can mod against your array length to get an index.
+
+## Collisions Are Inevitable
+
+By the pigeonhole principle, if you're mapping a large key space (all possible strings) to a small index space (array of 1,000 slots), collisions are mathematically guaranteed. Two different keys will hash to the same index.
+
+There are two main strategies for handling this:
+
+**Chaining.** Each slot holds a linked list. On collision, append to the list. Lookup scans the list at the slot.
+
+**Open addressing.** On collision, probe for the next empty slot. Linear probing: check slot+1, slot+2, etc. until empty. Lookup follows the same probe sequence until it finds the key or an empty slot.
+
+Most production HashMaps use chaining or a variant of open addressing. Python's dict uses open addressing with pseudo-random probing. Java's HashMap uses chaining.
+
+## Load Factor and Rehashing
+
+As you add entries, collisions become more frequent. The **load factor** is the ratio of entries to array slots:
+
+```
+load_factor = num_entries / array_capacity
+```
+
+When load factor exceeds a threshold (typically 0.7–0.75), the HashMap **rehashes**: allocates a new array (usually 2× larger) and reinserts all entries. This is O(n) — but it happens so infrequently that the amortized cost per insertion is still O(1).
+
+This is why saying HashMaps are O(1) is technically "amortized O(1)." Individual insertions near a rehash are O(n). The average across all insertions is O(1).
+
+## What "O(1)" Actually Means
+
+The O(1) lookup guarantee relies on one assumption: **the hash function distributes keys uniformly.**
+
+If all your keys hash to the same slot, lookup degrades to O(n) — you're scanning a linked list at that slot. This isn't a theoretical concern. Hash flooding attacks exploit exactly this: sending keys that all collide to degrade HashMap performance from O(1) to O(n).
+
+Python 3.3+ and Java randomize their hash functions per process (PYTHONHASHSEED, String hash randomization). This defeats precomputed attacks but means you can't assume hash values are stable across runs.
+
+## The Practical Takeaway
+
+HashMaps are the right data structure when:
+- You need O(1) average-case lookup by key
+- Insertion order doesn't matter (or you're using Python 3.7+/Java's LinkedHashMap)
+- Your keys have good hash function coverage
+
+They're the wrong data structure when:
+- You need sorted order (use a balanced BST / TreeMap)
+- You need range queries (use a B-Tree index in a database)
+- Memory is extremely constrained (each entry has overhead)
+
+Understanding the implementation turns "use a HashMap" from cargo-culting into a deliberate choice.

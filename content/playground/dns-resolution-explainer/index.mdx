@@ -1,0 +1,57 @@
+---
+type: playground
+title: "DNS Resolution Explainer"
+description: "Step-by-step walkthrough of how a DNS query resolves across the internet."
+summary: "Step-by-step walkthrough of how a DNS query resolves across the internet."
+status: published
+publishedAt: "2025-04-01"
+tags: ["Explainer"]
+cover: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=900&h=450&fit=crop&auto=format&q=80"
+layout:
+  desktop: "col-start-3 col-span-2 row-start-2 row-span-1"
+  mobile: "col-span-2 row-span-1"
+---
+
+## Idea
+
+Type a URL into a browser. Something happens. 50ms later, a connection is established. What happened?
+
+I knew the vocabulary — recursive resolver, root nameserver, TLD nameserver, authoritative nameserver — but I couldn't fluently explain the handoffs. I wanted to build something that made the handoffs visible.
+
+## Experiment
+
+An animated diagram that simulates a DNS resolution for any domain you enter. Each step in the resolution chain is animated in sequence: the stub resolver contacts the recursive resolver, which checks its cache, then queries the root servers, then the TLD servers, then the authoritative nameserver.
+
+Each hop shows the actual DNS message types (A, AAAA, NS, CNAME) and the TTL values returned.
+
+## Implementation
+
+The simulation uses a real DoH (DNS over HTTPS) API to resolve the domain, then animates the steps in sequence based on the response data. The animation timeline is built from the intermediate resolution steps:
+
+```typescript
+async function resolveWithSteps(domain: string): Promise<ResolutionStep[]> {
+  const steps: ResolutionStep[] = []
+
+  // Query root → returns NS records for TLD
+  const tldNS = await queryDNS(ROOT_SERVERS[0], domain, 'NS')
+  steps.push({ from: 'resolver', to: 'root', query: domain, response: tldNS })
+
+  // Query TLD nameserver → returns NS records for domain
+  const domainNS = await queryDNS(tldNS.nameserver, domain, 'NS')
+  steps.push({ from: 'resolver', to: 'tld', query: domain, response: domainNS })
+
+  // Query authoritative nameserver → returns A record
+  const aRecord = await queryDNS(domainNS.nameserver, domain, 'A')
+  steps.push({ from: 'resolver', to: 'auth', query: domain, response: aRecord })
+
+  return steps
+}
+```
+
+## Interesting Findings
+
+TTL values are fascinating when you watch them. The root zone's NS records have TTL of 518400 (6 days). Most TLD nameserver records have TTL of 172800 (2 days). Authoritative A records vary wildly — some CDNs use TTL of 60 seconds for fast failover, some small sites use 86400 (24 hours).
+
+You can literally see the difference between "this site cares about fast DNS failover" and "this site changes its IP address never."
+
+The other thing that becomes obvious: DNS is almost entirely cache hits. A busy recursive resolver might have millions of cached entries. Most domains you visit have their IP cached from someone else's query. The full resolution chain is surprisingly rare in practice.

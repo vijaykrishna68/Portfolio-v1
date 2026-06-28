@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router";
 import { Moon, Sun } from "lucide-react";
 
 import { ButtonLink } from "../shared/Button";
@@ -6,21 +7,59 @@ import { NAV_LINKS, NAV_SCROLL_THRESHOLD, THEME_MODES } from "../../lib/constant
 import { Container } from "../shared/Container";
 import type { ThemeMode } from "../../types/portfolio";
 import { INTERACTION } from "../../lib/interaction";
+import { useActiveSection } from "../../hooks/useActiveSection";
 
 type NavbarProps = {
   theme: ThemeMode;
   toggleTheme: () => void;
-  activeSection: string;
 };
 
-export function Navbar({ theme, toggleTheme, activeSection }: NavbarProps) {
+const HOME_SECTION_IDS = ["work", "timeline", "journal", "playground", "about"];
+
+const ROUTE_MAP: Record<string, string> = {
+  "#work": "/projects",
+  "#timeline": "/",
+  "#journal": "/journal",
+  "#playground": "/playground",
+  "#about": "/",
+};
+
+export function Navbar({ theme, toggleTheme }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
+
+  const activeSection = useActiveSection({
+    ids: HOME_SECTION_IDS,
+    fallback: HOME_SECTION_IDS[0],
+  });
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > NAV_SCROLL_THRESHOLD);
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  function isActive(href: string): boolean {
+    if (isHome) return activeSection === href.slice(1);
+    const route = ROUTE_MAP[href];
+    return route !== "/" && pathname.startsWith(route);
+  }
+
+  function linkClassName(href: string) {
+    const active = isActive(href);
+    return `text-[13px] relative group ${INTERACTION.color} ${
+      active ? "text-[#68b1f5]" : "text-muted-foreground hover:text-foreground"
+    }`;
+  }
+
+  function underlineClassName(href: string) {
+    const active = isActive(href);
+    return `absolute -bottom-0.5 left-0 h-px bg-[#68b1f5] ${INTERACTION.underline} ${
+      active ? "w-full" : "w-0 group-hover:w-full"
+    }`;
+  }
 
   return (
     <nav
@@ -30,37 +69,53 @@ export function Navbar({ theme, toggleTheme, activeSection }: NavbarProps) {
     >
       <Container>
         <div className="h-[58px] flex items-center justify-between">
-          <a
-            href="#"
-            className="text-[17px] text-foreground hover:opacity-60 transition-opacity leading-none select-none"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            VK
-          </a>
+          {isHome ? (
+            <a
+              href="#"
+              className="text-[17px] text-foreground hover:opacity-60 transition-opacity leading-none select-none"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              VK
+            </a>
+          ) : (
+            <Link
+              to="/"
+              className="text-[17px] text-foreground hover:opacity-60 transition-opacity leading-none select-none"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              VK
+            </Link>
+          )}
 
           <div className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                aria-current={activeSection === link.href.slice(1) ? "page" : undefined}
-                className={`text-[13px] relative group ${INTERACTION.color} ${
-                  activeSection === link.href.slice(1) ? "text-[#68b1f5]" : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {link.label}
-                <span
-                  className={`absolute -bottom-0.5 left-0 h-px bg-[#68b1f5] ${INTERACTION.underline} ${
-                    activeSection === link.href.slice(1) ? "w-full" : "w-0 group-hover:w-full"
-                  }`}
-                />
-              </a>
-            ))}
+            {NAV_LINKS.map((link) =>
+              isHome ? (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  aria-current={isActive(link.href) ? "page" : undefined}
+                  className={linkClassName(link.href)}
+                >
+                  {link.label}
+                  <span className={underlineClassName(link.href)} />
+                </a>
+              ) : (
+                <Link
+                  key={link.label}
+                  to={ROUTE_MAP[link.href]}
+                  aria-current={isActive(link.href) ? "page" : undefined}
+                  className={linkClassName(link.href)}
+                >
+                  {link.label}
+                  <span className={underlineClassName(link.href)} />
+                </Link>
+              ),
+            )}
           </div>
 
           <div className="flex items-center gap-3">
             <ButtonLink
-              href="#contact"
+              href={isHome ? "#contact" : "/#contact"}
               variant="nav"
               className="hidden md:inline-flex"
             >

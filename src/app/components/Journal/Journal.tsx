@@ -1,14 +1,15 @@
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 
 import { Container } from "../shared/Container";
 import { SectionLabel } from "../shared/SectionLabel";
-import { journal } from "../../content/projects";
+import { getJournalPosts, getFeaturedJournalPost } from "../../lib/content";
 
 import { JournalCard } from "./JournalCard";
 
 export function Journal() {
-  const featured = journal.find((article) => article.featured)!;
-  const rest = journal.filter((article) => !article.featured);
+  const featured = getFeaturedJournalPost()!;
+  const rest = getJournalPosts().filter((post) => !post.featured);
 
   return (
     <section id="journal" className="py-36 border-t border-border">
@@ -20,13 +21,13 @@ export function Journal() {
               Writing through ideas.
             </h2>
           </div>
-          <a
-            href="#"
+          <Link
+            to="/journal"
             className="hidden md:flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-foreground transition-colors group"
           >
             All articles
             <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5" />
-          </a>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
@@ -34,7 +35,7 @@ export function Journal() {
 
           <div className="lg:col-span-5 lg:col-start-8 flex flex-col">
             {rest.map((article, index) => (
-              <JournalCard key={article.id} article={article} className={index === rest.length - 1 ? "border-b" : ""} />
+              <JournalCard key={article.slug} article={article} className={index === rest.length - 1 ? "border-b" : ""} />
             ))}
           </div>
         </div>

@@ -1,10 +1,12 @@
 import { Container } from "../shared/Container";
 import { SectionLabel } from "../shared/SectionLabel";
-import { playground } from "../../content/projects";
+import { getPlaygroundItems } from "../../lib/content";
 
 import { PlaygroundCard } from "./PlaygroundCard";
 
 export function Playground() {
+  const items = getPlaygroundItems();
+
   return (
     <section id="playground" className="py-36 border-t border-border bg-secondary/30">
       <Container>
@@ -21,14 +23,14 @@ export function Playground() {
         </div>
 
         <div className="hidden md:grid grid-cols-4 grid-rows-2 gap-3 h-[520px]">
-          {playground.map((item) => (
-            <PlaygroundCard key={item.id} item={item} className={item.gridClass} />
+          {items.map((item) => (
+            <PlaygroundCard key={item.slug} item={item} className={item.layout.desktop} />
           ))}
         </div>
 
         <div className="md:hidden grid grid-cols-2 gap-3">
-          {playground.map((item) => (
-            <PlaygroundCard key={item.id} item={item} className={item.mobileClass} />
+          {items.map((item) => (
+            <PlaygroundCard key={item.slug} item={item} className={item.layout.mobile} />
           ))}
         </div>
       </Container>

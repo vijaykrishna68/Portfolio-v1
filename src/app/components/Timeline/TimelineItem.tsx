@@ -17,7 +17,7 @@ export function TimelineItem({ item, isOpen, onToggle }: TimelineItemProps) {
           isOpen ? "bg-[#ffdf60] border-[#ffdf60] scale-110 shadow-[0_0_0_4px_rgba(104,177,245,0.08)]" : "bg-background border-border scale-100"
         }`}
       />
-      <button onClick={onToggle} className={`w-full text-left py-6 border-b border-border group/btn ${INTERACTION.fast}`}>
+      <button onClick={onToggle} aria-expanded={isOpen} className={`w-full text-left py-6 border-b border-border group/btn ${INTERACTION.fast}`}>
         <div className="flex items-start justify-between gap-4">
           <div>
             <span className="text-[10px] tracking-[0.2em] text-[#68b1f5] uppercase" style={{ fontFamily: "var(--font-mono)" }}>

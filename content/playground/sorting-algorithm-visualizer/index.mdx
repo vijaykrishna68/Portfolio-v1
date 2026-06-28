@@ -1,0 +1,54 @@
+---
+type: playground
+title: "Sorting Algorithm Visualizer"
+description: "Watch bubble sort, quicksort, and merge sort compete in real-time."
+summary: "Watch bubble sort, quicksort, and merge sort compete in real-time."
+status: published
+publishedAt: "2025-01-01"
+tags: ["Visualization"]
+cover: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&h=700&fit=crop&auto=format&q=80"
+layout:
+  desktop: "col-start-1 col-span-2 row-start-1 row-span-2"
+  mobile: "col-span-2 row-span-2"
+---
+
+## Idea
+
+I could never intuitively feel why quicksort is faster than bubble sort on average until I watched them run side-by-side on the same array.
+
+Reading the time complexity analysis tells you that quicksort is O(n log n) average and O(n²) worst case. Watching quicksort partition an array while bubble sort laboriously bubbles its way through the same data makes you *feel* the difference in a way that no asymptotic analysis does.
+
+## Experiment
+
+Built a canvas-based renderer that runs multiple sort algorithms simultaneously on identical copies of a shuffled array. The array is rendered as a bar chart; bars swap colors as they're compared or swapped.
+
+Constraints I set:
+- No external visualization libraries — raw canvas API only
+- All algorithms run at the same "step rate" so the comparison is fair
+- The visualizer pauses when a tab loses focus to avoid drift
+
+## Implementation
+
+The trickiest part was threading the sort algorithms as generators so they yield on each comparison, allowing the visualizer to advance one step at a time:
+
+```typescript
+function* bubbleSort(arr: number[]): Generator<SortState> {
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = 0; j < arr.length - i - 1; j++) {
+      yield { comparing: [j, j + 1], arr: [...arr] }
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+        yield { swapping: [j, j + 1], arr: [...arr] }
+      }
+    }
+  }
+}
+```
+
+Each `yield` is one frame. The animation loop calls `.next()` on each generator and redraws.
+
+## Interesting Findings
+
+Merge sort's memory access pattern is visually obvious — you see it building sorted halves and merging them. Quicksort's partition step looks chaotic but resolves faster. Bubble sort is painful to watch after the first 20 elements.
+
+The visual that surprised me most: insertion sort is *fast* on nearly-sorted arrays. Faster than quicksort in some cases. You can see it — insertion sort barely moves elements when the array is almost sorted, while quicksort still does the full partition dance.

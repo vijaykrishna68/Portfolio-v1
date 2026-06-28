@@ -1,4 +1,4 @@
-import { type Project } from "../../types/portfolio";
+import { type Project } from "../../lib/content";
 import { INTERACTION } from "../../lib/interaction";
 
 type ProjectCardProps = {
@@ -10,10 +10,10 @@ export function ProjectCard({ project, isLast }: ProjectCardProps) {
   return (
     <div className={`group/card py-16 border-t border-border ${INTERACTION.lift} hover:border-[#68b1f5]/20 ${isLast ? "border-b" : ""}`}>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-        <div className={`lg:col-span-5 ${project.flip ? "lg:order-2" : "lg:order-1"}`}>
+        <div className={`lg:col-span-5 ${project.displayLayout === "flip" ? "lg:order-2" : "lg:order-1"}`}>
           <div className="flex items-center gap-3 mb-6">
             <span className="text-[10px] text-[#68b1f5] tracking-widest uppercase" style={{ fontFamily: "var(--font-mono)" }}>
-              {project.num}
+              {project.displayIndex}
             </span>
             <div className="w-6 h-px bg-border" />
             <span className="text-[10px] text-muted-foreground tracking-wider" style={{ fontFamily: "var(--font-mono)" }}>
@@ -35,7 +35,7 @@ export function ProjectCard({ project, isLast }: ProjectCardProps) {
           </div>
 
           <div className="flex flex-wrap gap-1.5 mb-8">
-            {project.stack.map((tech) => (
+            {project.technologies.map((tech) => (
               <span
                 key={tech}
                 className={`px-2.5 py-1 text-[11px] border border-border text-muted-foreground hover:border-[#68b1f5] hover:bg-[rgba(104,177,245,0.06)] ${INTERACTION.border}`}
@@ -54,14 +54,16 @@ export function ProjectCard({ project, isLast }: ProjectCardProps) {
           </div>
         </div>
 
-        <div className={`lg:col-span-7 ${project.flip ? "lg:order-1" : "lg:order-2"} overflow-hidden`}>
+        <div className={`lg:col-span-7 ${project.displayLayout === "flip" ? "lg:order-1" : "lg:order-2"} overflow-hidden`}>
           <div
             className="relative overflow-hidden bg-muted aspect-[16/10] border border-border group-hover/card:border-[#68b1f5]/30"
           >
             <img
-              src={project.image}
-              alt={project.imageAlt}
-              className={`w-full h-full object-cover transition-transform duration-[250ms] ease-out group-hover/card:scale-[1.03]`}
+              src={project.cover}
+              alt={project.coverAlt}
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover transition-transform duration-[250ms] ease-out group-hover/card:scale-[1.03]"
             />
             <div className="absolute inset-0 bg-foreground/8 group-hover/card:bg-transparent transition-colors duration-[250ms] ease-out" />
           </div>

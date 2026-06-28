@@ -1,0 +1,82 @@
+---
+type: journal
+title: "Designing Better APIs"
+description: "Predictable naming, consistent errors, and the principle of least surprise — what separates a good API from a painful one."
+excerpt: "Predictable naming, consistent errors, and the principle of least surprise — what separates a good API from a painful one."
+status: published
+publishedAt: "2025-04-19"
+tags: ["Architecture"]
+readTime: "6 min"
+featured: false
+---
+
+I've integrated with a lot of APIs. Some of them I think about fondly. Most of them I have repressed.
+
+The difference between a good API and a bad one is rarely about technical complexity. It's almost always about the designer's willingness to make decisions on behalf of the caller.
+
+## Predictability Over Cleverness
+
+The best APIs are boring. Every endpoint does exactly what its name suggests. Every response has the same shape. Every error looks like every other error.
+
+The worst APIs are creative. Endpoints have names that made sense to the original developer but require reading the docs (or the source code) to understand. Responses have slightly different shapes depending on whether the request succeeded, failed, or partially succeeded. Errors are sometimes strings, sometimes objects, sometimes HTTP status codes with no body.
+
+Predictability is a feature. When a developer can guess how your API behaves without reading the docs, they're faster and they make fewer mistakes.
+
+## The Error Contract
+
+Most APIs I've worked with have inconsistent error handling. Some return `{ "error": "message" }`. Some return `{ "message": "error" }`. Some return plain strings. Some throw 500s for things that aren't server errors.
+
+A good error contract:
+
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "The 'email' field is required.",
+    "field": "email"
+  }
+}
+```
+
+Every error has the same shape. The `code` field is a machine-readable string that the caller can switch on without parsing the `message`. The `message` is human-readable and safe to surface to users. Optional `field` for validation errors.
+
+The HTTP status code carries semantic meaning:
+- `400` — caller did something wrong
+- `401` — authentication required
+- `403` — authenticated but not authorized
+- `404` — resource doesn't exist
+- `422` — request is valid but semantically wrong
+- `429` — rate limited
+- `5xx` — our fault, not yours
+
+**Never return `200` with an error in the body.** I see this constantly. It forces callers to check two things: the HTTP status and the response body. Status codes exist precisely so callers don't have to parse the body to know if the request succeeded.
+
+## Idempotency
+
+Any operation that creates or modifies state should be idempotent — calling it twice produces the same result as calling it once.
+
+The practical pattern: accept an idempotency key in a header. If you've seen this key before, return the original response. Don't execute the operation again.
+
+```
+POST /api/payments
+Idempotency-Key: 4d2f1e9a-7c3b-4a8e-b612-9f0e1d5c3b2a
+```
+
+Network failures are a fact of life. Callers retry. Without idempotency, a retry that arrives after the server processed the first request creates a duplicate. With idempotency, the retry is safe.
+
+## Versioning Up Front
+
+Add API versioning before you have multiple versions. The cost of adding `/v1/` to every URL path is zero. The cost of adding versioning after you have callers in production is enormous — you have to maintain backward compatibility forever or break every existing integration.
+
+Two patterns that work:
+
+1. **URL path versioning**: `/v1/users`, `/v2/users`. Simple, visible, cacheable.
+2. **Header versioning**: `Accept: application/vnd.api+json;version=1`. More RESTful, less visible.
+
+I prefer URL path versioning. It's immediately obvious from a log line which version a request used.
+
+## The Principle of Least Surprise
+
+When in doubt, ask: what would a developer who has never seen this API before expect this endpoint to do?
+
+If the answer is different from what the endpoint actually does, that's a design problem. Good API design is empathy applied to a technical interface.

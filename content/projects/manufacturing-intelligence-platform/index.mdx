@@ -1,0 +1,53 @@
+---
+type: project
+title: "Manufacturing Intelligence Platform"
+description: "A real-time production scheduling system that replaced manual Excel-based workflows across three factory floors. Processes 50,000+ scheduling events daily with sub-100ms response times."
+status: published
+publishedAt: "2022-12-01"
+tags: ["Go", "PostgreSQL", "Redis", "gRPC", "React"]
+year: "2021 – 2022"
+challenge: "Modeling complex constraint satisfaction — machines with maintenance windows, operators with shift constraints, materials with lead times — into a scheduling algorithm production managers could actually trust."
+technologies: ["Go", "PostgreSQL", "Redis", "gRPC", "React"]
+impact: "73% reduction in scheduling conflicts. 14 hours/week of manual replanning eliminated."
+cover: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1400&h=900&fit=crop&auto=format&q=80"
+coverAlt: "Software engineer working on industrial scheduling system"
+displayIndex: "01"
+displayLayout: "default"
+featured: true
+role: "Backend Engineer"
+hook: "Replacing Excel chaos with constraint-satisfaction scheduling on the factory floor."
+---
+
+## Problem
+
+Three factory floors. Three production managers. Three separate Excel spreadsheets, reconciled manually every morning at 6 AM.
+
+When a machine broke down or a raw material shipment came in late, someone had to open all three files, cross-reference operator shift schedules, check machine maintenance windows, and redistribute work by hand. On a good day this took 90 minutes. On a bad day, the 6 AM reconciliation ran until noon — and production had already started on the wrong schedule.
+
+The business case was obvious. The technical challenge was not.
+
+## Architecture
+
+The core problem is a variant of the **Job Shop Scheduling Problem** — provably NP-hard in the general case. We didn't need an optimal solution. We needed a *good enough* solution, fast, with explanations that production managers could actually understand and override.
+
+We built a two-phase system:
+
+**Phase 1 — Constraint evaluation.** A Go service consumes a stream of events (machine status, operator clock-ins, material arrivals) via Kafka and maintains a materialized view of current floor state in Redis. Each event triggers a constraint re-evaluation pass: which jobs can still run, on which machines, with which operators.
+
+**Phase 2 — Schedule generation.** A greedy backtracking algorithm generates candidate schedules against the current constraint set. Redis sorted sets let us rank machines by availability with O(log N) lookups. gRPC streams push schedule updates to the React dashboard in real time.
+
+## Technical Decisions
+
+**Why Go?** The constraint evaluator runs on every incoming event. At 50K events/day the performance headroom matters less than I thought — but the goroutine model made it trivial to parallelize constraint evaluation across machines.
+
+**Why backtracking over OR-Tools?** We evaluated Google's OR-Tools constraint programming library. It produces better schedules. It also produced schedules that production managers couldn't follow. Backtracking with a fixed priority order gives worse schedules but the explanation is always the same: "higher-priority jobs run first, maintenance windows are respected." Operators trusted it.
+
+**Why not CQRS all the way down?** The write path (event log) and read path (materialized schedule view) are separated, but the schedule generation reads directly from the materialized view rather than replaying the event log. Replaying 50K events to generate one schedule on every request was too slow. Eventual consistency with a 2-second lag was an acceptable tradeoff.
+
+## Lessons Learned
+
+The hardest part of this project wasn't the algorithm. It was the **interface between the algorithm's output and production manager expectations**.
+
+Early prototype: the algorithm generated a schedule. Production managers said "this is wrong" and did it manually. We added a diff view showing what changed and why. Production managers said "this is still wrong." We added overrides. They started using overrides to express constraints the algorithm didn't know about — machine X always runs hot in the afternoon so it should run lighter jobs then.
+
+We ended up building a **constraint capture UI** where overrides became named rules. The algorithm got better. Overrides decreased. The lesson: the model of the problem was incomplete, and the only way to complete it was to give users a way to express what the model missed.
