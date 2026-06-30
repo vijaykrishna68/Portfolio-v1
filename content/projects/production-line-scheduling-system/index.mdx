@@ -1,0 +1,283 @@
+---
+type: project
+slug: production-line-scheduling-system
+title: "Production Line Scheduling System"
+description: "A constraint-based scheduling platform that automated production planning for a manufacturing plant, reducing manual scheduling time from 4–5 days to around 30 minutes."
+status: published
+publishedAt: "2026-06-30"
+tags:
+  - React
+  - Node.js
+  - Express
+  - MongoDB
+  - Excel
+  - Manufacturing
+  - Scheduling
+  - Algorithms
+cover: "./cover.png"
+coverAlt: "Dashboard showing production line scheduling and manufacturing metrics"
+year: "2025 – 2026"
+challenge: "Design a scheduling engine that could allocate thousands of manufacturing parts across multiple production lines while respecting production capacity, cycle times, business rules, and existing Excel-based workflows."
+technologies:
+  - React
+  - Tailwind CSS
+  - Node.js
+  - Express.js
+  - MongoDB
+  - XLSX
+impact: "Reduced production planning time from 4–5 days to approximately 30 minutes while preserving the company's existing Excel workflow."
+displayIndex: "01"
+displayLayout: default
+featured: true
+links:
+  github: ""
+  live: ""
+  writeup: ""
+---
+
+## Problem
+
+The manufacturing plant planned production entirely through Excel spreadsheets.
+
+Every production cycle, planners manually reviewed customer orders, part specifications, production line capabilities, and cycle times before deciding where every part should be manufactured.
+
+The process involved:
+
+- Reviewing thousands of production quantities
+- Calculating production durations manually
+- Assigning parts across four production lines
+- Estimating production dates
+- Updating multiple worksheets
+
+A single scheduling cycle required **4–5 days of manual work by one planner**, making it difficult to respond quickly to changing production demands.
+
+The company needed a solution that automated scheduling **without forcing operators to abandon their existing Excel workflow**.
+
+---
+
+## Background
+
+This project was developed as a freelance engagement for a manufacturing company within the Polyhose group that produces hose components for heavy-duty industrial machinery and commercial vehicles.
+
+The plant consisted of:
+
+- 4 production lines
+- Approximately 16 manufacturing machines
+- Around 50 employees per plant
+- Two production facilities
+
+Production planning relied on a single master workbook containing multiple worksheets including customer orders, part specifications, production line information, and production performance metrics.
+
+Rather than replacing Excel with an ERP system, the objective was to build software that understood the existing workbook and generated optimized production schedules automatically.
+
+---
+
+## Constraints
+
+Several practical constraints shaped the system architecture.
+
+- Factory planners were already comfortable with Excel and could not be expected to learn an entirely new workflow.
+- The generated schedule had to remain compatible with the company's existing spreadsheets.
+- Production capacity varied between manufacturing lines.
+- Different parts required different cycle times.
+- Certain parts could only be manufactured on specific production lines.
+- Sundays had to be excluded from scheduling.
+- The scheduler needed to continue production across multiple working days while respecting production windows.
+
+These operational constraints made the scheduling logic significantly more complex than a simple allocation algorithm.
+
+---
+
+## Research
+
+Before implementing the scheduler, I spent time understanding how production planning was performed manually.
+
+This involved studying:
+
+- Manufacturing workflows
+- Production capacity calculations
+- Cycle time estimation
+- Existing Excel templates
+- Business rules used by planners
+- Line priority strategies
+- Manufacturing constraints and fallback scenarios
+
+Rather than attempting to create a mathematically optimal scheduler, I designed the engine to replicate the company's real operational decision-making process while dramatically reducing planning time.
+
+---
+
+## Architecture
+
+The application converts an Excel workbook into an internal production model, performs capacity-aware scheduling, and generates a new workbook containing the completed production plan.
+
+```text
+                Manufacturing Workbook
+                        │
+                        ▼
+              Workbook Validation
+                        │
+                        ▼
+             Multi-Sheet XLSX Parser
+                        │
+                        ▼
+      Internal Production Data Model
+        (Parts, Lines, Capacity)
+                        │
+                        ▼
+ Constraint-Based Scheduling Engine
+                        │
+        ┌───────────────┴───────────────┐
+        │                               │
+        ▼                               ▼
+ MongoDB Schedule History      Workbook Generator
+        │                               │
+        └───────────────┬───────────────┘
+                        ▼
+                React Dashboard
+```
+
+The frontend provides dashboards, historical scheduling runs, file uploads, and production summaries while the backend performs scheduling and workbook generation.
+
+---
+
+## Technical Decisions
+
+### Decision: Preserve the Excel workflow
+
+**Options considered**
+
+- Replace Excel with a database-driven planning system
+- Continue using Excel as the primary interface
+
+**Chosen**
+
+Continue using Excel.
+
+**Why**
+
+The planners were already familiar with Excel and introducing a completely new workflow would have increased training costs and reduced adoption. Instead, the application adapts to the users' existing process while automating the most time-consuming work.
+
+---
+
+### Decision: Generate a new workbook
+
+**Options considered**
+
+- Modify the uploaded workbook
+- Generate a completely new workbook
+
+**Chosen**
+
+Generate a new workbook.
+
+**Why**
+
+Keeping the original workbook untouched provides an audit trail, prevents accidental data loss, and makes validation significantly easier.
+
+---
+
+### Decision: Constraint-based scheduling
+
+**Options considered**
+
+- Allocate parts sequentially
+- Build a capacity-aware scheduling engine
+
+**Chosen**
+
+Constraint-based scheduling.
+
+**Why**
+
+Production lines have different capacities, different supported operations, and different availability windows. The scheduler therefore considers production capacity, cycle time, line priority, fallback routing, and remaining production quantities before assigning work.
+
+---
+
+## Challenges
+
+The scheduling algorithm was the most challenging part of the project.
+
+Some of the engineering challenges included:
+
+- Converting multiple Excel worksheets into a consistent in-memory production model.
+- Tracking production capacity in minutes rather than simply counting quantities.
+- Supporting fallback production lines when preferred lines reached capacity.
+- Continuing production across multiple working days while excluding Sundays.
+- Writing thousands of generated allocations back into a newly created workbook while preserving spreadsheet compatibility.
+- Producing deterministic schedules that matched the company's manual planning process.
+
+---
+
+## Tradeoffs
+
+The scheduler deliberately prioritizes predictability over theoretical optimization.
+
+Business-defined production priorities are respected even if another allocation could potentially produce a slightly better utilization rate.
+
+Similarly, retaining Excel as the primary interface increases parser complexity, but significantly improves adoption because planners continue using familiar tools.
+
+These tradeoffs favored operational reliability over architectural purity.
+
+---
+
+## Results
+
+The system successfully automated production planning for the manufacturing plant.
+
+Measured outcomes included:
+
+- Reduced production planning time from **4–5 days** to approximately **30 minutes**
+- Automated allocation across four production lines
+- Automatic production date calculation
+- Capacity-aware scheduling using cycle times
+- Historical schedule tracking through a dashboard
+- Downloadable production workbooks compatible with existing company processes
+
+The solution allowed planners to generate production schedules in minutes instead of spending several days performing manual calculations.
+
+---
+
+## Lessons Learned
+
+This project fundamentally changed how I think about software engineering.
+
+Initially, I viewed the problem as "editing an Excel file."
+
+In reality, the Excel workbook was only the user interface.
+
+The real challenge was modelling a manufacturing system, translating business rules into deterministic scheduling logic, and designing software that fit naturally into an existing operational workflow.
+
+I also learned that successful engineering is often about adapting technology to people rather than forcing people to adapt to technology.
+
+---
+
+## Future Improvements
+
+Future iterations of the system would include:
+
+- User authentication and role-based permissions
+- ERP integration for automatic order synchronization
+- Background job queues for large scheduling runs
+- Real-time machine availability
+- Automatic schedule rebalancing after production delays
+- Audit logs for production changes
+- REST APIs for integration with manufacturing execution systems (MES)
+
+---
+
+## Gallery
+
+![Architecture diagram](./architecture.png)
+
+*Constraint-based scheduling architecture showing workbook ingestion, scheduling engine, and workbook generation.*
+
+![Dashboard](./dashboard.png)
+
+*Dashboard displaying production metrics, scheduling history, line utilization, and operational summaries.*
+
+---
+
+## References
+
+- Microsoft Excel XLSX File Format — Used for workbook parsing and generation.
+- Manufacturing Scheduling and Production Planning principles — Inspired the capacity-aware scheduling approach used in the allocation engine.
