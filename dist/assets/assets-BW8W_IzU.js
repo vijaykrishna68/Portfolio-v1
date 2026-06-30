@@ -1,0 +1,1 @@
+const t="/assets/cover-D8IclpGL.png",c=Object.assign({"/content/projects/production-line-scheduling-system/cover.png":t});function o(e,s){if(!e||!e.startsWith("."))return e;const n=s+"/"+e.replace(/^\.\//,"");return c[n]??e}export{o as r};

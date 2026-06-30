@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import type { Project, ContentWithMDX } from "./types";
+import { resolveAsset } from "./assets";
 
 type MDXModule = {
   default: ComponentType<{ components?: Record<string, ComponentType<any>> }>;
@@ -13,11 +14,23 @@ const modules = import.meta.glob<MDXModule>("/content/projects/*/index.mdx", {
 function loadAll(): ContentWithMDX<Project>[] {
   return Object.entries(modules).map(([path, mod]) => {
     const slug = path.split("/")[3];
-    return {
+    const dir = path.substring(0, path.lastIndexOf("/"));
+
+    const item = {
       slug,
       ...(mod.frontmatter as Omit<Project, "slug">),
       Component: mod.default,
     } as ContentWithMDX<Project>;
+
+    if (item.cover) item.cover = resolveAsset(item.cover, dir);
+    if (item.gallery) {
+      item.gallery = item.gallery.map((img) => ({
+        ...img,
+        src: resolveAsset(img.src, dir),
+      }));
+    }
+
+    return item;
   });
 }
 

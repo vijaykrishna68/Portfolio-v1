@@ -20,7 +20,9 @@ export default function ProjectDetail() {
   const allProjects = getProjects();
   const idx = allProjects.findIndex((p) => p.slug === slug);
   const next = idx < allProjects.length - 1 ? allProjects[idx + 1] : allProjects[0];
-
+  // console.log("PROJECT:", project);
+  // console.log("COVER:", project.cover);
+  // alert(project.cover);
   return (
     <article>
       {/* Back */}

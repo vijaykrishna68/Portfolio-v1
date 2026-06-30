@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
 import type { JournalPost, ContentWithMDX } from "./types";
+import { resolveAsset } from "./assets";
 
 type MDXModule = {
   default: ComponentType<{ components?: Record<string, ComponentType<any>> }>;
@@ -13,11 +14,17 @@ const modules = import.meta.glob<MDXModule>("/content/journal/*/index.mdx", {
 function loadAll(): ContentWithMDX<JournalPost>[] {
   return Object.entries(modules).map(([path, mod]) => {
     const slug = path.split("/")[3];
-    return {
+    const dir = path.substring(0, path.lastIndexOf("/"));
+
+    const item = {
       slug,
       ...(mod.frontmatter as Omit<JournalPost, "slug">),
       Component: mod.default,
     } as ContentWithMDX<JournalPost>;
+
+    if (item.cover) item.cover = resolveAsset(item.cover, dir);
+
+    return item;
   });
 }
 
