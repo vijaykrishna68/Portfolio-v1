@@ -4,6 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!--
+      Theme bootstrap — runs synchronously before any CSS or content is painted.
+      Priority: localStorage("theme") → prefers-color-scheme → light.
+      The key "theme" must match THEME_STORAGE_KEY in src/app/lib/constants.ts.
+    -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (saved === "dark" || (!saved && prefersDark)) {
+            document.documentElement.classList.add("dark");
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Primary meta -->
     <title>Vijay Krishna – Backend Engineer</title>
     <meta name="description" content="Backend engineer based in Bengaluru. I build distributed systems, data pipelines, and APIs that hold up under pressure. This is my work." />

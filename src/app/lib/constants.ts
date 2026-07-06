@@ -5,6 +5,9 @@ export const THEME_MODES = {
   DARK: "dark",
 } as const;
 
+// Must match the key used in the inline script in index.html.
+export const THEME_STORAGE_KEY = "theme";
+
 export const NAV_SCROLL_THRESHOLD = 40;
 
 export const NAV_LINKS = [
