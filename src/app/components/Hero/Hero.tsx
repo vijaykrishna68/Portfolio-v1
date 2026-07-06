@@ -1,13 +1,16 @@
 import { ArrowRight, ExternalLink } from "lucide-react";
 
 import { ButtonLink } from "../shared/Button";
+import { Reveal } from "../shared/Reveal";
 import { SectionLabel } from "../shared/SectionLabel";
 import { HeroStatus } from "./HeroStatus";
 
 export function Hero() {
   return (
     <section className="min-h-[100svh] flex flex-col justify-center px-6 md:px-10 max-w-[1320px] mx-auto pt-20 pb-14 md:pb-16">
-      <div className="max-w-4xl lg:max-w-[920px]">
+
+      {/* Main content block — entrance animation on page load */}
+      <Reveal delay={60} className="max-w-4xl lg:max-w-[920px]">
         <SectionLabel>Portfolio · 2025</SectionLabel>
 
         <h1
@@ -44,22 +47,17 @@ export function Hero() {
         </div>
 
         <div className="mt-12 flex items-center gap-3 flex-wrap">
-          <ButtonLink
-            href="#work"
-            variant="solid"
-          >
+          <ButtonLink href="#work" variant="solid">
             View Work <ArrowRight size={13} strokeWidth={2} />
           </ButtonLink>
-          <ButtonLink
-            href="#journal"
-            variant="outline"
-          >
+          <ButtonLink href="#journal" variant="outline">
             Read Journal <ExternalLink size={13} strokeWidth={1.5} />
           </ButtonLink>
         </div>
-      </div>
+      </Reveal>
 
-      <div className="mt-auto pb-12 pt-20 flex items-center gap-3">
+      {/* Scroll indicator — delayed so it appears after the heading settles */}
+      <Reveal delay={500} className="mt-auto pb-12 pt-20 flex items-center gap-3">
         <div className="w-10 h-px bg-border" />
         <span
           className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground"
@@ -67,7 +65,8 @@ export function Hero() {
         >
           Scroll to explore
         </span>
-      </div>
+      </Reveal>
+
     </section>
   );
 }

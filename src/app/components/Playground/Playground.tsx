@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 
 import { Container } from "../shared/Container";
+import { Reveal } from "../shared/Reveal";
 import { SectionLabel } from "../shared/SectionLabel";
 import { getPlaygroundItems } from "../../lib/content";
 
@@ -14,15 +15,17 @@ export function Playground() {
     <section id="playground" className="py-36 border-t border-border bg-secondary/30">
       <Container>
         <div className="flex items-end justify-between mb-16">
-          <div>
-            <SectionLabel>Playground</SectionLabel>
-            <h2 className="mt-3 max-w-[12ch] text-3xl md:text-4xl text-foreground leading-[1.08]" style={{ fontFamily: "var(--font-display)" }}>
-              Experiments & explorations.
-            </h2>
-            <p className="mt-3 text-[14px] text-muted-foreground max-w-[22rem] leading-[1.7]">
-              Tools, visualizations, and prototypes built to understand things better.
-            </p>
-          </div>
+          <Reveal>
+            <div>
+              <SectionLabel>Playground</SectionLabel>
+              <h2 className="mt-3 max-w-[12ch] text-3xl md:text-4xl text-foreground leading-[1.08]" style={{ fontFamily: "var(--font-display)" }}>
+                Experiments & explorations.
+              </h2>
+              <p className="mt-3 text-[14px] text-muted-foreground max-w-[22rem] leading-[1.7]">
+                Tools, visualizations, and prototypes built to understand things better.
+              </p>
+            </div>
+          </Reveal>
           <Link
             to="/playground"
             className="hidden md:flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-foreground transition-colors group"
@@ -32,17 +35,19 @@ export function Playground() {
           </Link>
         </div>
 
-        <div className="hidden md:grid grid-cols-4 grid-rows-2 gap-3 h-[520px]">
+        {/* Desktop grid — Reveal wraps the container; PlaygroundCard keeps its placement class */}
+        <Reveal className="hidden md:grid grid-cols-4 grid-rows-2 gap-3 h-[520px]">
           {items.map((item) => (
             <PlaygroundCard key={item.slug} item={item} className={item.layout.desktop} />
           ))}
-        </div>
+        </Reveal>
 
-        <div className="md:hidden grid grid-cols-2 gap-3">
+        {/* Mobile grid */}
+        <Reveal className="md:hidden grid grid-cols-2 gap-3">
           {items.map((item) => (
             <PlaygroundCard key={item.slug} item={item} className={item.layout.mobile} />
           ))}
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

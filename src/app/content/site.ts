@@ -17,6 +17,10 @@ export const CURRENTLY_ITEMS = [
 
 export const CONTACT_EMAIL = "vijaykrishna.officialid@gmail.com";
 
+// Portrait image shown beside the About text on desktop.
+// Place your photo at public/portrait.jpg and set this to "/portrait.jpg".
+// Leave empty ("") to hide the portrait slot.
+export const PORTRAIT_SRC = "/portait.jpg";
 export const SOCIAL_LINKS = [
   { icon: Github, label: "GitHub", href: "https://github.com/vijaykrishna68" },
   { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/contact-vijay-krishna/" },

@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 
 import { Container } from "../shared/Container";
+import { Reveal } from "../shared/Reveal";
 import { CONTACT_EMAIL, SOCIAL_LINKS } from "../../content/site";
 import { INTERACTION } from "../../lib/interaction";
 
@@ -8,7 +9,8 @@ export function Footer() {
   return (
     <footer id="contact" className="py-24 border-t border-border">
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0 items-end">
+        <Reveal className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0 items-end">
+
           <div>
             <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
               Contact
@@ -46,7 +48,8 @@ export function Footer() {
               Vijay Krishna · {new Date().getFullYear()} · Bengaluru, India
             </p>
           </div>
-        </div>
+
+        </Reveal>
       </Container>
     </footer>
   );

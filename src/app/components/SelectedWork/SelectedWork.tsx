@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 
 import { Container } from "../shared/Container";
+import { Reveal } from "../shared/Reveal";
 import { SectionLabel } from "../shared/SectionLabel";
 import { getProjects } from "../../lib/content";
 
@@ -14,12 +15,14 @@ export function SelectedWork() {
     <section id="work" className="py-36 border-t border-border">
       <Container>
         <div className="flex items-end justify-between mb-[4.5rem]">
-          <div>
-            <SectionLabel>Selected Work</SectionLabel>
-            <h2 className="mt-3 text-3xl md:text-4xl text-foreground tracking-tight" style={{ fontFamily: "var(--font-display)" }}>
-              Three projects that shaped me.
-            </h2>
-          </div>
+          <Reveal>
+            <div>
+              <SectionLabel>Selected Work</SectionLabel>
+              <h2 className="mt-3 text-3xl md:text-4xl text-foreground tracking-tight" style={{ fontFamily: "var(--font-display)" }}>
+                Three projects that shaped me.
+              </h2>
+            </div>
+          </Reveal>
           <Link
             to="/projects"
             className="hidden md:flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-foreground transition-colors group"
@@ -31,9 +34,11 @@ export function SelectedWork() {
 
         <div>
           {projects.map((project, index) => (
-            <Link key={project.slug} to={`/projects/${project.slug}`} className="block">
-              <ProjectCard project={project} isLast={index === projects.length - 1} />
-            </Link>
+            <Reveal key={project.slug} delay={index * 80}>
+              <Link to={`/projects/${project.slug}`} className="block">
+                <ProjectCard project={project} isLast={index === projects.length - 1} />
+              </Link>
+            </Reveal>
           ))}
         </div>
       </Container>

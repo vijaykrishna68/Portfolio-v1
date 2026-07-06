@@ -1,1 +1,0 @@
-import{j as e}from"./index-Cbh2hl2S.js";function r({children:t}){return e.jsx("p",{className:"text-[10px] uppercase tracking-[0.22em] text-muted-foreground",style:{fontFamily:"var(--font-mono)"},children:t})}export{r as S};

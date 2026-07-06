@@ -1,13 +1,29 @@
 import { Container } from "../shared/Container";
+import { Reveal } from "../shared/Reveal";
 import { SectionLabel } from "../shared/SectionLabel";
-import { aboutStats } from "../../content/site";
+import { aboutStats, PORTRAIT_SRC } from "../../content/site";
+
+import { TechStrip } from "./TechStrip";
 
 export function About() {
   return (
     <section id="about" className="py-36 border-t border-border">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          <div className="lg:col-span-4">
+
+          {/* Left column — portrait (if set) + quote */}
+          <Reveal delay={0} className="lg:col-span-4">
+            {PORTRAIT_SRC && (
+              <div className="mb-10 w-[78%] overflow-hidden rounded-[6px] bg-muted aspect-[3/4]">
+                <img
+                  src={PORTRAIT_SRC}
+                  alt="Portrait of Vijay Krishna"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+            )}
             <SectionLabel>About</SectionLabel>
             <div className="mt-10">
               <p
@@ -22,9 +38,10 @@ export function About() {
               </p>
             </div>
             <div className="mt-8 w-10 h-0.5 bg-[#ffdf60]" />
-          </div>
+          </Reveal>
 
-          <div className="lg:col-span-6 lg:col-start-7">
+          {/* Right column — bio + stats + tech strip */}
+          <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
             <div className="space-y-5 text-[16px] text-foreground/80 leading-[1.75] max-w-[40rem]">
               <p>
                 I'm Vijay Krishna, a backend engineer based in Bengaluru, India. I care deeply
@@ -56,7 +73,10 @@ export function About() {
                 </div>
               ))}
             </div>
-          </div>
+
+            <TechStrip />
+          </Reveal>
+
         </div>
       </Container>
     </section>
