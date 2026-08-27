@@ -1,283 +1,342 @@
 ---
 type: project
-slug: production-line-scheduling-system
-title: "Production Line Scheduling System"
-description: "A constraint-based scheduling platform that automated production planning for a manufacturing plant, reducing manual scheduling time from 4–5 days to around 30 minutes."
-status: published
-publishedAt: "2026-06-30"
+slug: vector-production-scheduling
+title: "Vector — Production Scheduling Platform"
+description: "A capacity-aware production scheduling platform that turns Excel-based manufacturing demand into validated, deterministic production plans."
+status: draft
+publishedAt: "2026-05-27"
 tags:
   - React
+  - Vite
+  - Tailwind CSS
   - Node.js
   - Express
   - MongoDB
-  - Excel
-  - Manufacturing
-  - Scheduling
-  - Algorithms
+  - Mongoose
+  - xlsx
+  - Render
 cover: "./cover.png"
-coverAlt: "Dashboard showing production line scheduling and manufacturing metrics"
-year: "2025 – 2026"
-challenge: "Design a scheduling engine that could allocate thousands of manufacturing parts across multiple production lines while respecting production capacity, cycle times, business rules, and existing Excel-based workflows."
+coverAlt: "Vector production scheduling dashboard"
+year: "2026 – 2026"
+challenge: "Replace a manual Excel-based production planning workflow with a deterministic, capacity-aware scheduling system while preserving the planner's existing workbook workflow."
 technologies:
   - React
+  - Vite
   - Tailwind CSS
   - Node.js
-  - Express.js
+  - Express
   - MongoDB
-  - XLSX
-impact: "Reduced production planning time from 4–5 days to approximately 30 minutes while preserving the company's existing Excel workflow."
-displayIndex: "01"
+  - Mongoose
+  - xlsx
+  - node:test
+  - Render
+impact: "Reduced workbook serialization time from ~75.6s to ~0.54s (~141× faster) while producing byte-identical output across 315,070 cells."
+displayIndex: "04"
 displayLayout: default
-featured: true
+featured: false
 links:
-  github: ""
-  live: ""
+  github: "https://github.com/vijaykrishna68/Vector_UPDATE"
+  live: "https://vector-update-403i.onrender.com/"
   writeup: ""
 ---
 
 ## Problem
 
-The manufacturing plant planned production entirely through Excel spreadsheets.
+Production demand arrived as Excel workbooks containing parts, weekly quantities, production-line assignments, cycle times, and working-day information. Turning that demand into a production plan required handling capacity, allocation priorities, fallback rules, and exceptions without silently overcommitting a line.
 
-Every production cycle, planners manually reviewed customer orders, part specifications, production line capabilities, and cycle times before deciding where every part should be manufactured.
+The real problem was not simply generating a schedule. It was making the scheduling process `repeatable`, `capacity-aware`, and `trustworthy` while preserving the Excel workflow planners already used.
 
-The process involved:
-
-- Reviewing thousands of production quantities
-- Calculating production durations manually
-- Assigning parts across four production lines
-- Estimating production dates
-- Updating multiple worksheets
-
-A single scheduling cycle required **4–5 days of manual work by one planner**, making it difficult to respond quickly to changing production demands.
-
-The company needed a solution that automated scheduling **without forcing operators to abandon their existing Excel workflow**.
+Vector was built to take the workbook from `upload → validation → normalization → allocation → persistence → review`, with failures and unallocated demand surfaced explicitly instead of disappearing inside a spreadsheet.
 
 ---
 
 ## Background
 
-This project was developed as a freelance engagement for a manufacturing company within the Polyhose group that produces hose components for heavy-duty industrial machinery and commercial vehicles.
+Vector is an end-to-end production scheduling application built around a manufacturing planning workflow.
 
-The plant consisted of:
+The source of truth remains the planner's `.xlsx` workbook. The workbook contains schedule data and a working-days sheet, while the application adds validation, deterministic allocation, capacity visibility, run persistence, and a web dashboard.
 
-- 4 production lines
-- Approximately 16 manufacturing machines
-- Around 50 employees per plant
-- Two production facilities
+The system has three important boundaries:
 
-Production planning relied on a single master workbook containing multiple worksheets including customer orders, part specifications, production line information, and production performance metrics.
+- `React + Vite` provides the planner-facing dashboard, upload flow, weekly schedule, issues, and history views.
+- `Node.js + Express` handles uploads, validation, APIs, persistence, and orchestration.
+- A standalone `allocation engine` converts normalized demand into a schedule without depending on HTTP, React, or MongoDB.
 
-Rather than replacing Excel with an ERP system, the objective was to build software that understood the existing workbook and generated optimized production schedules automatically.
+MongoDB stores completed planning runs so a generated schedule can be reviewed after the upload request has finished.
 
 ---
 
 ## Constraints
 
-Several practical constraints shaped the system architecture.
+The system had to work within the existing planning workflow rather than requiring planners to abandon Excel.
 
-- Factory planners were already comfortable with Excel and could not be expected to learn an entirely new workflow.
-- The generated schedule had to remain compatible with the company's existing spreadsheets.
-- Production capacity varied between manufacturing lines.
-- Different parts required different cycle times.
-- Certain parts could only be manufactured on specific production lines.
-- Sundays had to be excluded from scheduling.
-- The scheduler needed to continue production across multiple working days while respecting production windows.
+Key constraints included:
 
-These operational constraints made the scheduling logic significantly more complex than a simple allocation algorithm.
+- Input arrives as `.xlsx` workbooks whose sheet ordering and dimensions cannot be assumed.
+- Scheduling rules are operational heuristics rather than a general-purpose optimization model.
+- Four production lines have daily capacity constraints.
+- Allocation follows a fixed priority order and predefined fallback chains.
+- A line-day must never be allocated beyond its remaining capacity.
+- Invalid rows and duplicate demand must be handled without corrupting the planning run.
+- Demand that cannot be placed must become explicit `unallocated demand`.
+- The backend and frontend need to remain separately testable.
+- Production deployment needs to serve the React application and API from one origin.
+- Upload validation is required because the `xlsx` dependency has known vulnerabilities with no upstream fix currently available.
+
+The biggest design constraint was therefore correctness at the boundaries: bad spreadsheet data should be rejected or diagnosed before it reaches the core scheduler.
 
 ---
 
 ## Research
 
-Before implementing the scheduler, I spent time understanding how production planning was performed manually.
+Before changing the scheduling workflow, the existing workbook behavior and processing path were examined to understand where assumptions lived.
 
-This involved studying:
+One important discovery was that workbook structure could not safely be inferred from fixed sheet positions. The parser therefore identifies relevant sheets from meaningful headers and labels.
 
-- Manufacturing workflows
-- Production capacity calculations
-- Cycle time estimation
-- Existing Excel templates
-- Business rules used by planners
-- Line priority strategies
-- Manufacturing constraints and fallback scenarios
+The allocation behavior was treated as a set of confirmed business rules rather than something to "optimize" without domain evidence. This led to a deterministic heuristic instead of introducing a general-purpose optimization solver.
 
-Rather than attempting to create a mathematically optimal scheduler, I designed the engine to replicate the company's real operational decision-making process while dramatically reducing planning time.
+Testing also shaped the implementation. `Characterization tests` preserve important existing behavior, while `golden-master` snapshots make changes to generated schedules visible.
+
+A separate performance investigation focused on workbook serialization. Some workbooks declared ranges extending toward Excel's approximately 1,048,576-row limit even when most rows were empty. Measuring the actual populated cell extent revealed that the writer was doing far more work than the data required.
 
 ---
 
 ## Architecture
 
-The application converts an Excel workbook into an internal production model, performs capacity-aware scheduling, and generates a new workbook containing the completed production plan.
-
 ```text
-                Manufacturing Workbook
-                        │
-                        ▼
-              Workbook Validation
-                        │
-                        ▼
-             Multi-Sheet XLSX Parser
-                        │
-                        ▼
-      Internal Production Data Model
-        (Parts, Lines, Capacity)
-                        │
-                        ▼
- Constraint-Based Scheduling Engine
-                        │
-        ┌───────────────┴───────────────┐
-        │                               │
-        ▼                               ▼
- MongoDB Schedule History      Workbook Generator
-        │                               │
-        └───────────────┬───────────────┘
-                        ▼
-                React Dashboard
+┌──────────────────┐
+│   Excel Upload   │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│ Validate / Parse │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│    Normalize     │
+│ duplicates / bad │
+│       rows       │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│ Allocation Engine │
+│ capacity / rules │
+└───────┬─────┬────┘
+        │     │
+        ▼     ▼
+┌───────────┐ ┌──────────────┐
+│ MongoDB   │ │ Excel Output │
+│ Run Store │ │  / Download  │
+└─────┬─────┘ └──────────────┘
+      │
+      ▼
+┌──────────────────┐
+│ React Dashboard  │
+│ Schedule / Issues│
+│      / History   │
+└──────────────────┘
 ```
 
-The frontend provides dashboards, historical scheduling runs, file uploads, and production summaries while the backend performs scheduling and workbook generation.
+### Client
+
+`React + Vite + Tailwind CSS` powers the single-page planner interface.
+
+The client displays operational results but does not contain the scheduling rules. It consumes API data for dashboard metrics, weekly schedules, issues, and planning history.
+
+### Server
+
+`Node.js + Express` provides the API, upload handling, validation boundary, and application orchestration.
+
+The backend follows a `routes → controllers → services → models` structure so HTTP concerns remain separate from business logic.
+
+### Allocation Engine
+
+The allocation engine is intentionally independent from the API and UI. It receives normalized planning data and returns allocation results plus diagnostics.
+
+This boundary makes the core scheduling behavior testable without starting the web server.
+
+### Database
+
+`MongoDB + Mongoose` stores planning runs and their allocation results, line totals, and diagnostics.
+
+### Excel Processing
+
+`xlsx` parses the incoming workbook and writes the generated schedule back into the workbook format planners already use.
+
+The parser discovers relevant sheets, validates rows, normalizes demand, and only then passes data to the scheduler.
+
+### Deployment
+
+The production application runs as a `single Node.js service` on Render. Express serves both the built React application and the JSON API from the same origin, with MongoDB providing persistent storage.
 
 ---
 
 ## Technical Decisions
 
-### Decision: Preserve the Excel workflow
+### Decision: Deterministic heuristic instead of a general optimizer
 
-**Options considered**
+`Options considered:`
 
-- Replace Excel with a database-driven planning system
-- Continue using Excel as the primary interface
+- General-purpose optimization — potentially stronger global optimization, but introduces additional model complexity and makes the confirmed factory rules harder to reason about.
+- Deterministic rule-based allocation — directly expresses the known priorities, fallbacks, capacity boundaries, and tolerance behavior.
 
-**Chosen**
+`Chosen:` Deterministic rule-based allocation.
 
-Continue using Excel.
+`Why:` The goal was to reliably implement the confirmed production rules, not to claim that the schedule is globally optimal. A deterministic engine is easier to test, reproduce, and explain to planners.
 
-**Why**
+### Decision: Normalize before allocation
 
-The planners were already familiar with Excel and introducing a completely new workflow would have increased training costs and reduced adoption. Instead, the application adapts to the users' existing process while automating the most time-consuming work.
+`Options considered:`
 
----
+- Let the allocation engine interpret raw spreadsheet rows — simpler input plumbing, but business logic becomes coupled to messy workbook data.
+- Normalize and validate at the boundary — adds an explicit processing stage but gives the scheduler a predictable internal model.
 
-### Decision: Generate a new workbook
+`Chosen:` Boundary validation and normalization.
 
-**Options considered**
+`Why:` Duplicate rows, invalid quantities, missing specifications, and invalid cycle times are data-quality concerns. Handling them before allocation keeps the scheduling engine focused on scheduling.
 
-- Modify the uploaded workbook
-- Generate a completely new workbook
+### Decision: Preserve Excel as the primary workflow
 
-**Chosen**
+`Options considered:`
 
-Generate a new workbook.
+- Replace Excel with a completely native planning interface.
+- Keep Excel as input/output and add validation, scheduling, and visibility around it.
 
-**Why**
+`Chosen:` Preserve the workbook workflow.
 
-Keeping the original workbook untouched provides an audit trail, prevents accidental data loss, and makes validation significantly easier.
+`Why:` The application improves the existing process without forcing planners to re-enter demand into a new system.
 
----
+### Decision: Single-service production deployment
 
-### Decision: Constraint-based scheduling
+`Options considered:`
 
-**Options considered**
+- Deploy the frontend and backend separately.
+- Serve the built SPA and API from the same Express service.
 
-- Allocate parts sequentially
-- Build a capacity-aware scheduling engine
+`Chosen:` Single service.
 
-**Chosen**
-
-Constraint-based scheduling.
-
-**Why**
-
-Production lines have different capacities, different supported operations, and different availability windows. The scheduler therefore considers production capacity, cycle time, line priority, fallback routing, and remaining production quantities before assigning work.
+`Why:` The application does not currently need independent frontend/backend scaling. Same-origin deployment also avoids unnecessary cross-origin configuration.
 
 ---
 
 ## Challenges
 
-The scheduling algorithm was the most challenging part of the project.
+### Excel data was less predictable than the UI suggested
 
-Some of the engineering challenges included:
+The workbook could contain variable sheet ordering, duplicate part/week rows, invalid quantities, missing specifications, and other data-quality issues.
 
-- Converting multiple Excel worksheets into a consistent in-memory production model.
-- Tracking production capacity in minutes rather than simply counting quantities.
-- Supporting fallback production lines when preferred lines reached capacity.
-- Continuing production across multiple working days while excluding Sundays.
-- Writing thousands of generated allocations back into a newly created workbook while preserving spreadsheet compatibility.
-- Producing deterministic schedules that matched the company's manual planning process.
+The solution was to create an explicit `validation → normalization` boundary. Duplicate rows are merged and reported, while invalid records become diagnostics instead of crashing the run or silently entering the scheduler.
+
+### Capacity needed to be enforced continuously
+
+A production line has daily capacity calculated from `workers × 475 minutes`. Allocation therefore cannot simply distribute weekly quantities and check capacity afterward.
+
+The engine maintains a shared running capacity model and ensures every line-day allocation is bounded by `remaining capacity`. Overflow can move only through predefined fallback chains or forward into later eligible dates.
+
+### Workbook serialization became the unexpected bottleneck
+
+The allocation logic was not the slow part of one important workflow. Workbook serialization was.
+
+Some workbooks advertised extremely large used ranges despite containing mostly empty rows. The writer consequently serialized close to a million rows.
+
+The fix recomputed the actual populated extent from cell keys before writing.
+
+Result:
+
+`~75.6s → ~0.54s`
+
+That is approximately `141× faster` for the workbook-write operation, with output verified `byte-identical` across `315,070 cells`.
+
+### Production exposed a dependency-installation difference
+
+The first Render deployment built successfully locally but failed in production because Render's production-mode installation skipped `devDependencies`. `@vitejs/plugin-react` was therefore unavailable when Vite loaded the configuration.
+
+The failure was first `reproduced locally` using the same production-mode install. The dependency was then moved into `dependencies`, followed by a clean production-mode build and full deployment-path verification.
 
 ---
 
 ## Tradeoffs
 
-The scheduler deliberately prioritizes predictability over theoretical optimization.
-
-Business-defined production priorities are respected even if another allocation could potentially produce a slightly better utilization rate.
-
-Similarly, retaining Excel as the primary interface increases parser complexity, but significantly improves adoption because planners continue using familiar tools.
-
-These tradeoffs favored operational reliability over architectural purity.
+- `Deterministic heuristic` over global optimization: easier to verify and explain, but not a universal scheduling optimizer.
+- `Single-service deployment` over independent services: simpler operations and same-origin requests, but less flexibility for independent scaling.
+- `Excel workflow` over a native planning interface: lower adoption friction, but continued dependence on workbook conventions.
+- `Explicit diagnostics` over silent correction: exceptions become visible, but planners must review cases that cannot be allocated.
+- `MongoDB persistence` over returning only a generated workbook: enables run history and review, but introduces database availability as a production dependency.
 
 ---
 
 ## Results
 
-The system successfully automated production planning for the manufacturing plant.
+Vector now provides a complete `Excel → schedule` workflow:
 
-Measured outcomes included:
+- Validates and normalizes planner workbooks.
+- Runs deterministic `capacity-aware allocation` across four production lines.
+- Applies fixed priorities and fallback chains.
+- Prevents line-day overcommitment.
+- Surfaces `duplicates`, `invalid input`, and `unallocated demand`.
+- Persists planning runs for later review.
+- Provides dashboard, weekly schedule, issues, and history views.
+- Returns the generated workbook in the planner's existing format.
+- Runs as a live production deployment serving the React application and Express API from one origin.
 
-- Reduced production planning time from **4–5 days** to approximately **30 minutes**
-- Automated allocation across four production lines
-- Automatic production date calculation
-- Capacity-aware scheduling using cycle times
-- Historical schedule tracking through a dashboard
-- Downloadable production workbooks compatible with existing company processes
+The clearest measured performance result is the workbook serialization optimization:
 
-The solution allowed planners to generate production schedules in minutes instead of spending several days performing manual calculations.
+`~75.6s → ~0.54s`
+
+`~141× faster`, with `byte-identical` output verified across `315,070 cells`.
 
 ---
 
 ## Lessons Learned
 
-This project fundamentally changed how I think about software engineering.
+The biggest lesson was that the most important engineering work was often at the boundaries rather than in the main algorithm.
 
-Initially, I viewed the problem as "editing an Excel file."
+`Validate before allocating.` A scheduler can be logically correct and still produce unreliable results if malformed spreadsheet data reaches it.
 
-In reality, the Excel workbook was only the user interface.
+`Measure the real bottleneck.` The largest performance improvement came from inspecting what the workbook writer was actually serializing rather than assuming the allocation algorithm was responsible for the delay.
 
-The real challenge was modelling a manufacturing system, translating business rules into deterministic scheduling logic, and designing software that fit naturally into an existing operational workflow.
+`Reproduce production failures locally.` The Render dependency failure became straightforward once the production installation behavior was reproduced locally.
 
-I also learned that successful engineering is often about adapting technology to people rather than forcing people to adapt to technology.
+`Keep business rules isolated.` Separating the allocation engine from HTTP and presentation made the core behavior easier to test and reason about.
+
+`Make exceptions visible.` In production planning, an explicit unallocated quantity is safer than a system that quietly hides the fact that demand could not be scheduled.
 
 ---
 
 ## Future Improvements
 
-Future iterations of the system would include:
+The next improvements should focus on known limitations rather than adding unrelated features.
 
-- User authentication and role-based permissions
-- ERP integration for automatic order synchronization
-- Background job queues for large scheduling runs
-- Real-time machine availability
-- Automatic schedule rebalancing after production delays
-- Audit logs for production changes
-- REST APIs for integration with manufacturing execution systems (MES)
+- Clarify the business meaning behind the remaining `OVERLOAD` diagnostic instead of inferring a rule that has not been confirmed.
+- Revisit weekly-bucket tolerance behavior where a small amount of demand can remain unallocated even when later capacity exists.
+- Add a continuous integration pipeline so lint, build, and tests run automatically for changes.
+- Add representative concurrent-usage and load-testing data before making claims about production scale.
+- Continue evaluating the `xlsx` dependency and its vulnerability status as upstream fixes become available.
+- Add more operational observability around allocation decisions and production runs.
 
 ---
 
 ## Gallery
 
-![Architecture diagram](./architecture.png)
+{/* Cover image is automatic from frontmatter. Add supplemental images below. */}
 
-*Constraint-based scheduling architecture showing workbook ingestion, scheduling engine, and workbook generation.*
+![Vector dashboard](./dashboard.png)
+*Production dashboard showing planning status, line capacity, and weekly demand.*
 
-![Dashboard](./dashboard.png)
+![Weekly schedule](./schedule.png)
+*Weekly schedule view showing allocated production demand and capacity information.*
 
-*Dashboard displaying production metrics, scheduling history, line utilization, and operational summaries.*
+![Issues panel](./issues.png)
+*Issues view surfacing validation problems, duplicate demand, and unallocated quantities.*
 
 ---
 
 ## References
 
-- Microsoft Excel XLSX File Format — Used for workbook parsing and generation.
-- Manufacturing Scheduling and Production Planning principles — Inspired the capacity-aware scheduling approach used in the allocation engine.
+- [Vector GitHub repository](https://github.com/vijaykrishna68/Vector_UPDATE) — source code for the production scheduling application.
+- [Live Vector deployment](https://vector-update-403i.onrender.com/) — hosted production instance.
+- [Node.js test runner documentation](https://nodejs.org/api/test.html) — the built-in test runner used by the project.
+- [Render documentation](https://render.com/docs) — deployment platform used for the live service.
