@@ -6,6 +6,7 @@ import mdx from '@mdx-js/rollup'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import remarkGfm from 'remark-gfm'
+import { remarkContentImages } from './src/app/lib/mdx/remarkContentImages'
 
 function figmaAssetResolver() {
   return {
@@ -29,6 +30,7 @@ export default defineConfig({
           remarkFrontmatter,
           [remarkMdxFrontmatter, { name: 'frontmatter' }],
           remarkGfm,
+          remarkContentImages,
         ],
       }),
     },

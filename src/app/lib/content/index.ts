@@ -18,8 +18,6 @@ export type {
   SharedFrontmatter,
   Tag,
   Technology,
-  TechCategory,
-  GalleryImage,
   Project,
   JournalPost,
   PlaygroundItem,

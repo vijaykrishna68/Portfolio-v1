@@ -35,7 +35,7 @@ cover: "./cover.jpg"       # or absolute Unsplash URL
 coverAlt: "Description of the image"
 displayIndex: "04"         # Controls sort order: "01", "02", ...
 displayLayout: "default"   # or "flip" — which side the image sits on
-featured: false
+featured: false            # true = shown in the homepage "Selected Work" section
 ---
 ```
 
@@ -44,7 +44,14 @@ featured: false
 ```yaml
 role: "Backend Engineer"    # Your role on this project
 hook: "One punchy line summarising the project."
+links:
+  github: "https://github.com/you/repo"
+  live: "https://your-demo.com"
+  writeup: "https://your-writeup-or-blog-post"
+  caseStudy: "https://your-case-study"
 ```
+
+Any `links` entry you omit or leave as `""` simply doesn't render a button — only fill in the ones that apply.
 
 ### Body
 

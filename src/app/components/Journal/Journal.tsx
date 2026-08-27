@@ -9,8 +9,10 @@ import { getJournalPosts, getFeaturedJournalPost } from "../../lib/content";
 import { JournalCard } from "./JournalCard";
 
 export function Journal() {
-  const featured = getFeaturedJournalPost()!;
-  const rest = getJournalPosts().filter((post) => !post.featured);
+  const featured = getFeaturedJournalPost();
+  const rest = getJournalPosts().filter((post) => post.slug !== featured?.slug);
+
+  if (!featured) return null;
 
   return (
     <section id="journal" className="py-36 border-t border-border">

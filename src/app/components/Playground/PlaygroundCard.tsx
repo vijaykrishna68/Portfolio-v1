@@ -12,13 +12,15 @@ export function PlaygroundCard({ item, className }: PlaygroundCardProps) {
       to={`/playground/${item.slug}`}
       className={`relative group overflow-hidden bg-muted cursor-pointer ${className} md:min-h-0 min-h-[160px]`}
     >
-      <img
-        src={item.cover}
-        alt={item.title}
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
-      />
+      {item.cover && (
+        <img
+          src={item.cover}
+          alt={item.title}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+        />
+      )}
       <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/30 transition-colors duration-300" />
       <div className="absolute bottom-0 left-0 right-0 p-4">
         <span className="text-[9px] tracking-widest uppercase text-white/55 mb-1 block" style={{ fontFamily: "var(--font-mono)" }}>

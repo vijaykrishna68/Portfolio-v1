@@ -1,9 +1,8 @@
 ---
 type: project
-slug: vector-production-scheduling
 title: "Vector — Production Scheduling Platform"
 description: "A capacity-aware production scheduling platform that turns Excel-based manufacturing demand into validated, deterministic production plans."
-status: draft
+status: published
 publishedAt: "2026-05-27"
 tags: ["React","Vite","Tailwind CSS","Node.js","Express","MongoDB","Mongoose","xlsx","Render"]
 cover: "./cover.png"
@@ -14,7 +13,7 @@ technologies: ["React","Vite","Tailwind CSS","Node.js","Express","MongoDB","Mong
 impact: "Reduced workbook serialization time from ~75.6s to ~0.54s (~141× faster) while producing byte-identical output across 315,070 cells."
 displayIndex: "03"
 displayLayout: default
-featured: false
+featured: true
 links:
   github: "https://github.com/vijaykrishna68/Vector_UPDATE"
   live: "https://vector-update-403i.onrender.com/"
@@ -297,21 +296,6 @@ The next improvements should focus on known limitations rather than adding unrel
 - Add representative concurrent-usage and load-testing data before making claims about production scale.
 - Continue evaluating the `xlsx` dependency and its vulnerability status as upstream fixes become available.
 - Add more operational observability around allocation decisions and production runs.
-
----
-
-## Gallery
-
-{/* Cover image is automatic from frontmatter. Add supplemental images below. */}
-
-![Vector dashboard](./dashboard.png)
-*Production dashboard showing planning status, line capacity, and weekly demand.*
-
-![Weekly schedule](./schedule.png)
-*Weekly schedule view showing allocated production demand and capacity information.*
-
-![Issues panel](./issues.png)
-*Issues view surfacing validation problems, duplicate demand, and unallocated quantities.*
 
 ---
 

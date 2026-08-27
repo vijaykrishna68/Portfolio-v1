@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import type { Project, ContentWithMDX } from "./types";
 import { resolveAsset } from "./assets";
+import { isPublished, withoutFrontmatterSlug } from "./utils";
 
 type MDXModule = {
   default: ComponentType<{ components?: Record<string, ComponentType<any>> }>;
@@ -18,17 +19,11 @@ function loadAll(): ContentWithMDX<Project>[] {
 
     const item = {
       slug,
-      ...(mod.frontmatter as Omit<Project, "slug">),
+      ...(withoutFrontmatterSlug(mod.frontmatter) as Omit<Project, "slug">),
       Component: mod.default,
     } as ContentWithMDX<Project>;
 
     if (item.cover) item.cover = resolveAsset(item.cover, dir);
-    if (item.gallery) {
-      item.gallery = item.gallery.map((img) => ({
-        ...img,
-        src: resolveAsset(img.src, dir),
-      }));
-    }
 
     return item;
   });
@@ -37,7 +32,7 @@ function loadAll(): ContentWithMDX<Project>[] {
 /** All published projects in display order. */
 export function getProjects(): Project[] {
   return loadAll()
-    .filter((p) => p.status === "published")
+    .filter((p) => isPublished(p.status))
     .sort((a, b) => a.displayIndex.localeCompare(b.displayIndex));
 }
 
@@ -45,7 +40,7 @@ export function getProjects(): Project[] {
 export function getProjectBySlug(
   slug: string,
 ): ContentWithMDX<Project> | undefined {
-  return loadAll().find((p) => p.slug === slug && p.status === "published");
+  return loadAll().find((p) => p.slug === slug && isPublished(p.status));
 }
 
 /** Projects marked as featured, in display order. */

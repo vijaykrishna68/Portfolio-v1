@@ -4,12 +4,12 @@ import { Link } from "react-router";
 import { Container } from "../shared/Container";
 import { Reveal } from "../shared/Reveal";
 import { SectionLabel } from "../shared/SectionLabel";
-import { getProjects } from "../../lib/content";
+import { getFeaturedProjects } from "../../lib/content";
 
 import { ProjectCard } from "./ProjectCard";
 
 export function SelectedWork() {
-  const projects = getProjects();
+  const projects = getFeaturedProjects();
 
   return (
     <section id="work" className="py-36 border-t border-border">

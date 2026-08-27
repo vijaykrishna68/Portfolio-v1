@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import type { JournalPost, ContentWithMDX } from "./types";
 import { resolveAsset } from "./assets";
+import { isPublished, withoutFrontmatterSlug } from "./utils";
 
 type MDXModule = {
   default: ComponentType<{ components?: Record<string, ComponentType<any>> }>;
@@ -18,7 +19,7 @@ function loadAll(): ContentWithMDX<JournalPost>[] {
 
     const item = {
       slug,
-      ...(mod.frontmatter as Omit<JournalPost, "slug">),
+      ...(withoutFrontmatterSlug(mod.frontmatter) as Omit<JournalPost, "slug">),
       Component: mod.default,
     } as ContentWithMDX<JournalPost>;
 
@@ -31,7 +32,7 @@ function loadAll(): ContentWithMDX<JournalPost>[] {
 /** All published journal posts, sorted newest-first. */
 export function getJournalPosts(): JournalPost[] {
   return loadAll()
-    .filter((p) => p.status === "published")
+    .filter((p) => isPublished(p.status))
     .sort(
       (a, b) =>
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
@@ -42,10 +43,15 @@ export function getJournalPosts(): JournalPost[] {
 export function getJournalPost(
   slug: string,
 ): ContentWithMDX<JournalPost> | undefined {
-  return loadAll().find((p) => p.slug === slug && p.status === "published");
+  return loadAll().find((p) => p.slug === slug && isPublished(p.status));
 }
 
-/** The single post marked as featured. */
+/**
+ * The featured post — the newest published post marked `featured: true`,
+ * or (if none is) simply the newest published post, so the homepage always
+ * has something to show instead of crashing when the flag is missing.
+ */
 export function getFeaturedJournalPost(): JournalPost | undefined {
-  return loadAll().find((p) => p.featured && p.status === "published");
+  const published = getJournalPosts();
+  return published.find((p) => p.featured) ?? published[0];
 }

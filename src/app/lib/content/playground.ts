@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import type { PlaygroundItem, ContentWithMDX } from "./types";
 import { resolveAsset } from "./assets";
+import { isPublished, withoutFrontmatterSlug } from "./utils";
 
 type MDXModule = {
   default: ComponentType<{ components?: Record<string, ComponentType<any>> }>;
@@ -19,7 +20,7 @@ function loadAll(): ContentWithMDX<PlaygroundItem>[] {
 
     const item = {
       slug,
-      ...(mod.frontmatter as Omit<PlaygroundItem, "slug">),
+      ...(withoutFrontmatterSlug(mod.frontmatter) as Omit<PlaygroundItem, "slug">),
       Component: mod.default,
     } as ContentWithMDX<PlaygroundItem>;
 
@@ -31,7 +32,7 @@ function loadAll(): ContentWithMDX<PlaygroundItem>[] {
 
 /** All published playground items. */
 export function getPlaygroundItems(): PlaygroundItem[] {
-  return loadAll().filter((item) => item.status === "published");
+  return loadAll().filter((item) => isPublished(item.status));
 }
 
 /** Look up a single item by slug, paired with its MDX component. */
@@ -39,6 +40,6 @@ export function getPlaygroundItem(
   slug: string,
 ): ContentWithMDX<PlaygroundItem> | undefined {
   return loadAll().find(
-    (item) => item.slug === slug && item.status === "published",
+    (item) => item.slug === slug && isPublished(item.status),
   );
 }

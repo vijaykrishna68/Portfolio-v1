@@ -170,7 +170,8 @@ export default function ProjectDetail() {
       </section>
 
       {/* External links */}
-      {project.links && (project.links.github || project.links.live) && (
+      {project.links &&
+        (project.links.github || project.links.live || project.links.writeup || project.links.caseStudy) && (
         <section className="py-10 border-b border-border">
           <Container>
             <div className="max-w-2xl mx-auto flex flex-wrap gap-3">
@@ -192,6 +193,26 @@ export default function ProjectDetail() {
                   className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 border border-border text-foreground hover:border-[#68b1f5] hover:text-[#68b1f5] ${INTERACTION.border}`}
                 >
                   Live demo <ArrowUpRight size={12} />
+                </a>
+              )}
+              {project.links.writeup && (
+                <a
+                  href={project.links.writeup}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 border border-border text-foreground hover:border-[#68b1f5] hover:text-[#68b1f5] ${INTERACTION.border}`}
+                >
+                  Writeup <ArrowUpRight size={12} />
+                </a>
+              )}
+              {project.links.caseStudy && (
+                <a
+                  href={project.links.caseStudy}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 border border-border text-foreground hover:border-[#68b1f5] hover:text-[#68b1f5] ${INTERACTION.border}`}
+                >
+                  Case study <ArrowUpRight size={12} />
                 </a>
               )}
             </div>

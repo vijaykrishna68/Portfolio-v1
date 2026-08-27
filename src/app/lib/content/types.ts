@@ -39,18 +39,6 @@ export interface SharedFrontmatter {
 // Active content types
 // ─────────────────────────────────────────────────────────
 
-export interface TechCategory {
-  category: string;
-  items: Technology[];
-}
-
-export interface GalleryImage {
-  src: string;
-  alt: string;
-  caption?: string;
-  span?: "full" | "half";
-}
-
 /**
  * An engineering project entry.
  */
@@ -64,12 +52,9 @@ export interface Project extends SharedFrontmatter {
   coverAlt: string;
   displayIndex: string;                  // "01", "02" — controls sort order display
   displayLayout: "default" | "flip";    // Whether the cover image sits left or right
-  featured: boolean;
+  featured: boolean;                     // true = shown in the homepage "Selected Work" section
   hook?: string;                         // One-line tagline for the hero
   role?: string;                         // "Backend Engineer"
-  techStack?: TechCategory[];            // Grouped tech for the stack section
-  gallery?: GalleryImage[];              // Image grid with captions
-  nextProject?: { slug: string; title: string };
   links?: {
     github?: string;
     live?: string;
