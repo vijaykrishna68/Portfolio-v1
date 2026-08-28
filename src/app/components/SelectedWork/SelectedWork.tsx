@@ -9,7 +9,7 @@ import { getFeaturedProjects } from "../../lib/content";
 import { ProjectCard } from "./ProjectCard";
 
 export function SelectedWork() {
-  const projects = getFeaturedProjects();
+  const [primary, ...rest] = getFeaturedProjects();
 
   return (
     <section id="work" className="py-36 border-t border-border">
@@ -32,15 +32,23 @@ export function SelectedWork() {
           </Link>
         </div>
 
-        <div>
-          {projects.map((project, index) => (
-            <Reveal key={project.slug} delay={index * 80}>
-              <Link to={`/projects/${project.slug}`} className="block">
-                <ProjectCard project={project} isLast={index === projects.length - 1} />
+        {primary && (
+          <Reveal>
+            <Link to={`/projects/${primary.slug}`} className="block">
+              <ProjectCard project={primary} variant="dominant" />
+            </Link>
+          </Reveal>
+        )}
+
+        {rest.length > 0 && (
+          <Reveal delay={100} className="grid grid-cols-1 md:grid-cols-2 border-b border-border">
+            {rest.map((project) => (
+              <Link key={project.slug} to={`/projects/${project.slug}`} className="block">
+                <ProjectCard project={project} variant="compact" />
               </Link>
-            </Reveal>
-          ))}
-        </div>
+            ))}
+          </Reveal>
+        )}
       </Container>
     </section>
   );

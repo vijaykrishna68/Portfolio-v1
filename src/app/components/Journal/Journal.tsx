@@ -21,7 +21,7 @@ export function Journal() {
           <Reveal>
             <div>
               <SectionLabel>Engineering Journal</SectionLabel>
-              <h2 className="mt-3 max-w-[10ch] text-3xl md:text-4xl text-foreground leading-[1.08]" style={{ fontFamily: "var(--font-display)" }}>
+              <h2 className="mt-3 max-w-[10ch] text-display-section text-foreground leading-[1.08]" style={{ fontFamily: "var(--font-display)" }}>
                 Writing through ideas.
               </h2>
             </div>

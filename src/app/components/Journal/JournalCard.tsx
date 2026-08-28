@@ -31,8 +31,8 @@ export function JournalCard({ article, featured = false, className = "" }: Journ
         </div>
 
         <h3
-          className="text-foreground leading-[1.08] mb-4 group-hover/card:text-[#68b1f5] transition-colors duration-200 max-w-[13ch]"
-          style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.6rem, 3vw, 2.35rem)" }}
+          className="text-display-card text-foreground leading-[1.08] mb-4 group-hover/card:text-[#68b1f5] transition-colors duration-200 max-w-[13ch]"
+          style={{ fontFamily: "var(--font-display)" }}
         >
           {article.title}
         </h3>

@@ -6,14 +6,16 @@ status: published
 publishedAt: "2026-05-27"
 tags: ["React","Vite","Tailwind CSS","Node.js","Express","MongoDB","Mongoose","xlsx","Render"]
 cover: "./cover.png"
-coverAlt: "Vector production scheduling dashboard"
+coverAlt: "Vector production-line capacity and weekly allocation overview"
 year: "2026 – 2026"
 challenge: "Replace a manual Excel-based production planning workflow with a deterministic, capacity-aware scheduling system while preserving the planner's existing workbook workflow."
 technologies: ["React","Vite","Tailwind CSS","Node.js","Express","MongoDB","Mongoose","xlsx","node:test","Render"]
-impact: "Reduced workbook serialization time from ~75.6s to ~0.54s (~141× faster) while producing byte-identical output across 315,070 cells."
+impact: "Cut manual production allocation from 3 days to 30 minutes. A separate workbook-serialization fix also made schedule generation ~141× faster (~75.6s to ~0.54s), with byte-identical output verified across 315,070 cells."
 displayIndex: "03"
 displayLayout: default
 featured: true
+featuredIndex: "01"
+hook: "Turning a planner's Excel workbook into a deterministic, capacity-aware production schedule — without taking Excel away from them."
 links:
   github: "https://github.com/vijaykrishna68/Vector_UPDATE"
   live: "https://vector-update-403i.onrender.com/"
@@ -27,6 +29,14 @@ Production demand arrived as Excel workbooks containing parts, weekly quantities
 The real problem was not simply generating a schedule. It was making the scheduling process `repeatable`, `capacity-aware`, and `trustworthy` while preserving the Excel workflow planners already used.
 
 Vector was built to take the workbook from `upload → validation → normalization → allocation → persistence → review`, with failures and unallocated demand surfaced explicitly instead of disappearing inside a spreadsheet.
+
+---
+
+## Gallery
+
+![Vector dashboard showing allocated demand, capacity utilisation, and per-line status](./dashboard-overview.png)
+
+![Part-level allocation table for a single planning week, with per-day quantities and status](./allocation-table.png)
 
 ---
 

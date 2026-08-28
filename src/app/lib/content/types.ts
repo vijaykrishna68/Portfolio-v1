@@ -50,9 +50,13 @@ export interface Project extends SharedFrontmatter {
   impact: string;
   cover: string;
   coverAlt: string;
-  displayIndex: string;                  // "01", "02" — controls sort order display
+  displayIndex: string;                  // "01", "02" — controls sort order on /projects
   displayLayout: "default" | "flip";    // Whether the cover image sits left or right
   featured: boolean;                     // true = shown in the homepage "Selected Work" section
+  featuredIndex?: string;                // "01", "02" — order *within* Selected Work only;
+                                          // independent of displayIndex so picking the homepage's
+                                          // dominant project never reorders /projects. Falls back
+                                          // to displayIndex when omitted.
   hook?: string;                         // One-line tagline for the hero
   role?: string;                         // "Backend Engineer"
   links?: {

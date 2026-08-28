@@ -43,7 +43,14 @@ export function getProjectBySlug(
   return loadAll().find((p) => p.slug === slug && isPublished(p.status));
 }
 
-/** Projects marked as featured, in display order. */
+/**
+ * Projects marked as featured, ordered for the homepage "Selected Work"
+ * section specifically. Sorted by featuredIndex (falling back to
+ * displayIndex when unset) — a separate key from displayIndex so choosing
+ * Selected Work's dominant project never reorders /projects.
+ */
 export function getFeaturedProjects(): Project[] {
-  return getProjects().filter((p) => p.featured);
+  return getProjects()
+    .filter((p) => p.featured)
+    .sort((a, b) => (a.featuredIndex ?? a.displayIndex).localeCompare(b.featuredIndex ?? b.displayIndex));
 }

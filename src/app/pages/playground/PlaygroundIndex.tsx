@@ -35,18 +35,18 @@ export default function PlaygroundIndex() {
               to={`/playground/${item.slug}`}
               className="block group"
             >
-              <div className="relative overflow-hidden bg-muted aspect-[4/3]">
+              <div className="relative overflow-hidden bg-muted aspect-[4/3] border border-dashed border-transparent transition-[transform,border-color] duration-200 ease-out hover:z-10 hover:scale-[1.015] hover:-rotate-[0.4deg] hover:border-[#68b1f5]/45">
                 {item.cover && (
                   <img
                     src={item.cover}
                     alt={item.title}
                     loading="lazy"
                     decoding="async"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
                   />
                 )}
                 <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/30 transition-colors duration-300" />
-                <div className="absolute bottom-0 left-0 right-0 p-4">
+                <div className="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5">
                   <span
                     className="text-[9px] tracking-widest uppercase text-white/55 mb-1 block"
                     style={{ fontFamily: "var(--font-mono)" }}

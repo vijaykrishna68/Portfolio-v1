@@ -46,6 +46,16 @@ export default defineConfig({
     },
   },
 
+  // motion/react (Hero's tech-cluster animation) is only ever imported from
+  // inside the lazy-loaded Home route chunk, so Vite's cold-start dependency
+  // scan doesn't discover it until that chunk first loads — which triggers a
+  // dev-only re-optimize/reload that otherwise ends up with a duplicate React
+  // module instance ("Invalid hook call"). Pre-bundling it explicitly avoids
+  // that reload entirely.
+  optimizeDeps: {
+    include: ['motion/react'],
+  },
+
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
 })

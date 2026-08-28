@@ -3,8 +3,6 @@ import { Reveal } from "../shared/Reveal";
 import { SectionLabel } from "../shared/SectionLabel";
 import { aboutStats, PORTRAIT_SRC } from "../../content/site";
 
-import { TechStrip } from "./TechStrip";
-
 export function About() {
   return (
     <section id="about" className="py-36 border-t border-border">
@@ -14,7 +12,7 @@ export function About() {
           {/* Left column — portrait (if set) + quote */}
           <Reveal delay={0} className="lg:col-span-4">
             {PORTRAIT_SRC && (
-              <div className="mb-10 w-[78%] overflow-hidden rounded-[6px] bg-muted aspect-[3/4]">
+              <div className="mb-10 w-[78%] max-w-[300px] overflow-hidden rounded-[6px] bg-muted aspect-[3/4]">
                 <img
                   src={PORTRAIT_SRC}
                   alt="Portrait of Vijay Krishna"
@@ -27,10 +25,9 @@ export function About() {
             <SectionLabel>About</SectionLabel>
             <div className="mt-10">
               <p
-                className="text-foreground leading-[1.08] tracking-tight max-w-[11ch]"
+                className="text-display-quote text-foreground leading-[1.08] tracking-tight max-w-[11ch]"
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "clamp(1.9rem, 3.5vw, 3rem)",
                   fontStyle: "italic",
                 }}
               >
@@ -40,9 +37,9 @@ export function About() {
             <div className="mt-8 w-10 h-0.5 bg-[#ffdf60]" />
           </Reveal>
 
-          {/* Right column — bio + stats + tech strip */}
+          {/* Right column — bio + stats */}
           <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
-            <div className="space-y-5 text-[16px] text-foreground/80 leading-[1.75] max-w-[40rem]">
+            <div className="space-y-5 text-body text-foreground/80 leading-[1.75] max-w-[40rem]">
               <p>
                 I'm Vijay Krishna, a backend engineer based in Bengaluru, India. I care deeply
                 about building systems that are simple, correct, and maintainable — in roughly
@@ -50,8 +47,7 @@ export function About() {
               </p>
               <p>
                 My background is in distributed systems and API design. I've built pipelines that
-                process patient vitals in real-time, scheduling engines for factory floors, and
-                gateways serving millions of requests per day.
+                process patient vitals in real-time and scheduling engines for factory floors.
               </p>
               <p>
                 I think the best engineers are also good product thinkers. Code is a means, not an
@@ -73,8 +69,6 @@ export function About() {
                 </div>
               ))}
             </div>
-
-            <TechStrip />
           </Reveal>
 
         </div>

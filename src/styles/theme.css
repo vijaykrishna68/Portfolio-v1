@@ -43,6 +43,31 @@
   --sidebar-accent-foreground: #1a1714;
   --sidebar-border: rgba(26, 23, 20, 0.1);
   --sidebar-ring: #68b1f5;
+
+  /* ---- Redesign Phase 1: additive tokens, not yet consumed by any component ---- */
+
+  /* Type scale — values extracted verbatim from existing inline clamp()
+     declarations (Hero h1, JournalCard featured title, About quote), so
+     adopting these later moves nothing. --text-display-section documents
+     the text-3xl/md:text-4xl pattern already shared by every section heading. */
+  --text-display-hero: clamp(3.75rem, 10vw, 9rem);
+  --text-display-section: clamp(1.875rem, 1.5rem + 1.5vw, 2.25rem);
+  --text-display-card: clamp(1.6rem, 3vw, 2.35rem);
+  --text-display-quote: clamp(1.9rem, 3.5vw, 3rem);
+  --text-body: 1rem;
+  --text-body-lg: 1.0625rem;
+
+  /* Surface system — restrained elevation, no new blur/shadow default */
+  --surface-elevated: #f4f1ec;
+  --surface-glass: rgba(247, 245, 240, 0.55);
+  --border-subtle: rgba(26, 23, 20, 0.08);
+  --border-strong: rgba(26, 23, 20, 0.22);
+  --shadow-glow: 0 12px 28px rgba(79, 143, 214, 0.16);
+
+  /* Signal color — same value as the yellow already used in ProjectCard/About;
+     reserved strictly for impact/outcome markers, never decorative */
+  --signal: #ffdf60;
+  --signal-soft: rgba(255, 223, 96, 0.08);
 }
 
 .dark {
@@ -80,6 +105,15 @@
   --sidebar-accent-foreground: #ece9e4;
   --sidebar-border: rgba(236, 233, 228, 0.1);
   --sidebar-ring: #68b1f5;
+
+  /* ---- Redesign Phase 1: additive tokens (dark values) ---- */
+  --surface-elevated: #211d31;
+  --surface-glass: rgba(28, 25, 39, 0.55);
+  --border-subtle: rgba(236, 233, 228, 0.08);
+  --border-strong: rgba(236, 233, 228, 0.24);
+  --shadow-glow: 0 16px 32px rgba(127, 180, 238, 0.22);
+  --signal: #ffdf60;
+  --signal-soft: rgba(255, 223, 96, 0.1);
 }
 
 @theme inline {
@@ -124,6 +158,21 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ---- Redesign Phase 1: register new tokens as Tailwind utilities ---- */
+  --text-display-hero: var(--text-display-hero);
+  --text-display-section: var(--text-display-section);
+  --text-display-card: var(--text-display-card);
+  --text-display-quote: var(--text-display-quote);
+  --text-body: var(--text-body);
+  --text-body-lg: var(--text-body-lg);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-glass: var(--surface-glass);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --shadow-glow: var(--shadow-glow);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
 }
 
 @layer base {

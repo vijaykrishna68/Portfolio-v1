@@ -17,7 +17,7 @@ export function Timeline() {
 
           <Reveal delay={0} className="lg:col-span-3">
             <SectionLabel>Timeline</SectionLabel>
-            <h2 className="mt-3 max-w-[10ch] text-3xl md:text-4xl text-foreground leading-[1.08]" style={{ fontFamily: "var(--font-display)" }}>
+            <h2 className="mt-3 max-w-[10ch] text-display-section text-foreground leading-[1.08]" style={{ fontFamily: "var(--font-display)" }}>
               How I got here.
             </h2>
             <p className="mt-4 text-[14px] text-muted-foreground leading-[1.7] max-w-[20rem]">
@@ -27,11 +27,11 @@ export function Timeline() {
 
           <div className="lg:col-span-7 lg:col-start-5">
             <div className="relative">
-              <div className="absolute left-[7px] top-3 bottom-3 w-px bg-border" />
+              <div className="absolute left-[7px] top-3 bottom-3 w-px bg-border-subtle" />
               {timeline.map((item, index) => {
                 const isOpen = open === index;
                 return (
-                  <Reveal key={item.year} delay={index * 60}>
+                  <Reveal key={index} delay={index * 60}>
                     <TimelineItem
                       item={item}
                       isOpen={isOpen}

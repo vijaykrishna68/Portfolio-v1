@@ -90,7 +90,8 @@ export default function ProjectDetail() {
         </Container>
       </section>
 
-      {/* Cover */}
+      {/* Cover — the dominant (featuredIndex "01") project's cover is typically a wide
+          dashboard-style screenshot, so it gets a wider frame than the default 16:9. */}
       {project.cover && (
         <div className="border-b border-border bg-muted">
           <div className="max-w-5xl mx-auto">
@@ -99,7 +100,7 @@ export default function ProjectDetail() {
               alt={project.coverAlt ?? project.title}
               loading="lazy"
               decoding="async"
-              className="w-full aspect-[16/9] object-cover"
+              className={`w-full object-cover ${project.featuredIndex === "01" ? "aspect-[9/4]" : "aspect-[16/9]"}`}
             />
           </div>
         </div>
@@ -121,15 +122,17 @@ export default function ProjectDetail() {
               </p>
             </div>
             <div className="md:col-span-2">
-              <p
-                className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1.5"
-                style={{ fontFamily: "var(--font-mono)" }}
-              >
-                Impact
-              </p>
-              <p className="text-[14px] text-foreground font-medium leading-snug">
-                {project.impact}
-              </p>
+              <div className="p-5 border border-signal/30 bg-signal-soft">
+                <p
+                  className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1.5"
+                  style={{ fontFamily: "var(--font-mono)" }}
+                >
+                  Impact
+                </p>
+                <p className="text-[14px] text-foreground font-medium leading-snug">
+                  {project.impact}
+                </p>
+              </div>
             </div>
           </div>
         </Container>
@@ -158,7 +161,7 @@ export default function ProjectDetail() {
               {project.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="px-2.5 py-1 text-[11px] border border-border text-muted-foreground"
+                  className={`px-2.5 py-1 text-[11px] border border-border text-muted-foreground hover:border-[#68b1f5] hover:bg-[rgba(104,177,245,0.06)] ${INTERACTION.border}`}
                   style={{ fontFamily: "var(--font-mono)" }}
                 >
                   {tech}

@@ -60,7 +60,7 @@ export default function JournalDetail() {
               {post.title}
             </h1>
 
-            <p className="text-[16px] text-muted-foreground leading-relaxed">
+            <p className="text-body text-muted-foreground leading-relaxed">
               {post.excerpt}
             </p>
           </div>
