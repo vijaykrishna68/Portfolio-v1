@@ -98,7 +98,7 @@ function DefaultCard({ project, isLast }: { project: Project; isLast: boolean })
         <div className={`lg:col-span-7 ${project.displayLayout === "flip" ? "lg:order-1" : "lg:order-2"} overflow-hidden`}>
           <div
             className={`relative overflow-hidden bg-muted border border-border group-hover/card:border-[#68b1f5]/30 ${
-              project.featuredIndex === "01" ? "aspect-[9/4]" : "aspect-[16/10]"
+              project.featuredIndex === "01" ? "aspect-[16/9]" : "aspect-[16/10]"
             }`}
           >
             <img
@@ -125,7 +125,7 @@ function DominantCard({ project }: { project: Project }) {
         <IndexMeta project={project} showIndex={false} />
       </div>
 
-      <div className="relative overflow-hidden bg-muted aspect-[9/4] border border-border group-hover/card:border-[#68b1f5]/30 group-hover/card:shadow-glow transition-shadow duration-300">
+      <div className="relative overflow-hidden bg-muted aspect-[16/9] border border-border group-hover/card:border-[#68b1f5]/30 group-hover/card:shadow-glow transition-shadow duration-300">
         <img
           src={project.cover}
           alt={project.coverAlt}

@@ -90,8 +90,7 @@ export default function ProjectDetail() {
         </Container>
       </section>
 
-      {/* Cover — the dominant (featuredIndex "01") project's cover is typically a wide
-          dashboard-style screenshot, so it gets a wider frame than the default 16:9. */}
+      {/* Cover */}
       {project.cover && (
         <div className="border-b border-border bg-muted">
           <div className="max-w-5xl mx-auto">
@@ -100,7 +99,7 @@ export default function ProjectDetail() {
               alt={project.coverAlt ?? project.title}
               loading="lazy"
               decoding="async"
-              className={`w-full object-cover ${project.featuredIndex === "01" ? "aspect-[9/4]" : "aspect-[16/9]"}`}
+              className="w-full object-cover aspect-[16/9]"
             />
           </div>
         </div>
