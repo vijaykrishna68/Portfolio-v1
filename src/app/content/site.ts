@@ -3,9 +3,9 @@ import { FileText, Github, Linkedin, Mail } from "lucide-react";
 import type { AboutStat, CurrentlyStatusItem, SocialLink } from "../types/portfolio";
 
 export const aboutStats = [
-  { label: "Languages", value: "Go · Python · Rust" },
+  { label: "Languages", value: "TypeScript · Next.js · Python" },
   { label: "Currently reading", value: "DDIA, 2nd Ed." },
-  { label: "Based in", value: "Bengaluru, India" },
+  { label: "Based in", value: "Chennai / Bangalore, India" },
 ] satisfies readonly AboutStat[];
 
 export const CURRENTLY_ITEMS = [
@@ -15,7 +15,7 @@ export const CURRENTLY_ITEMS = [
   { label: "Currently reading", value: "Designing Data Intensive Applications" },
 ] satisfies readonly CurrentlyStatusItem[];
 
-export const CONTACT_EMAIL = "vijaykrishna.officialid@gmail.com";
+export const CONTACT_EMAIL = "vijaykrishna.dev.in@gmail.com";
 
 // Portrait image shown beside the About text on desktop.
 // Place your photo at public/portrait.jpg and set this to "/portrait.jpg".

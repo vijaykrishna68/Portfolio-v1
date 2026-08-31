@@ -41,7 +41,7 @@ export function About() {
           <Reveal delay={80} className="lg:col-span-6 lg:col-start-7">
             <div className="space-y-5 text-body text-foreground/80 leading-[1.75] max-w-[40rem]">
               <p>
-                I'm Vijay Krishna, a backend engineer based in Bengaluru, India. I care deeply
+                I'm Vijay Krishna, a backend engineer based in Chennai / Bangalore, India. I care deeply
                 about building systems that are simple, correct, and maintainable — in roughly
                 that order.
               </p>

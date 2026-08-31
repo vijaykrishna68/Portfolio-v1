@@ -4,7 +4,24 @@
 // One source of truth so the icon set and the "what I work with" list never
 // drift apart between components.
 
-export type TechId = "js" | "ts" | "react" | "node" | "postgres" | "mongo" | "tailwind" | "git";
+export type TechId =
+  | "js"
+  | "ts"
+  | "react"
+  | "node"
+  | "postgres"
+  | "mongo"
+  | "tailwind"
+  | "git"
+  | "claude"
+  | "chatgpt"
+  | "notion"
+  | "docker"
+  | "postman"
+  | "nextjs"
+  | "framer"
+  | "figma"
+  | "supabase";
 
 function IconJS({ size }: { size: number }) {
   return (
@@ -86,6 +103,98 @@ function IconGit({ size }: { size: number }) {
   );
 }
 
+function IconClaude({ size }: { size: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+      <line x1="12" y1="3" x2="12" y2="9" />
+      <line x1="12" y1="15" x2="12" y2="21" />
+      <line x1="3" y1="12" x2="9" y2="12" />
+      <line x1="15" y1="12" x2="21" y2="12" />
+      <line x1="5.6" y1="5.6" x2="9.5" y2="9.5" />
+      <line x1="14.5" y1="14.5" x2="18.4" y2="18.4" />
+      <line x1="18.4" y1="5.6" x2="14.5" y2="9.5" />
+      <line x1="9.5" y1="14.5" x2="5.6" y2="18.4" />
+    </svg>
+  );
+}
+
+function IconChatGPT({ size }: { size: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden fill="none" stroke="currentColor" strokeWidth="1.4">
+      <circle cx="9" cy="9.5" r="4.5" />
+      <circle cx="15" cy="9.5" r="4.5" />
+      <circle cx="12" cy="15" r="4.5" />
+    </svg>
+  );
+}
+
+function IconNotion({ size }: { size: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="2.5" fillOpacity="0.1" fill="currentColor" />
+      <path d="M7 7v10M7 7l10 10M17 7v10" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconDocker({ size }: { size: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round">
+      <rect x="3.5" y="11" width="4" height="4" />
+      <rect x="8.5" y="11" width="4" height="4" />
+      <rect x="8.5" y="6" width="4" height="4" />
+      <rect x="13.5" y="11" width="4" height="4" />
+      <path d="M2 15c0 3.5 2.5 5.5 6.5 5.5h5c4 0 7.5-2 8.5-5.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconPostman({ size }: { size: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="10" cy="10" r="7" />
+      <line x1="15" y1="15" x2="21" y2="21" />
+      <circle cx="10" cy="10" r="2.2" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function IconNextjs({ size }: { size: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden fill="none" stroke="currentColor" strokeWidth="1.4">
+      <circle cx="12" cy="12" r="9.5" />
+      <path d="M8.5 8v8M8.5 8l7 8M15.5 10v6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconFramer({ size }: { size: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round">
+      <path d="M6 3h12v6.5H12L6 3z" />
+      <path d="M6 9.5h6l6 6.5H12v5l-6-6.5v-5z" />
+    </svg>
+  );
+}
+
+function IconFigma({ size }: { size: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round">
+      <path d="M9 2h3a3 3 0 010 6H9V2z" />
+      <path d="M9 8h3a3 3 0 010 6H9V8z" />
+      <circle cx="12" cy="17" r="3" />
+    </svg>
+  );
+}
+
+function IconSupabase({ size }: { size: number }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} aria-hidden fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" strokeLinecap="round">
+      <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" />
+    </svg>
+  );
+}
+
 export type Technology = {
   id: TechId;
   name: string;
@@ -104,4 +213,13 @@ export const TECHNOLOGIES: Technology[] = [
   { id: "mongo", name: "MongoDB", icon: (s) => <IconMongo size={s} /> },
   { id: "tailwind", name: "Tailwind", icon: (s) => <IconTailwind size={s} /> },
   { id: "git", name: "Git", icon: (s) => <IconGit size={s} /> },
+  { id: "claude", name: "Claude", icon: (s) => <IconClaude size={s} /> },
+  { id: "chatgpt", name: "ChatGPT", icon: (s) => <IconChatGPT size={s} /> },
+  { id: "notion", name: "Notion", icon: (s) => <IconNotion size={s} /> },
+  { id: "docker", name: "Docker", icon: (s) => <IconDocker size={s} /> },
+  { id: "postman", name: "Postman", icon: (s) => <IconPostman size={s} /> },
+  { id: "nextjs", name: "Next.js", icon: (s) => <IconNextjs size={s} /> },
+  { id: "framer", name: "Framer Motion", icon: (s) => <IconFramer size={s} /> },
+  { id: "figma", name: "Figma", icon: (s) => <IconFigma size={s} /> },
+  { id: "supabase", name: "Supabase", icon: (s) => <IconSupabase size={s} /> },
 ];

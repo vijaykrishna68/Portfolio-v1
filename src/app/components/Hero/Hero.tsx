@@ -22,11 +22,11 @@ export function Hero() {
               fontSize: "clamp(3.75rem, 10vw, 9rem)",
             }}
           >
-            <span className="inline-block text-foreground group-hover:text-[#68b1f5] transition-colors duration-700 ease-in-out">
+            <span className="inline-block text-foreground [@media(hover:none)]:text-[#68b1f5] group-hover:text-[#68b1f5] transition-colors duration-700 ease-in-out">
               Vijay
             </span>
             <br />
-            <span className="inline-block text-foreground group-hover:text-[#ffdf60] transition-colors duration-700 ease-in-out delay-75">
+            <span className="inline-block text-foreground [@media(hover:none)]:text-[#ffdf60] group-hover:text-[#ffdf60] transition-colors duration-700 ease-in-out delay-75">
               Krishna.
             </span>
           </h1>
@@ -41,11 +41,11 @@ export function Hero() {
           <HeroStatus />
 
           <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-muted-foreground text-[13px]" style={{ fontFamily: "var(--font-mono)" }}>
-            <span>Backend Engineer</span>
+            <span>Full Stack Engineer</span>
             <span className="text-[#68b1f5]">·</span>
-            <span>Product Builder</span>
+            <span>Pragmatic Developer</span>
             <span className="text-[#68b1f5]">·</span>
-            <span>Design Enthusiast</span>
+            <span>Open to Freelance Work</span>
           </div>
 
           <div className="mt-12 flex items-center gap-3 flex-wrap">
