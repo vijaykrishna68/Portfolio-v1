@@ -1,4 +1,4 @@
-import{j as n}from"./index-DOU67Ldo.js";import{i as o,w as h,r as p}from"./assets-36Ci423h.js";const u={type:"project",title:"Clinical Data Pipeline",description:"HIPAA-compliant ingestion pipeline for a healthtech startup, aggregating patient vitals from 12 IoT device types into a unified API consumed by clinicians and ML models in real time.",status:"published",publishedAt:"2023-06-01",tags:["Python","FastAPI","Apache Kafka","TimescaleDB","Docker"],year:"2022 – 2023",challenge:"Event sourcing architecture that supports historical replay for model training while maintaining the strict audit trail required for FDA compliance — without sacrificing real-time latency.",technologies:["Python","FastAPI","Apache Kafka","TimescaleDB","Docker"],impact:"Data latency dropped from 45 minutes to under 8 seconds for 1,200 daily active patients.",cover:"https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1400&h=900&fit=crop&auto=format&q=80",coverAlt:"Healthcare technology interface showing patient data",displayIndex:"02",displayLayout:"flip",featured:!0,featuredIndex:"03",role:"Backend Engineer",hook:"Every second of latency between a patient's heartbeat and a clinician's screen is a second of diagnostic blindness."};function r(i){const e={code:"code",h2:"h2",p:"p",strong:"strong",...i.components};return n.jsxs(n.Fragment,{children:[n.jsx(e.h2,{children:"Problem"}),`
+import{j as n}from"./index-CmiUiDbz.js";import{i as o,w as h,r as p}from"./assets-BldAag6z.js";const u={type:"project",title:"Clinical Data Pipeline",description:"HIPAA-compliant ingestion pipeline for a healthtech startup, aggregating patient vitals from 12 IoT device types into a unified API consumed by clinicians and ML models in real time.",status:"published",publishedAt:"2023-06-01",tags:["Python","FastAPI","Apache Kafka","TimescaleDB","Docker"],year:"2022 – 2023",challenge:"Event sourcing architecture that supports historical replay for model training while maintaining the strict audit trail required for FDA compliance — without sacrificing real-time latency.",technologies:["Python","FastAPI","Apache Kafka","TimescaleDB","Docker"],impact:"Data latency dropped from 45 minutes to under 8 seconds for 1,200 daily active patients.",cover:"https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1400&h=900&fit=crop&auto=format&q=80",coverAlt:"Healthcare technology interface showing patient data",displayIndex:"02",displayLayout:"flip",featured:!0,featuredIndex:"03",role:"Backend Engineer",hook:"Every second of latency between a patient's heartbeat and a clinician's screen is a second of diagnostic blindness."};function a(i){const e={code:"code",h2:"h2",p:"p",strong:"strong",...i.components};return n.jsxs(n.Fragment,{children:[n.jsx(e.h2,{children:"Problem"}),`
 `,n.jsx(e.p,{children:"The startup had 12 different IoT device types reporting patient vitals. Each device had its own binary protocol, its own clock drift characteristics, its own failure modes. The existing pipeline collected data on a 45-minute polling cycle — fine for long-term trend analysis, dangerous for real-time monitoring."}),`
 `,n.jsx(e.p,{children:"Clinicians needed data within 10 seconds. ML models needed three years of historical data in a consistent format. The FDA required an immutable audit trail of every data transformation. These three requirements were in direct tension with each other."}),`
 `,n.jsx(e.h2,{children:"Architecture"}),`
@@ -12,30 +12,14 @@ import{j as n}from"./index-DOU67Ldo.js";import{i as o,w as h,r as p}from"./asset
 `,n.jsx(e.p,{children:"HIPAA required that PHI (patient health information) never appear in logs, metrics, or error messages. We wrote a custom Python logging filter that strips fields in a configured PHI field list before any log record is emitted. Prometheus metrics carry patient count but never patient identifiers."}),`
 `,n.jsx(e.h2,{children:"Lessons Learned"}),`
 `,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Clock drift is the enemy."})," Seven of twelve device types had clocks that drifted by up to 90 seconds per hour under heavy load. Naively trusting device timestamps would have made vitals appear to arrive in the wrong order. The Kalman filter took two weeks to tune correctly and made the data trustworthy."]}),`
-`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Event sourcing is only as good as your schema evolution story."})," Halfway through the project, one device type changed its packet structure in a firmware update. Because we stored the raw binary payload, we could replay historical events through a new adapter and backfill the normalization. Without that, we would have had a two-week gap in training data."]})]})}function m(i={}){const{wrapper:e}=i.components||{};return e?n.jsx(e,{...i,children:n.jsx(r,{...i})}):r(i)}const x=Object.freeze(Object.defineProperty({__proto__:null,default:m,frontmatter:u},Symbol.toStringTag,{value:"Module"})),g={type:"project",title:"Manufacturing Intelligence Platform",description:"A real-time production scheduling system that replaced manual Excel-based workflows across three factory floors. Processes 50,000+ scheduling events daily with sub-100ms response times.",status:"published",publishedAt:"2022-12-01",tags:["Go","PostgreSQL","Redis","gRPC","React"],year:"2021 – 2022",challenge:"Modeling complex constraint satisfaction — machines with maintenance windows, operators with shift constraints, materials with lead times — into a scheduling algorithm production managers could actually trust.",technologies:["Go","PostgreSQL","Redis","gRPC","React"],impact:"73% reduction in scheduling conflicts. 14 hours/week of manual replanning eliminated.",cover:"https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1400&h=900&fit=crop&auto=format&q=80",coverAlt:"Software engineer working on industrial scheduling system",displayIndex:"01",displayLayout:"default",featured:!0,featuredIndex:"02",role:"Backend Engineer",hook:"Replacing Excel chaos with constraint-satisfaction scheduling on the factory floor."};function a(i){const e={em:"em",h2:"h2",p:"p",strong:"strong",...i.components};return n.jsxs(n.Fragment,{children:[n.jsx(e.h2,{children:"Problem"}),`
-`,n.jsx(e.p,{children:"Three factory floors. Three production managers. Three separate Excel spreadsheets, reconciled manually every morning at 6 AM."}),`
-`,n.jsx(e.p,{children:"When a machine broke down or a raw material shipment came in late, someone had to open all three files, cross-reference operator shift schedules, check machine maintenance windows, and redistribute work by hand. On a good day this took 90 minutes. On a bad day, the 6 AM reconciliation ran until noon — and production had already started on the wrong schedule."}),`
-`,n.jsx(e.p,{children:"The business case was obvious. The technical challenge was not."}),`
-`,n.jsx(e.h2,{children:"Architecture"}),`
-`,n.jsxs(e.p,{children:["The core problem is a variant of the ",n.jsx(e.strong,{children:"Job Shop Scheduling Problem"})," — provably NP-hard in the general case. We didn't need an optimal solution. We needed a ",n.jsx(e.em,{children:"good enough"})," solution, fast, with explanations that production managers could actually understand and override."]}),`
-`,n.jsx(e.p,{children:"We built a two-phase system:"}),`
-`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Phase 1 — Constraint evaluation."})," A Go service consumes a stream of events (machine status, operator clock-ins, material arrivals) via Kafka and maintains a materialized view of current floor state in Redis. Each event triggers a constraint re-evaluation pass: which jobs can still run, on which machines, with which operators."]}),`
-`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Phase 2 — Schedule generation."})," A greedy backtracking algorithm generates candidate schedules against the current constraint set. Redis sorted sets let us rank machines by availability with O(log N) lookups. gRPC streams push schedule updates to the React dashboard in real time."]}),`
-`,n.jsx(e.h2,{children:"Technical Decisions"}),`
-`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Why Go?"})," The constraint evaluator runs on every incoming event. At 50K events/day the performance headroom matters less than I thought — but the goroutine model made it trivial to parallelize constraint evaluation across machines."]}),`
-`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Why backtracking over OR-Tools?"}),` We evaluated Google's OR-Tools constraint programming library. It produces better schedules. It also produced schedules that production managers couldn't follow. Backtracking with a fixed priority order gives worse schedules but the explanation is always the same: "higher-priority jobs run first, maintenance windows are respected." Operators trusted it.`]}),`
-`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Why not CQRS all the way down?"})," The write path (event log) and read path (materialized schedule view) are separated, but the schedule generation reads directly from the materialized view rather than replaying the event log. Replaying 50K events to generate one schedule on every request was too slow. Eventual consistency with a 2-second lag was an acceptable tradeoff."]}),`
-`,n.jsx(e.h2,{children:"Lessons Learned"}),`
-`,n.jsxs(e.p,{children:["The hardest part of this project wasn't the algorithm. It was the ",n.jsx(e.strong,{children:"interface between the algorithm's output and production manager expectations"}),"."]}),`
-`,n.jsx(e.p,{children:`Early prototype: the algorithm generated a schedule. Production managers said "this is wrong" and did it manually. We added a diff view showing what changed and why. Production managers said "this is still wrong." We added overrides. They started using overrides to express constraints the algorithm didn't know about — machine X always runs hot in the afternoon so it should run lighter jobs then.`}),`
-`,n.jsxs(e.p,{children:["We ended up building a ",n.jsx(e.strong,{children:"constraint capture UI"})," where overrides became named rules. The algorithm got better. Overrides decreased. The lesson: the model of the problem was incomplete, and the only way to complete it was to give users a way to express what the model missed."]})]})}function j(i={}){const{wrapper:e}=i.components||{};return e?n.jsx(e,{...i,children:n.jsx(a,{...i})}):a(i)}const f=Object.freeze(Object.defineProperty({__proto__:null,default:j,frontmatter:g},Symbol.toStringTag,{value:"Module"})),w="/assets/dashboard-overview-BFF71gH6.png",y="/assets/allocation-table-CVXcbGc8.png",b={type:"project",title:"Vector — Production Scheduling Platform",description:"A capacity-aware production scheduling platform that turns Excel-based manufacturing demand into validated, deterministic production plans.",status:"published",publishedAt:"2026-05-27",tags:["React","Vite","Tailwind CSS","Node.js","Express","MongoDB","Mongoose","xlsx","Render"],cover:"./cover.png",coverAlt:"Vector production-line capacity and weekly allocation overview",year:"2026 – 2026",challenge:"Replace a manual Excel-based production planning workflow with a deterministic, capacity-aware scheduling system while preserving the planner's existing workbook workflow.",technologies:["React","Vite","Tailwind CSS","Node.js","Express","MongoDB","Mongoose","xlsx","node:test","Render"],impact:"Cut manual production allocation from 3 days to 30 minutes. A separate workbook-serialization fix also made schedule generation ~141× faster (~75.6s to ~0.54s), with byte-identical output verified across 315,070 cells.",displayIndex:"03",displayLayout:"default",featured:!0,featuredIndex:"01",hook:"Turning a planner's Excel workbook into a deterministic, capacity-aware production schedule — without taking Excel away from them.",links:{github:"https://github.com/vijaykrishna68/Vector_UPDATE",live:"https://vector-update-403i.onrender.com/",writeup:""}};function s(i){const e={a:"a",code:"code",h2:"h2",h3:"h3",hr:"hr",img:"img",li:"li",p:"p",pre:"pre",ul:"ul",...i.components};return n.jsxs(n.Fragment,{children:[n.jsx(e.h2,{children:"Problem"}),`
+`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Event sourcing is only as good as your schema evolution story."})," Halfway through the project, one device type changed its packet structure in a firmware update. Because we stored the raw binary payload, we could replay historical events through a new adapter and backfill the normalization. Without that, we would have had a two-week gap in training data."]})]})}function m(i={}){const{wrapper:e}=i.components||{};return e?n.jsx(e,{...i,children:n.jsx(a,{...i})}):a(i)}const x=Object.freeze(Object.defineProperty({__proto__:null,default:m,frontmatter:u},Symbol.toStringTag,{value:"Module"})),g="/assets/dashboard-overview-BFF71gH6.png",f="/assets/allocation-table-CVXcbGc8.png",j={type:"project",title:"Vector — Production Scheduling Platform",description:"A capacity-aware production scheduling platform that turns Excel-based manufacturing demand into validated, deterministic production plans.",status:"published",publishedAt:"2026-05-27",tags:["React","Vite","Tailwind CSS","Node.js","Express","MongoDB","Mongoose","xlsx","Render"],cover:"./cover.png",coverAlt:"Vector production-line capacity and weekly allocation overview",year:"2026 – 2026",challenge:"Replace a manual Excel-based production planning workflow with a deterministic, capacity-aware scheduling system while preserving the planner's existing workbook workflow.",technologies:["React","Vite","Tailwind CSS","Node.js","Express","MongoDB","Mongoose","xlsx","node:test","Render"],impact:"Cut manual production allocation from 3 days to 30 minutes. A separate workbook-serialization fix also made schedule generation ~141× faster (~75.6s to ~0.54s), with byte-identical output verified across 315,070 cells.",displayIndex:"03",displayLayout:"default",featured:!0,featuredIndex:"01",hook:"Turning a planner's Excel workbook into a deterministic, capacity-aware production schedule — without taking Excel away from them.",links:{github:"https://github.com/vijaykrishna68/Vector_UPDATE",live:"https://vector-update-403i.onrender.com/",writeup:""}};function s(i){const e={a:"a",code:"code",h2:"h2",h3:"h3",hr:"hr",img:"img",li:"li",p:"p",pre:"pre",ul:"ul",...i.components};return n.jsxs(n.Fragment,{children:[n.jsx(e.h2,{children:"Problem"}),`
 `,n.jsx(e.p,{children:"Production demand arrived as Excel workbooks containing parts, weekly quantities, production-line assignments, cycle times, and working-day information. Turning that demand into a production plan required handling capacity, allocation priorities, fallback rules, and exceptions without silently overcommitting a line."}),`
 `,n.jsxs(e.p,{children:["The real problem was not simply generating a schedule. It was making the scheduling process ",n.jsx(e.code,{children:"repeatable"}),", ",n.jsx(e.code,{children:"capacity-aware"}),", and ",n.jsx(e.code,{children:"trustworthy"})," while preserving the Excel workflow planners already used."]}),`
 `,n.jsxs(e.p,{children:["Vector was built to take the workbook from ",n.jsx(e.code,{children:"upload → validation → normalization → allocation → persistence → review"}),", with failures and unallocated demand surfaced explicitly instead of disappearing inside a spreadsheet."]}),`
 `,n.jsx(e.hr,{}),`
 `,n.jsx(e.h2,{children:"Gallery"}),`
-`,n.jsx(e.p,{children:n.jsx(e.img,{src:w,alt:"Vector dashboard showing allocated demand, capacity utilisation, and per-line status"})}),`
-`,n.jsx(e.p,{children:n.jsx(e.img,{src:y,alt:"Part-level allocation table for a single planning week, with per-day quantities and status"})}),`
+`,n.jsx(e.p,{children:n.jsx(e.img,{src:g,alt:"Vector dashboard showing allocated demand, capacity utilisation, and per-line status"})}),`
+`,n.jsx(e.p,{children:n.jsx(e.img,{src:f,alt:"Part-level allocation table for a single planning week, with per-day quantities and status"})}),`
 `,n.jsx(e.hr,{}),`
 `,n.jsx(e.h2,{children:"Background"}),`
 `,n.jsx(e.p,{children:"Vector is an end-to-end production scheduling application built around a manufacturing planning workflow."}),`
@@ -228,4 +212,162 @@ import{j as n}from"./index-DOU67Ldo.js";import{i as o,w as h,r as p}from"./asset
 `,n.jsxs(e.li,{children:[n.jsx(e.a,{href:"https://vector-update-403i.onrender.com/",children:"Live Vector deployment"})," — hosted production instance."]}),`
 `,n.jsxs(e.li,{children:[n.jsx(e.a,{href:"https://nodejs.org/api/test.html",children:"Node.js test runner documentation"})," — the built-in test runner used by the project."]}),`
 `,n.jsxs(e.li,{children:[n.jsx(e.a,{href:"https://render.com/docs",children:"Render documentation"})," — deployment platform used for the live service."]}),`
-`]})]})}function v(i={}){const{wrapper:e}=i.components||{};return e?n.jsx(e,{...i,children:n.jsx(s,{...i})}):s(i)}const k=Object.freeze(Object.defineProperty({__proto__:null,default:v,frontmatter:b},Symbol.toStringTag,{value:"Module"})),T=Object.assign({"/content/projects/clinical-data-pipeline/index.mdx":x,"/content/projects/manufacturing-intelligence-platform/index.mdx":f,"/content/projects/production-line-scheduling-system/index.mdx":k});function l(){return Object.entries(T).map(([i,e])=>{const d=i.split("/")[3],c=i.substring(0,i.lastIndexOf("/")),t={slug:d,...h(e.frontmatter),Component:e.default};return t.cover&&(t.cover=p(t.cover,c)),t})}function P(){return l().filter(i=>o(i.status)).sort((i,e)=>i.displayIndex.localeCompare(e.displayIndex))}function D(i){return l().find(e=>e.slug===i&&o(e.status))}function E(){return P().filter(i=>i.featured).sort((i,e)=>(i.featuredIndex??i.displayIndex).localeCompare(e.featuredIndex??e.displayIndex))}export{P as a,D as b,E as g};
+`]})]})}function y(i={}){const{wrapper:e}=i.components||{};return e?n.jsx(e,{...i,children:n.jsx(s,{...i})}):s(i)}const b=Object.freeze(Object.defineProperty({__proto__:null,default:y,frontmatter:j},Symbol.toStringTag,{value:"Module"})),w="/assets/hero-qYy664OX.png",v="/assets/payment-step-BwXahb2i.png",k="/assets/confirmation-step-LEoSlcXs.png",T={type:"project",title:"S1P Charity - Official Website",description:"Sacrifice One Pizza, A donation flow built around a simple idea — small individual contributions becoming a collective whole — implemented with a dependency-free signature animation, a purpose-scoped state architecture, and accessibility fixes verified through direct testing.",status:"published",publishedAt:"2026-08-29",tags:["React","TypeScript","Tailwind CSS","Accessibility","UX Engineering"],cover:"./cover.png",coverAlt:"The Sacrifice One Pizza hero section, showing the Gathering Point animation and the primary donation call to action",year:"2026",challenge:"Model a four-step donation flow (amount, UPI payment, confirmation, screenshot upload) with clear, independently-testable state boundaries, and pair it with a lightweight, library-free signature animation — without treating accessibility as a final checklist pass.",technologies:["React","TypeScript","Tailwind CSS","Vite","qrcode.react"],impact:"Portfolio project, not live for real donations. Production bundle verified at ~83KB JS / ~15KB CSS gzipped against the deployed build.",displayIndex:"01",displayLayout:"default",featured:!0,featuredIndex:"02",links:{github:"https://github.com/vijaykrishna68/S1P",live:"https://sacrifice-one-pizza-f2z5fkqy2-vijaykrishna68s-projects.vercel.app",writeup:"",caseStudy:""}};function r(i){const e={a:"a",code:"code",em:"em",h2:"h2",h3:"h3",hr:"hr",img:"img",li:"li",p:"p",pre:"pre",strong:"strong",ul:"ul",...i.components};return n.jsxs(n.Fragment,{children:[n.jsx(e.h2,{children:"Problem"}),`
+`,n.jsx(e.p,{children:`Most informal UPI donation pages are a single static QR code with no
+confirmation step, or a form that quietly implies the payment has been
+verified when nothing on the page could possibly know that. Sacrifice One
+Pizza starts from a simple behavioral premise — what you'd spend on one pizza
+(₹300–₹3000) can instead fund someone's education or essential needs — and
+had to turn that into an honest donation flow: show the donor exactly how to
+pay, let them pay in their own UPI app, and collect proof of payment without
+ever claiming to verify a transaction the site has no access to.`}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"Background"}),`
+`,n.jsx(e.p,{children:`Built as a portfolio project from a product brief and design spec (target
+amounts, UPI-only payment, a warm and editorial tone rather than a
+guilt-driven one). There's no payment gateway integration and no backend —
+UPI supports peer-to-peer QR/deep-link payments without one, which shaped the
+entire flow around "donor pays externally, then confirms" rather than an
+in-page checkout. Designed and built solo, end to end.`}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"Constraints"}),`
+`,n.jsx(e.p,{children:`No payment gateway meant no server-side confirmation was possible, and the
+UI could never imply otherwise. Donation amounts had to be user-entered
+rather than preset buttons, valid only in a ₹300–₹3000 UPI range. The
+signature hero effect had to stay SVG/CSS only — no animation library, no
+canvas — to keep it lightweight. And accessibility couldn't be a final pass:
+it had to hold up to actually testing keyboard and focus behavior, not just
+adding ARIA attributes and calling it done.`}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"Research"}),`
+`,n.jsxs(e.p,{children:[`Before writing the donation flow, I confirmed the UPI deep-link format
+(`,n.jsx(e.code,{children:"upi://pay?pa=...&am=..."}),`) so the QR code could be generated correctly
+client-side with the donor's exact amount pre-filled, instead of shipping a
+static placeholder image. I also initially modeled the testimonial
+navigation on the WAI-ARIA tabs pattern before realizing that pattern
+requires arrow-key roving focus I hadn't built — a dead end caught during
+the accessibility audit and corrected to a plainer, honestly-scoped pattern
+(see Challenges).`]}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"Architecture"}),`
+`,n.jsx(e.p,{children:`The app is a single Vite/React/TypeScript bundle with no router and no
+backend — one page, one flow, walked through below.`}),`
+`,n.jsx(e.pre,{children:n.jsx(e.code,{children:`┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│    Amount    │───▶│   Payment    │───▶│ Confirmation │───▶│   Success    │
+│ (live-valid.)│    │  (QR + UPI)  │    │(form+upload) │    │              │
+└──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘
+`})}),`
+`,n.jsxs(e.p,{children:[`The donation experience, the most complex part, is three separate,
+purpose-scoped state machines rather than one large reducer or a pile of
+booleans: `,n.jsx(e.code,{children:"donationReducer"}),` tracks which of the four screens is showing;
+`,n.jsx(e.code,{children:"confirmationFormReducer"}),` owns the form's fields, validation errors, and
+submission status; `,n.jsx(e.code,{children:"useScreenshotUpload"}),` owns the upload lifecycle
+independently of both. I rejected a single combined reducer early — it
+would mean every keystroke in the confirmation form re-evaluates
+step-transition logic that has nothing to do with typing, and would give the
+outer flow field-level responsibility that three of its four screens never
+touch.`]}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"Technical Decisions"}),`
+`,n.jsx(e.h3,{children:"Decision: Hero animation implementation"}),`
+`,n.jsx(e.p,{children:n.jsx(e.strong,{children:"Options considered:"})}),`
+`,n.jsxs(e.ul,{children:[`
+`,n.jsx(e.li,{children:`A heavier animation library — convenient orchestration, but a bundle-size
+cost for something native CSS already does well.`}),`
+`,n.jsxs(e.li,{children:[`Canvas or a particle system — more visual flexibility, harder to reason
+about for `,n.jsx(e.code,{children:"prefers-reduced-motion"})," and DOM-based testing."]}),`
+`,n.jsx(e.li,{children:"SVG + CSS keyframes, no library."}),`
+`]}),`
+`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Chosen:"})," SVG + CSS keyframes."]}),`
+`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Why:"}),` The animation only needed a handful of elements — five dots, one
+core, up to five accumulating "facets" — animating transform/opacity on a
+shared clock, exactly what native CSS keyframes do well. A library would
+have paid a bundle-size cost for orchestration this simple.`]}),`
+`,n.jsx(e.h3,{children:'Decision: What "uploading" means with no backend'}),`
+`,n.jsx(e.p,{children:n.jsx(e.strong,{children:"Options considered:"})}),`
+`,n.jsxs(e.ul,{children:[`
+`,n.jsx(e.li,{children:"Fake a network upload with a spinner implying a server received the file."}),`
+`,n.jsx(e.li,{children:"Skip the loading state entirely."}),`
+`,n.jsx(e.li,{children:'Model "uploading" as real local processing with a short synthetic delay.'}),`
+`]}),`
+`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Chosen:"})," Local processing model."]}),`
+`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Why:"}),` There's no backend, so nothing is transferred over a network when a
+file is selected. The state honestly represents generating a local preview
+via `,n.jsx(e.code,{children:"URL.createObjectURL"}),`, with a short synthetic delay so the state is
+visible rather than an instant flash — disclosed as synthetic in a code
+comment, not left to look like a fake "upload succeeded" claim.`]}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"Challenges"}),`
+`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Facet timing bug."}),` The hero's rim facets initially reused the dots'
+negative-`,n.jsx(e.code,{children:"animation-delay"}),` stagger trick — safe for the dots, whose resting
+pose looks the same at any phase, but wrong for facets, whose only hidden
+window is the first 8% of their cycle. It put four of five facets into an
+"already revealed" state on the very first frame. Scrubbing the Web
+Animations API's `,n.jsx(e.code,{children:"currentTime"}),` confirmed the timing math but completely
+missed this, since that technique never observes the untouched render. Only
+watching the actual page load caught it. Fixed by giving every facet its own
+keyframe on one shared, un-shifted clock.`]}),`
+`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"Focus management."}),` Advancing the donation flow removed the clicked button
+from the DOM each time, and browsers silently reset focus to `,n.jsx(e.code,{children:"<body>"}),` — no
+signal to keyboard or screen reader users that anything changed. The same
+root cause reappeared twice more: a failed submission never focused the
+error, and closing the mobile menu via Escape stranded focus. I fixed all
+three the same way — explicitly focusing the new step's heading, the first
+invalid field, or the menu's toggle button.`]}),`
+`,n.jsxs(e.p,{children:[n.jsx(e.strong,{children:"ARIA mismatch."})," Testimonial navigation used ",n.jsx(e.code,{children:'role="tab"'}),"/",n.jsx(e.code,{children:'"tablist"'}),`,
+which implies arrow-key roving focus per the WAI-ARIA Authoring Practices —
+a behavior I hadn't built. Claiming a widget role without its required
+interaction is worse than not claiming it, so I switched to plain buttons
+with `,n.jsx(e.code,{children:"aria-current"}),"."]}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"Tradeoffs"}),`
+`,n.jsx(e.p,{children:`I skipped a visible "validating" state in the confirmation form's
+submission lifecycle — validation is synchronous, so a dedicated state
+would be true for 0ms and rendered for no visible reason. I also kept the
+donation service boundary deliberately minimal: no retry logic, no request
+cancellation, no generic API client, since none of that has a real backend
+to justify it yet. And the hero's rim facets trade DRYness for correctness —
+five hardcoded keyframes instead of one shared, delay-staggered keyframe —
+because the shared version is exactly what caused the bug above.`}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"Results"}),`
+`,n.jsx(e.p,{children:`This is a portfolio build, not a live fundraising product — there are no
+real donors or donation totals to report. What I can state factually: the
+app type-checks and lints clean, the production bundle is roughly 83KB of
+JS and 15KB of CSS gzipped, and the full donation flow, focus management,
+and reduced-motion behavior were verified end-to-end against the actual
+deployed production build, not just the local dev server. Every
+accessibility fix above was confirmed by inspecting real DOM/focus state
+afterward, not assumed from the code.`}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"Lessons Learned"}),`
+`,n.jsxs(e.p,{children:[`The clearest lesson: a technique that verifies the mechanism — scrubbing
+`,n.jsx(e.code,{children:"currentTime"}),`, reading the JSX — can still miss what the browser actually
+renders on load. I now treat "watch the real, untouched page" as a mandatory
+check, not a nice-to-have, especially around delay-based animation
+staggering. The second: three unrelated-looking bugs (donation steps, form
+validation, mobile menu) turned out to share one root cause. Naming that
+pattern once was more valuable than patching each symptom separately.`]}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"Future Improvements"}),`
+`,n.jsxs(e.p,{children:[`The most consequential next step is a real backend behind
+`,n.jsx(e.code,{children:"donationService.submitDonation"}),` — currently a single documented function
+boundary — accepting the donor's name, address, amount, and screenshot, and
+returning a submission status. That unlocks the rest: secure, non-public
+storage for uploaded screenshots, an actual verification/admin review
+workflow, and donor notifications once a submission is reviewed. None of
+this exists today; the UI is intentionally careful never to imply otherwise.`]}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"Gallery"}),`
+`,`
+`,n.jsxs(e.p,{children:[n.jsx(e.img,{src:w,alt:"Hero section with the Gathering Point animation"}),`
+`,n.jsx(e.em,{children:"The signature animation: individual marks travel to a core and merge, each leaving a trace on its rim."})]}),`
+`,n.jsxs(e.p,{children:[n.jsx(e.img,{src:v,alt:"Donation payment step"}),`
+`,n.jsx(e.em,{children:"Client-generated UPI QR code with the donor's exact amount pre-filled."})]}),`
+`,n.jsxs(e.p,{children:[n.jsx(e.img,{src:k,alt:"Confirmation form with screenshot upload"}),`
+`,n.jsx(e.em,{children:"The confirmation form and its screenshot uploader, mid-validation."})]}),`
+`,n.jsx(e.hr,{}),`
+`,n.jsx(e.h2,{children:"References"}),`
+`,n.jsxs(e.ul,{children:[`
+`,n.jsxs(e.li,{children:[n.jsx(e.a,{href:"https://www.w3.org/WAI/ARIA/apg/patterns/tabs/",children:"WAI-ARIA Authoring Practices — Tabs Pattern"})," — the spec that surfaced the testimonial navigation's ARIA mismatch during the accessibility audit."]}),`
+`]})]})}function A(i={}){const{wrapper:e}=i.components||{};return e?n.jsx(e,{...i,children:n.jsx(r,{...i})}):r(i)}const I=Object.freeze(Object.defineProperty({__proto__:null,default:A,frontmatter:T},Symbol.toStringTag,{value:"Module"})),P=Object.assign({"/content/projects/clinical-data-pipeline/index.mdx":x,"/content/projects/production-line-scheduling-system/index.mdx":b,"/content/projects/sacrifice-one-pizza/index.mdx":I});function l(){return Object.entries(P).map(([i,e])=>{const d=i.split("/")[3],c=i.substring(0,i.lastIndexOf("/")),t={slug:d,...h(e.frontmatter),Component:e.default};return t.cover&&(t.cover=p(t.cover,c)),t})}function S(){return l().filter(i=>o(i.status)).sort((i,e)=>i.displayIndex.localeCompare(e.displayIndex))}function z(i){return l().find(e=>e.slug===i&&o(e.status))}function C(){return S().filter(i=>i.featured).sort((i,e)=>(i.featuredIndex??i.displayIndex).localeCompare(e.featuredIndex??e.displayIndex))}export{S as a,z as b,C as g};
