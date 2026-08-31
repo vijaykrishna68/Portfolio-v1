@@ -1,12 +1,36 @@
+import { useEffect, useState } from "react";
 import { ArrowRight, ExternalLink } from "lucide-react";
 
 import { ButtonLink } from "../shared/Button";
 import { Reveal } from "../shared/Reveal";
 import { SectionLabel } from "../shared/SectionLabel";
+import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
+import { useNoHover } from "../../hooks/useNoHover";
 import { HeroStatus } from "./HeroStatus";
 import { HeroTechCluster } from "./HeroTechCluster";
 
+// Touch devices have no cursor, so the hover-driven name-color interaction
+// never fires there. Instead, on devices with no hover capability, the two
+// existing color states simply alternate on a fixed 3s timer — desktop is
+// completely unaffected (showAltName never becomes true when hover works).
+const NAME_ALT_INTERVAL_MS = 3000;
+
 export function Hero() {
+  const noHover = useNoHover();
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [showAltName, setShowAltName] = useState(false);
+
+  useEffect(() => {
+    if (!noHover || prefersReducedMotion) {
+      setShowAltName(false);
+      return;
+    }
+    const id = window.setInterval(() => {
+      setShowAltName((current) => !current);
+    }, NAME_ALT_INTERVAL_MS);
+    return () => window.clearInterval(id);
+  }, [noHover, prefersReducedMotion]);
+
   return (
     <section className="min-h-[100svh] flex flex-col justify-center px-6 md:px-10 max-w-[1320px] mx-auto pt-20 pb-14 md:pb-16">
 
@@ -22,11 +46,11 @@ export function Hero() {
               fontSize: "clamp(3.75rem, 10vw, 9rem)",
             }}
           >
-            <span className="inline-block text-foreground [@media(hover:none)]:text-[#68b1f5] group-hover:text-[#68b1f5] transition-colors duration-700 ease-in-out">
+            <span className={`inline-block ${showAltName ? "text-[#68b1f5]" : "text-foreground"} group-hover:text-[#68b1f5] transition-colors duration-700 ease-in-out`}>
               Vijay
             </span>
             <br />
-            <span className="inline-block text-foreground [@media(hover:none)]:text-[#ffdf60] group-hover:text-[#ffdf60] transition-colors duration-700 ease-in-out delay-75">
+            <span className={`inline-block ${showAltName ? "text-[#ffdf60]" : "text-foreground"} group-hover:text-[#ffdf60] transition-colors duration-700 ease-in-out delay-75`}>
               Krishna.
             </span>
           </h1>

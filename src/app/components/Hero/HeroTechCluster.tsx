@@ -82,6 +82,36 @@ function StaticChip({ techId, tier }: { techId: TechId; tier: Tier }) {
   );
 }
 
+// Mobile's lightweight equivalent of AnimatedSlot: the same crossfade
+// between whichever technology currently occupies this position, but with
+// no floating drift loop and no mouse-parallax wrapper — mobile has no
+// cursor, and the static wrapped row has no per-slot absolute positioning
+// to float within. This keeps mobile's rotation substantially cheaper than
+// desktop/tablet: one occasional opacity crossfade per swap, nothing else
+// ever animating continuously.
+function MobileChip({ techId, tier }: { techId: TechId; tier: Tier }) {
+  const tierStyle = TIER_STYLES[tier];
+  const tech = TECH_BY_ID[techId];
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={techId}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: CROSSFADE_SECONDS, ease: "easeInOut" }}
+        className={`inline-flex flex-col items-center justify-center gap-1 ${tierStyle.pad} rounded-2xl border border-border-strong bg-surface-glass text-foreground/70 select-none`}
+      >
+        {tech.icon(tierStyle.icon)}
+        <span className={`${tierStyle.text} uppercase tracking-wider text-muted-foreground`} style={{ fontFamily: "var(--font-mono)" }}>
+          {tech.name}
+        </span>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
 // Fixed-position, permanently-mounted slot: owns the float-drift loop and
 // the mouse-independent crossfade between whichever technology currently
 // occupies it. The float loop never restarts when the occupant changes.
@@ -115,7 +145,7 @@ function AnimatedSlot({ slot, techId }: { slot: Slot; techId: TechId }) {
 }
 
 type HeroTechClusterProps = {
-  /** desktop: full 8-slot cluster. tablet: reduced 5-slot cluster. mobile: static wrapped row. */
+  /** desktop: full 8-slot cluster. tablet: reduced 5-slot cluster. mobile: static wrapped row, same 8 slots. */
   variant: "desktop" | "tablet" | "mobile";
   className?: string;
 };
@@ -126,9 +156,12 @@ type HeroTechClusterProps = {
  * loops (transform/opacity only) with a very subtle mouse-parallax on the
  * whole cluster, and — independently of the mouse — one slot at a time
  * periodically crossfades to a different technology drawn from a larger
- * pool. Mobile renders the original 8 technologies as a static wrapped
- * row — no continuous animation, no rotation. Fully frozen (no motion, no
- * parallax, no rotation) under prefers-reduced-motion.
+ * pool. Mobile shares the same rotation timer and pool, but renders as a
+ * static wrapped row with no floating drift and no mouse-parallax wrapper
+ * (no cursor to parallax against) — each chip only ever animates via the
+ * same brief opacity crossfade when its own occupant changes, nothing
+ * continuous. Fully frozen (no motion, no parallax, no rotation) under
+ * prefers-reduced-motion, for every variant.
  */
 export function HeroTechCluster({ variant, className = "" }: HeroTechClusterProps) {
   const reducedMotion = usePrefersReducedMotion();
@@ -144,11 +177,13 @@ export function HeroTechCluster({ variant, className = "" }: HeroTechClusterProp
 
   // Single coordinated timer for the whole cluster — not one interval per
   // slot. Recursive setTimeout (rather than setInterval) so each swap is
-  // independently jittered and can never overlap the next one. Disabled
-  // entirely for mobile and under reduced motion, in which case the
-  // cluster simply keeps showing the seeded initial arrangement forever.
+  // independently jittered and can never overlap the next one. Runs for
+  // every variant, including mobile (mobile's render is just visually
+  // lighter — see MobileChip — not exempt from rotation itself). Disabled
+  // entirely under reduced motion, in which case the cluster simply keeps
+  // showing the seeded initial arrangement forever.
   useEffect(() => {
-    if (variant === "mobile" || reducedMotion) return;
+    if (reducedMotion) return;
 
     let timeoutId: ReturnType<typeof setTimeout>;
     let cancelled = false;
@@ -181,9 +216,13 @@ export function HeroTechCluster({ variant, className = "" }: HeroTechClusterProp
   if (variant === "mobile") {
     return (
       <div className={`flex flex-wrap items-center gap-2.5 ${className}`.trim()}>
-        {SLOTS.map((slot) => (
-          <StaticChip key={slot.id} techId={slot.id as TechId} tier={slot.tier} />
-        ))}
+        {SLOTS.map((slot) =>
+          reducedMotion ? (
+            <StaticChip key={slot.id} techId={assignment[slot.id]} tier={slot.tier} />
+          ) : (
+            <MobileChip key={slot.id} techId={assignment[slot.id]} tier={slot.tier} />
+          ),
+        )}
       </div>
     );
   }
