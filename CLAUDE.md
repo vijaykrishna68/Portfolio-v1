@@ -246,7 +246,7 @@ The `gallery: GalleryImage[]` frontmatter field that used to exist for this purp
 
 **Important consequence of the body-image fix**: a relative image reference to a file that doesn't exist is now a **build-time failure**, not a silently-broken `<img>`. Double-check filenames/extensions/case before committing — Vite's error message will name the exact unresolvable path if you get it wrong.
 
-`public/portait.jpg` (note: filename is missing the second "r" — `portait`, not `portrait`) is the About-section portrait, referenced by `PORTRAIT_SRC = "/portait.jpg"` in [site.ts](src/app/content/site.ts). This is a real, load-bearing filename — don't "fix" the typo by renaming the file without also updating the constant, or vice versa.
+`public/portrait.jpg` is the About-section portrait, referenced by `PORTRAIT_SRC = "/portrait.jpg"` in [site.ts](src/app/content/site.ts). (It was previously misspelled `portait.jpg`; renamed during the pre-redesign cleanup. Project covers there are now compressed `.webp` files.)
 
 ## 10. Routing
 
