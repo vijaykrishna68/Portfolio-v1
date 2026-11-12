@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { Moon, Sun } from "lucide-react";
 
@@ -8,6 +8,7 @@ import { Container } from "../shared/Container";
 import { GlassNav } from "../shared/GlassNav";
 import type { ThemeMode } from "../../types/portfolio";
 import { INTERACTION } from "../../lib/interaction";
+import { useAdaptiveNav } from "../../hooks/useAdaptiveNav";
 
 type NavbarProps = {
   theme: ThemeMode;
@@ -17,6 +18,8 @@ type NavbarProps = {
 export function Navbar({ theme, toggleTheme }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
+  const navRef = useRef<HTMLElement | null>(null);
+  useAdaptiveNav(navRef, scrolled, pathname);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > NAV_SCROLL_THRESHOLD);
@@ -44,11 +47,12 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
   }
 
   return (
-    <GlassNav glass={scrolled}>
+    <GlassNav glass={scrolled} navRef={navRef}>
       <Container>
         <div className="h-[58px] flex items-center justify-between">
           <Link
             to="/"
+            data-nav-item
             className="text-xl text-foreground hover:opacity-60 transition-opacity leading-none select-none font-display"
           >
             VK
@@ -59,6 +63,7 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
               <Link
                 key={link.label}
                 to={link.href}
+                data-nav-item
                 aria-current={isActive(link.href) ? "page" : undefined}
                 className={linkClassName(link.href)}
               >
@@ -71,6 +76,7 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
           <div className="flex items-center gap-3">
             <ButtonLink
               href="/#contact"
+              data-nav-item
               variant="nav"
               className="hidden md:inline-flex"
             >
@@ -78,6 +84,7 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
             </ButtonLink>
             <button
               onClick={toggleTheme}
+              data-nav-item
               aria-label="Toggle theme"
               className={`p-1.5 text-muted-foreground hover:text-foreground ${INTERACTION.icon}`}
             >

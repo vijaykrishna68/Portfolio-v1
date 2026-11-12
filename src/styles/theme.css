@@ -51,13 +51,13 @@
   --stroke-slab: 1.5px;
   --radius: var(--radius-slab);
 
-  /* ---- Smoky glass (nav bar and tool-wall labels only) ---- */
+  /* ---- Smoky glass for tool-wall labels (tinted, bone text) ---- */
   --glass-fill: rgba(32, 39, 42, 0.70);
   --glass-blur: 14px;
   --glass-saturate: 120%;
   --glass-edge: rgba(233, 230, 218, 0.30);
-  --glass-ink: #E9E6DA; /* text on glass is always bone */
-  --glass-solid: #20272A; /* opaque fallback: slate (light) */
+  --glass-ink: #E9E6DA; /* text on the tool-wall label glass is always bone */
+  --glass-solid: #20272A; /* opaque fallback for the labels: slate (light) */
 
 
   /* Type scale — values extracted verbatim from existing inline clamp()
@@ -98,6 +98,11 @@
 :root,
 .light,
 .dark {
+  /* ---- Clear nav glass: the theme's ground at 77%, 18px blur ---- */
+  --nav-glass-fill: color-mix(in srgb, var(--ground) 77%, transparent);
+  --nav-glass-blur: 18px;
+  --nav-glass-saturate: 120%;
+
   /* ---- Semantic aliases used by existing components ---- */
   --background: var(--ground);
   --foreground: var(--ink);
@@ -329,24 +334,32 @@
 }
 
 @layer components {
-  /* Smoky glass: the sticky nav and tool-wall labels only (Earned Light 3).
-     Inside the glass, semantic colours are re-pointed so children that use
-     text-foreground / border-border etc. read as bone on slate. */
+  /* Clear glass nav (Earned Light 3): the theme ground colour at 77% with an
+     18px blur, a 1px edge and an inner highlight. No dark tint. Text colour is
+     set per item by useAdaptiveNav (dark ink or bone, by what sits beneath).
+     Without backdrop-filter, or with prefers-reduced-transparency, it falls
+     back to solid ground and plain theme text. */
   .glass-nav {
-    --foreground: var(--glass-ink);
-    --ink: var(--glass-ink);
-    --ink-muted: color-mix(in srgb, var(--glass-ink) 78%, transparent);
-    --muted-foreground: color-mix(in srgb, var(--glass-ink) 78%, transparent);
-    --border: var(--glass-edge);
-    --line: var(--glass-ink);
-    --accent: var(--glass-ink);
-    --ring: var(--glass-ink);
-    color: var(--glass-ink);
-    background: var(--glass-fill);
-    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    background: var(--nav-glass-fill);
+    -webkit-backdrop-filter: blur(var(--nav-glass-blur)) saturate(var(--nav-glass-saturate));
+    backdrop-filter: blur(var(--nav-glass-blur)) saturate(var(--nav-glass-saturate));
     border-bottom: 1px solid var(--glass-edge);
     box-shadow: inset 0 1px 0 rgba(233, 230, 218, 0.18);
+  }
+
+  /* Smooth the adaptive colour change (200ms); none under reduced motion. */
+  .glass-nav [data-nav-item],
+  .glass-nav [data-nav-item] * {
+    transition-property: color, border-color, background-color, fill, stroke, opacity;
+    transition-duration: 200ms;
+    transition-timing-function: ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glass-nav [data-nav-item],
+    .glass-nav [data-nav-item] * {
+      transition: none;
+    }
   }
 
   .glass-label {
@@ -359,14 +372,20 @@
   }
 
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .glass-nav,
+    .glass-nav {
+      background: var(--ground);
+    }
     .glass-label {
       background: var(--glass-solid);
     }
   }
 
   @media (prefers-reduced-transparency: reduce) {
-    .glass-nav,
+    .glass-nav {
+      background: var(--ground);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
     .glass-label {
       background: var(--glass-solid);
       -webkit-backdrop-filter: none;
