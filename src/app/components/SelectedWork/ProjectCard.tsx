@@ -69,17 +69,17 @@ function DefaultCard({ project, isLast }: { project: Project; isLast: boolean })
             <IndexMeta project={project} />
           </div>
 
-          <h3 className="text-2xl md:text-[1.875rem] text-foreground leading-snug mb-5 font-display">
+          <h3 className="text-2xl md:text-headline-s text-foreground leading-snug mb-5 font-display">
             {project.title}
           </h3>
 
-          <p className="text-[15px] text-muted-foreground leading-relaxed mb-8">{project.description}</p>
+          <p className="text-body text-muted-foreground leading-relaxed mb-8">{project.description}</p>
 
           <div className="mb-8 pl-4 border-l-2 border-accent/25">
             <p className="text-label uppercase tracking-widest text-accent mb-1.5 font-mono">
               Engineering Challenge
             </p>
-            <p className="text-[14px] text-foreground/75 leading-relaxed">{project.challenge}</p>
+            <p className="text-caption text-foreground/75 leading-relaxed">{project.challenge}</p>
           </div>
 
           <div className="mb-8">
@@ -90,7 +90,7 @@ function DefaultCard({ project, isLast }: { project: Project; isLast: boolean })
             <p className="text-label uppercase tracking-widest text-muted-foreground mb-1.5 font-mono">
               Impact
             </p>
-            <p className="text-[14px] text-foreground font-medium leading-snug">{project.impact}</p>
+            <p className="text-caption text-foreground font-medium leading-snug">{project.impact}</p>
           </div>
         </div>
 
@@ -140,7 +140,7 @@ function DominantCard({ project }: { project: Project }) {
           <h3 className="text-display-section text-foreground leading-[1.08] font-display">
             {project.title}
           </h3>
-          <p className="mt-4 text-[15px] text-muted-foreground leading-relaxed max-w-[42rem]">{project.description}</p>
+          <p className="mt-4 text-body text-muted-foreground leading-relaxed max-w-[42rem]">{project.description}</p>
           <div className="mt-6">
             <TechPills project={project} />
           </div>
@@ -151,7 +151,7 @@ function DominantCard({ project }: { project: Project }) {
             <p className="text-label uppercase tracking-widest text-muted-foreground mb-2 font-mono">
               Impact
             </p>
-            <p className="text-[15px] text-foreground font-medium leading-snug">{project.impact}</p>
+            <p className="text-body text-foreground font-medium leading-snug">{project.impact}</p>
           </div>
         </div>
       </div>
@@ -189,7 +189,7 @@ function CompactCard({ project }: { project: Project }) {
         </div>
 
         <div className="mt-3 pl-2.5 border-l-2 border-signal/70">
-          <p className="text-[12px] text-foreground/85 leading-snug line-clamp-2">{project.impact}</p>
+          <p className="text-caption text-foreground/85 leading-snug line-clamp-2">{project.impact}</p>
         </div>
       </div>
     </div>

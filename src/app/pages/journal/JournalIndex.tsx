@@ -24,7 +24,7 @@ export default function JournalIndex() {
         </div>
 
         {posts.length === 0 && (
-          <p className="text-[15px] text-muted-foreground py-16">No articles yet.</p>
+          <p className="text-body text-muted-foreground py-16">No articles yet.</p>
         )}
         <div className="max-w-2xl">
           {posts.map((post) => (
@@ -56,7 +56,7 @@ export default function JournalIndex() {
                     <h2 className="text-body font-medium text-foreground leading-snug group-hover/card:text-accent transition-colors duration-200">
                       {post.title}
                     </h2>
-                    <p className="mt-1.5 text-[13px] text-muted-foreground leading-[1.6] line-clamp-2">
+                    <p className="mt-1.5 text-caption text-muted-foreground leading-[1.6] line-clamp-2">
                       {post.excerpt}
                     </p>
                   </div>

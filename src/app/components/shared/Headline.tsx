@@ -4,19 +4,30 @@ import type { ElementType, HTMLAttributes } from "react";
 import { useNoHover } from "../../hooks/useNoHover";
 import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
 
-type HeadlineProps = HTMLAttributes<HTMLElement> & { as?: ElementType };
+/** Width axis range for the hover relax: [at rest, on hover]. */
+export type HeadlineHover = readonly [number, number];
+/** Default for display headlines. */
+export const HEADLINE_HOVER_DEFAULT: HeadlineHover = [75, 96];
+/** For the name and short display lines only. */
+export const HEADLINE_HOVER_NAME: HeadlineHover = [62, 84];
+
+type HeadlineProps = HTMLAttributes<HTMLElement> & {
+  as?: ElementType;
+  /** [wdth at rest, wdth on hover]. Defaults to 75 -> 96; use HEADLINE_HOVER_NAME (62 -> 84) for the name and short lines. */
+  hover?: HeadlineHover;
+};
 
 /**
  * Display headline (Anybody, uppercase, 800). On devices that can hover, and
  * only while the text sits on a single line, its width axis relaxes from
- * wdth 62 to 84 over 560ms. Multi-line headlines, touch devices and
+ * wdth 75 to 96 (62 to 84 for the name and short display lines) over 560ms. Multi-line headlines, touch devices and
  * prefers-reduced-motion never change width.
  *
  * Single-line check: the box is no taller than ~1.4 lines and the text, grown by
  * 50% (the widest hover state, measured at +41%), still fits the box, so hover can never wrap.
  * Keep headline sizes at 20px or more (token floor for display type).
  */
-export function Headline({ as: Tag = "h2", className = "", children, ...rest }: HeadlineProps) {
+export function Headline({ as: Tag = "h2", hover = HEADLINE_HOVER_DEFAULT, className = "", children, style, ...rest }: HeadlineProps) {
   const ref = useRef<HTMLElement | null>(null);
   const noHover = useNoHover();
   const reduced = usePrefersReducedMotion();
@@ -51,6 +62,7 @@ export function Headline({ as: Tag = "h2", className = "", children, ...rest }: 
     <Tag
       ref={ref}
       data-single-line={active ? "true" : "false"}
+      style={{ ["--hw-from" as string]: hover[0], ["--hw-to" as string]: hover[1], ...style }}
       className={`font-display headline-hover ${className}`.trim()}
       {...rest}
     >

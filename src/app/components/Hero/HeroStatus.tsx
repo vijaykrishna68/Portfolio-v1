@@ -64,7 +64,7 @@ export function HeroStatus() {
     >
       <div
         key={index}
-        className={`absolute left-0 top-0 flex items-center gap-2 text-[13px] text-muted-foreground font-mono ${
+        className={`absolute left-0 top-0 flex items-center gap-2 text-caption text-muted-foreground font-mono ${
           prefersReducedMotion ? "" : INTERACTION.fadeMove
         } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-[4px]"}`}
         style={{

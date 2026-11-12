@@ -25,7 +25,7 @@ export function About() {
             <SectionLabel>About</SectionLabel>
             <div className="mt-10">
               <p
-                className="text-display-quote text-foreground leading-[1.08] tracking-tight max-w-[11ch] font-display"
+                className="font-text font-semibold text-subhead text-foreground max-w-[28ch]"
               >
                 "Software should solve problems, not create them."
               </p>
@@ -61,7 +61,7 @@ export function About() {
                   <p className="text-label uppercase tracking-widest text-muted-foreground mb-1 font-mono">
                     {label}
                   </p>
-                  <p className="text-[13px] text-foreground">{value}</p>
+                  <p className="text-caption text-foreground">{value}</p>
                 </div>
               ))}
             </div>

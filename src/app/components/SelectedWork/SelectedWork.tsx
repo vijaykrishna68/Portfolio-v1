@@ -25,7 +25,7 @@ export function SelectedWork() {
           </Reveal>
           <Link
             to="/projects"
-            className="hidden md:flex items-center gap-1.5 text-[13px] text-muted-foreground hover:text-foreground transition-colors group"
+            className="hidden md:flex items-center gap-1.5 text-caption text-muted-foreground hover:text-foreground transition-colors group"
           >
             All projects
             <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5" />

@@ -56,6 +56,7 @@
   --glass-blur: 14px;
   --glass-saturate: 120%;
   --glass-edge: rgba(233, 230, 218, 0.30);
+  --scrim: rgba(32, 39, 42, 0.75); /* slate, for the Playground photo scrim (75%: lowest value giving bone text 4.5:1 over the brightest photo) */
   --glass-ink: #E9E6DA; /* text on the tool-wall label glass is always bone */
   --glass-solid: #20272A; /* opaque fallback for the labels: slate (light) */
 
@@ -219,6 +220,8 @@
 
   /* Earned Light type scale (tokens.json): label 11, body 17, subhead 22,
      headline-s 40, headline 72, specimen 120. */
+  --text-caption: 14px;
+  --text-caption--line-height: 1.5;
   --text-label: 11px;
   --text-label--line-height: 1.4;
   --text-body: 17px;
@@ -393,16 +396,16 @@
     }
   }
 
-  /* Headline: width relaxes 62 -> 84 on hover, single-line text only, never on
+  /* Headline: width relaxes on hover (default 75 -> 96; 62 -> 84 for the name and short display lines), single-line text only, never on
      touch or under reduced motion. Headline sets data-single-line. */
   .headline-hover {
-    --display-wdth: 62;
+    --display-wdth: var(--hw-from, 75);
     transition: font-variation-settings 560ms cubic-bezier(0.25, 0.7, 0.3, 1);
   }
 
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     .headline-hover[data-single-line="true"]:hover {
-      --display-wdth: 84;
+      --display-wdth: var(--hw-to, 96);
     }
   }
 
@@ -421,6 +424,12 @@
     symbol .hi {
       transition: none;
     }
+  }
+
+  /* Playground photo scrim: the one gradient in the system. A slate scrim at 75%
+     sits under the title text so bone text has a known ground. */
+  .playground-scrim {
+    background: linear-gradient(to top, var(--scrim) 0%, var(--scrim) 45%, transparent 100%);
   }
 
   /* Pegboard: hairline dots every 24px (decorative). */

@@ -150,7 +150,7 @@ function ContrastTable({ values }: { values: Record<string, string> }) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-left text-[13px]">
+      <table className="w-full text-left text-caption">
         <thead>
           <tr className="border-b border-line">
             <th className="py-2 pr-4 type-label">Foreground</th>
@@ -198,7 +198,7 @@ function Swatches({ values }: { values: Record<string, string> }) {
             <div className="type-label text-ink">
               {t.name} {values[t.name] ? `· ${values[t.name]}` : ""}
             </div>
-            <p className="mt-1 text-[13px] text-ink-muted">{t.usage}</p>
+            <p className="mt-1 text-caption text-ink-muted">{t.usage}</p>
           </div>
         </div>
       ))}
@@ -277,7 +277,7 @@ function Showcase({ scheme }: { scheme: "light" | "dark" }) {
               <Headline as="h3" className="text-[56px] leading-[0.95]">
                 Hover this headline
               </Headline>
-              <p className="mt-2 text-ink-muted text-[13px]">Single line: the width relaxes over 560ms. No change on touch or under reduced motion.</p>
+              <p className="mt-2 text-ink-muted text-caption">Single line: the width relaxes over 560ms. No change on touch or under reduced motion.</p>
             </div>
             <div className="w-[300px] max-w-full">
               <Headline as="h3" className="text-[40px] leading-[0.95]">
@@ -307,7 +307,7 @@ function Showcase({ scheme }: { scheme: "light" | "dark" }) {
                 </ButtonLink>
               </div>
             ))}
-            <p className="text-ink-muted text-[13px]">One lit button per view, at most. The lit variant here is a demo.</p>
+            <p className="text-ink-muted text-caption">One lit button per view, at most. The lit variant here is a demo.</p>
           </div>
         </Section>
 
@@ -347,7 +347,7 @@ function Showcase({ scheme }: { scheme: "light" | "dark" }) {
           <div className="mt-6 flex flex-wrap items-end gap-6">
             <ToolCell glyph="A2-dial" size={48} lit />
             <ToolCell glyph="C4-calipers" size={24} />
-            <p className="text-ink-muted text-[13px] max-w-[40ch]">
+            <p className="text-ink-muted text-caption max-w-[40ch]">
               Controlled cells outside a provider at 48px and 24px: stroke width scales (5 and 9) so the linework stays legible.
             </p>
           </div>

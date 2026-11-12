@@ -29,7 +29,7 @@ export default function JournalDetail() {
         <Container>
           <Link
             to="/journal"
-            className={`inline-flex items-center gap-2 text-[12px] text-muted-foreground hover:text-foreground ${INTERACTION.color} font-mono`}
+            className={`inline-flex items-center gap-2 text-caption text-muted-foreground hover:text-foreground ${INTERACTION.color} font-mono`}
           >
             <ArrowLeft size={12} />
             All articles
@@ -88,7 +88,7 @@ export default function JournalDetail() {
                   >
                     <ArrowLeft size={10} /> Older
                   </span>
-                  <span className="text-[14px] text-foreground group-hover:text-accent transition-colors leading-snug">
+                  <span className="text-caption text-foreground group-hover:text-accent transition-colors leading-snug">
                     {prev.title}
                   </span>
                 </Link>
@@ -105,7 +105,7 @@ export default function JournalDetail() {
                   >
                     Newer <ArrowRight size={10} />
                   </span>
-                  <span className="text-[14px] text-foreground group-hover:text-accent transition-colors leading-snug">
+                  <span className="text-caption text-foreground group-hover:text-accent transition-colors leading-snug">
                     {next.title}
                   </span>
                 </Link>

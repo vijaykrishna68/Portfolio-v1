@@ -35,7 +35,7 @@ export function Hero() {
 
           <HeroStatus />
 
-          <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-muted-foreground text-[13px] font-mono">
+          <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-muted-foreground text-caption font-mono">
             <span>Full Stack Engineer</span>
             <span>·</span>
             <span>Pragmatic Developer</span>

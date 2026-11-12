@@ -35,9 +35,9 @@ export function JournalCard({ article, featured = false, className = "" }: Journ
           {article.title}
         </h3>
 
-        <p className="text-[15px] text-muted-foreground leading-[1.7] mb-7 max-w-[34rem]">{article.excerpt}</p>
+        <p className="text-body text-muted-foreground leading-[1.7] mb-7 max-w-[34rem]">{article.excerpt}</p>
 
-        <span className="inline-flex items-center gap-2 text-[13px] text-foreground font-medium group-hover/card:gap-3 group-hover/card:text-accent transition-all duration-200">
+        <span className="inline-flex items-center gap-2 text-caption text-foreground font-medium group-hover/card:gap-3 group-hover/card:text-accent transition-all duration-200">
           Read article <ArrowRight size={13} />
         </span>
       </Link>
@@ -60,10 +60,10 @@ export function JournalCard({ article, featured = false, className = "" }: Journ
               {article.readTime}
             </span>
           </div>
-          <h4 className="text-[15px] font-medium text-foreground leading-snug group-hover/card:text-accent transition-colors duration-200">
+          <h4 className="text-body font-medium text-foreground leading-snug group-hover/card:text-accent transition-colors duration-200">
             {article.title}
           </h4>
-          <p className="mt-1 text-[13px] text-muted-foreground line-clamp-1 leading-[1.55]">{article.excerpt}</p>
+          <p className="mt-1 text-caption text-muted-foreground line-clamp-1 leading-[1.55]">{article.excerpt}</p>
         </div>
         <ArrowUpRight size={14} className="flex-shrink-0 mt-0.5 text-muted-foreground group-hover/card:text-accent transition-colors duration-200" />
       </div>

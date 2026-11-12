@@ -17,12 +17,12 @@ export default function NotFound() {
         >
           Page not found.
         </h1>
-        <p className="text-[15px] text-muted-foreground mb-10 max-w-[30ch] leading-relaxed">
+        <p className="text-body text-muted-foreground mb-10 max-w-[30ch] leading-relaxed">
           Nothing lives at this URL.
         </p>
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-[13px] text-foreground border border-border px-5 py-2.5 hover:border-accent hover:text-accent transition-colors duration-200"
+          className="inline-flex items-center gap-2 text-caption text-foreground border border-border px-5 py-2.5 hover:border-accent hover:text-accent transition-colors duration-200"
         >
           Back to home
         </Link>

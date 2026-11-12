@@ -19,13 +19,13 @@ export default function PlaygroundIndex() {
           >
             Experiments & explorations.
           </h1>
-          <p className="mt-3 text-[14px] text-muted-foreground max-w-[22rem] leading-[1.7]">
+          <p className="mt-3 text-caption text-muted-foreground max-w-[22rem] leading-[1.7]">
             Tools, visualizations, and prototypes built to understand things better.
           </p>
         </div>
 
         {items.length === 0 && (
-          <p className="text-[15px] text-muted-foreground py-16">No experiments yet.</p>
+          <p className="text-body text-muted-foreground py-16">No experiments yet.</p>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {items.map((item) => (
@@ -44,15 +44,15 @@ export default function PlaygroundIndex() {
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
                   />
                 )}
-                <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/30 transition-colors duration-300" />
+                <div className="playground-scrim absolute inset-0 pointer-events-none" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5">
                   <span
-                    className="text-label tracking-widest uppercase text-glass-ink/80 mb-1 block font-mono"
+                    className="text-label tracking-widest uppercase text-glass-ink mb-1 block font-mono"
                   >
                     {item.tags[0]}
                   </span>
-                  <h2 className="text-[15px] font-medium text-glass-ink leading-tight">{item.title}</h2>
-                  <p className="text-[12px] text-glass-ink/80 mt-0.5 line-clamp-1">{item.summary}</p>
+                  <h2 className="text-body font-medium text-glass-ink leading-tight">{item.title}</h2>
+                  <p className="text-caption text-glass-ink mt-0.5 line-clamp-1">{item.summary}</p>
                 </div>
               </div>
             </Link>

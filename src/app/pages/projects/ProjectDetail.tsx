@@ -30,7 +30,7 @@ export default function ProjectDetail() {
         <Container>
           <Link
             to="/projects"
-            className={`inline-flex items-center gap-2 text-[12px] text-muted-foreground hover:text-foreground ${INTERACTION.color} font-mono`}
+            className={`inline-flex items-center gap-2 text-caption text-muted-foreground hover:text-foreground ${INTERACTION.color} font-mono`}
           >
             <ArrowLeft size={12} />
             All projects
@@ -78,7 +78,7 @@ export default function ProjectDetail() {
               </p>
             )}
 
-            <p className="text-[15px] text-muted-foreground leading-relaxed max-w-2xl">
+            <p className="text-body text-muted-foreground leading-relaxed max-w-2xl">
               {project.description}
             </p>
           </div>
@@ -110,7 +110,7 @@ export default function ProjectDetail() {
               >
                 Engineering Challenge
               </p>
-              <p className="text-[13px] text-foreground/75 leading-relaxed">
+              <p className="text-caption text-foreground/75 leading-relaxed">
                 {project.challenge}
               </p>
             </div>
@@ -121,7 +121,7 @@ export default function ProjectDetail() {
                 >
                   Impact
                 </p>
-                <p className="text-[14px] text-foreground font-medium leading-snug">
+                <p className="text-caption text-foreground font-medium leading-snug">
                   {project.impact}
                 </p>
               </div>
@@ -173,7 +173,7 @@ export default function ProjectDetail() {
                   href={project.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
+                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
                 >
                   GitHub <ArrowUpRight size={12} />
                 </a>
@@ -183,7 +183,7 @@ export default function ProjectDetail() {
                   href={project.links.live}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
+                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
                 >
                   Live demo <ArrowUpRight size={12} />
                 </a>
@@ -193,7 +193,7 @@ export default function ProjectDetail() {
                   href={project.links.writeup}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
+                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
                 >
                   Writeup <ArrowUpRight size={12} />
                 </a>
@@ -203,7 +203,7 @@ export default function ProjectDetail() {
                   href={project.links.caseStudy}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
+                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
                 >
                   Case study <ArrowUpRight size={12} />
                 </a>

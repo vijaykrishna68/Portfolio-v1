@@ -22,7 +22,7 @@ export function Footer() {
             </h2>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className={`mt-6 inline-flex items-center gap-2 text-[15px] text-accent hover:gap-3 ${INTERACTION.border}`}
+              className={`mt-6 inline-flex items-center gap-2 text-body text-accent hover:gap-3 ${INTERACTION.border}`}
             >
               {CONTACT_EMAIL} <ArrowRight size={14} />
             </a>
@@ -34,7 +34,7 @@ export function Footer() {
                 <a
                   key={label}
                   href={href}
-                  className={`flex items-center gap-2 text-[13px] text-muted-foreground group ${INTERACTION.color} hover:text-accent`}
+                  className={`flex items-center gap-2 text-caption text-muted-foreground group ${INTERACTION.color} hover:text-accent`}
                 >
                   <Icon size={14} strokeWidth={1.5} />
                   <span className="relative inline-flex items-center pb-0.5">

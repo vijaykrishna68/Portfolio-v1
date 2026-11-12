@@ -20,7 +20,7 @@ export function Timeline() {
             <h2 className="mt-3 max-w-[10ch] text-display-section text-foreground leading-[1.08] font-display">
               How I got here.
             </h2>
-            <p className="mt-4 text-[14px] text-muted-foreground leading-[1.7] max-w-[20rem]">
+            <p className="mt-4 text-caption text-muted-foreground leading-[1.7] max-w-[20rem]">
               A non-linear path through code, curiosity, and occasional chaos.
             </p>
           </Reveal>

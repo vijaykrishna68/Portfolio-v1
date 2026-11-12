@@ -34,7 +34,7 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
 
   function linkClassName(href: string) {
     const active = isActive(href);
-    return `text-[13px] relative group ${INTERACTION.color} ${
+    return `text-caption relative group ${INTERACTION.color} ${
       active ? "text-accent" : "text-muted-foreground hover:text-foreground"
     }`;
   }

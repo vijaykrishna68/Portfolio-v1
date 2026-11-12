@@ -24,7 +24,7 @@ export default function PlaygroundDetail() {
         <Container>
           <Link
             to="/playground"
-            className={`inline-flex items-center gap-2 text-[12px] text-muted-foreground hover:text-foreground ${INTERACTION.color} font-mono`}
+            className={`inline-flex items-center gap-2 text-caption text-muted-foreground hover:text-foreground ${INTERACTION.color} font-mono`}
           >
             <ArrowLeft size={12} />
             Playground
@@ -50,7 +50,7 @@ export default function PlaygroundDetail() {
               {item.title}
             </h1>
 
-            <p className="text-[15px] text-muted-foreground leading-relaxed mb-8">
+            <p className="text-body text-muted-foreground leading-relaxed mb-8">
               {item.description}
             </p>
 
@@ -60,7 +60,7 @@ export default function PlaygroundDetail() {
                   href={item.demoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 bg-foreground text-background hover:bg-accent hover:text-white ${INTERACTION.border}`}
+                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 bg-foreground text-background hover:bg-accent hover:text-white ${INTERACTION.border}`}
                 >
                   Live demo <ArrowUpRight size={12} />
                 </a>
@@ -70,7 +70,7 @@ export default function PlaygroundDetail() {
                   href={item.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
+                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
                 >
                   Source <ArrowUpRight size={12} />
                 </a>

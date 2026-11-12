@@ -23,7 +23,7 @@ export default function ProjectsIndex() {
         </div>
 
         {projects.length === 0 ? (
-          <p className="text-[15px] text-muted-foreground py-16">No projects yet.</p>
+          <p className="text-body text-muted-foreground py-16">No projects yet.</p>
         ) : (
           <div>
             {projects.map((project, index) => (
