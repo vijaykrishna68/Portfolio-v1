@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://vijaykrishna.dev/sitemap.xml
