@@ -12,7 +12,7 @@ export function Footer() {
         <Reveal className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0 items-end">
 
           <div>
-            <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground font-mono">
+            <p className="text-label uppercase tracking-[0.22em] text-muted-foreground font-mono">
               Contact
             </p>
             <h2 className="mt-3 max-w-[10ch] text-3xl md:text-4xl text-foreground leading-[1.08] font-display">
@@ -22,7 +22,7 @@ export function Footer() {
             </h2>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className={`mt-6 inline-flex items-center gap-2 text-[15px] text-[#68b1f5] hover:gap-3 ${INTERACTION.border}`}
+              className={`mt-6 inline-flex items-center gap-2 text-[15px] text-accent hover:gap-3 ${INTERACTION.border}`}
             >
               {CONTACT_EMAIL} <ArrowRight size={14} />
             </a>
@@ -34,17 +34,17 @@ export function Footer() {
                 <a
                   key={label}
                   href={href}
-                  className={`flex items-center gap-2 text-[13px] text-muted-foreground group ${INTERACTION.color} hover:text-[#68b1f5]`}
+                  className={`flex items-center gap-2 text-[13px] text-muted-foreground group ${INTERACTION.color} hover:text-accent`}
                 >
                   <Icon size={14} strokeWidth={1.5} />
                   <span className="relative inline-flex items-center pb-0.5">
                     {label}
-                    <span className={`absolute left-0 -bottom-0.5 h-px w-0 bg-[#68b1f5] ${INTERACTION.underline} group-hover:w-full`} />
+                    <span className={`absolute left-0 -bottom-0.5 h-px w-0 bg-accent ${INTERACTION.underline} group-hover:w-full`} />
                   </span>
                 </a>
               ))}
             </div>
-            <p className="mt-10 text-[11px] text-muted-foreground font-mono">
+            <p className="mt-10 text-label text-muted-foreground font-mono">
               Vijay Krishna · {new Date().getFullYear()} · Bengaluru, India
             </p>
           </div>

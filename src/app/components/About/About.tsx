@@ -12,7 +12,7 @@ export function About() {
           {/* Left column — portrait (if set) + quote */}
           <Reveal delay={0} className="lg:col-span-4">
             {PORTRAIT_SRC && (
-              <div className="mb-10 w-[78%] max-w-[300px] overflow-hidden rounded-[6px] bg-muted aspect-[3/4]">
+              <div className="mb-10 w-[78%] max-w-[300px] overflow-hidden rounded-slab bg-muted aspect-[3/4]">
                 <img
                   src={PORTRAIT_SRC}
                   alt="Portrait of Vijay Krishna"
@@ -30,7 +30,7 @@ export function About() {
                 "Software should solve problems, not create them."
               </p>
             </div>
-            <div className="mt-8 w-10 h-0.5 bg-[#ffdf60]" />
+            <div className="mt-8 w-10 h-0.5 bg-accent" />
           </Reveal>
 
           {/* Right column — bio + stats */}
@@ -58,7 +58,7 @@ export function About() {
             <div className="mt-11 grid grid-cols-1 sm:grid-cols-3 gap-6 pt-7 border-t border-border">
               {aboutStats.map(({ label, value }) => (
                 <div key={label}>
-                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1 font-mono">
+                  <p className="text-label uppercase tracking-widest text-muted-foreground mb-1 font-mono">
                     {label}
                   </p>
                   <p className="text-[13px] text-foreground">{value}</p>

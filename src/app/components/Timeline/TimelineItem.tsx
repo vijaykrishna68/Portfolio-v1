@@ -14,16 +14,16 @@ export function TimelineItem({ item, isOpen, onToggle }: TimelineItemProps) {
     <div className="relative pl-8">
       <div
         className={`absolute left-0 top-[23px] w-[14px] h-[14px] border ${INTERACTION.border} ${
-          isOpen ? "bg-signal border-signal scale-110 shadow-[0_0_0_4px_rgba(104,177,245,0.08)]" : "bg-background border-border scale-100"
+          isOpen ? "bg-signal border-signal scale-110" : "bg-background border-border scale-100"
         }`}
       />
       <button onClick={onToggle} aria-expanded={isOpen} className={`w-full text-left py-6 border-b border-border group/btn ${INTERACTION.fast}`}>
         <div className="flex items-start justify-between gap-4">
           <div>
-            <span className="text-[10px] tracking-[0.2em] text-[#68b1f5] uppercase font-mono">
+            <span className="text-label tracking-[0.2em] text-accent uppercase font-mono">
               {item.year}
             </span>
-            <h3 className="mt-1 text-body font-medium text-foreground group-hover/btn:text-[#68b1f5] transition-colors duration-200">
+            <h3 className="mt-1 text-body font-medium text-foreground group-hover/btn:text-accent transition-colors duration-200">
               {item.title}
             </h3>
             <p className="mt-0.5 text-[13px] text-muted-foreground leading-[1.6] max-w-[34rem]">{item.short}</p>

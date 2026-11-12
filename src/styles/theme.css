@@ -88,7 +88,6 @@
   --text-display-section: clamp(1.875rem, 1.5rem + 1.5vw, 2.25rem);
   --text-display-card: clamp(1.6rem, 3vw, 2.35rem);
   --text-display-quote: clamp(1.9rem, 3.5vw, 3rem);
-  --text-body: 1rem;
   --text-body-lg: 1.0625rem;
 
   /* Surface helpers. No soft shadows and no glass on content in this system,
@@ -98,8 +97,8 @@
   --border-subtle: var(--hairline);
   --border-strong: var(--line);
 
-  /* Signal (impact / outcome markers) now resolves to the lit tokens. */
-  --signal: var(--lit);
+  /* Signal (impact / outcome markers) resolves to accent: lit is reserved for the single lit part per view. */
+  --signal: var(--accent);
   --signal-soft: var(--mist);
 }
 
@@ -203,8 +202,25 @@
   --text-display-section: var(--text-display-section);
   --text-display-card: var(--text-display-card);
   --text-display-quote: var(--text-display-quote);
-  --text-body: var(--text-body);
   --text-body-lg: var(--text-body-lg);
+
+  /* Earned Light type scale (tokens.json): label 11, body 17, subhead 22,
+     headline-s 40, headline 72, specimen 120. */
+  --text-label: 11px;
+  --text-label--line-height: 1.4;
+  --text-body: 17px;
+  --text-body--line-height: 1.6;
+  --text-subhead: 22px;
+  --text-subhead--line-height: 1.3;
+  --text-headline-s: 40px;
+  --text-headline-s--line-height: 0.95;
+  --text-headline: 72px;
+  --text-headline--line-height: 0.9;
+  --text-specimen: 120px;
+  --text-specimen--line-height: 0.9;
+
+  /* Text on glass and on image overlays is always bone. */
+  --color-glass-ink: var(--glass-ink);
 }
 
 @layer base {

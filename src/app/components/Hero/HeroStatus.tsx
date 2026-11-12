@@ -72,7 +72,7 @@ export function HeroStatus() {
         }}
       >
         <span>{items[index].label}</span>
-        <span className="text-[#68b1f5]">→</span>
+        <span className="text-accent">→</span>
         <span className="text-foreground/85">{items[index].value}</span>
       </div>
     </div>

@@ -42,9 +42,9 @@ export default function JournalDetail() {
         <Container>
           <div className="max-w-2xl mx-auto">
             <div
-              className="flex flex-wrap items-center gap-3 mb-8 text-[11px] text-muted-foreground font-mono"
+              className="flex flex-wrap items-center gap-3 mb-8 text-label text-muted-foreground font-mono"
             >
-              <span className="text-[#68b1f5]">{post.tags[0]}</span>
+              <span className="text-accent">{post.tags[0]}</span>
               <span className="text-muted-foreground/40">·</span>
               <span>{formatDate(post.publishedAt)}</span>
               <span className="text-muted-foreground/40">·</span>
@@ -84,11 +84,11 @@ export default function JournalDetail() {
                   className={`group flex-1 text-left ${INTERACTION.color}`}
                 >
                   <span
-                    className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 flex items-center gap-1.5 font-mono"
+                    className="text-label uppercase tracking-widest text-muted-foreground mb-2 flex items-center gap-1.5 font-mono"
                   >
                     <ArrowLeft size={10} /> Older
                   </span>
-                  <span className="text-[14px] text-foreground group-hover:text-[#68b1f5] transition-colors leading-snug">
+                  <span className="text-[14px] text-foreground group-hover:text-accent transition-colors leading-snug">
                     {prev.title}
                   </span>
                 </Link>
@@ -101,11 +101,11 @@ export default function JournalDetail() {
                   className={`group flex-1 text-right ${INTERACTION.color}`}
                 >
                   <span
-                    className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 flex items-center justify-end gap-1.5 font-mono"
+                    className="text-label uppercase tracking-widest text-muted-foreground mb-2 flex items-center justify-end gap-1.5 font-mono"
                   >
                     Newer <ArrowRight size={10} />
                   </span>
-                  <span className="text-[14px] text-foreground group-hover:text-[#68b1f5] transition-colors leading-snug">
+                  <span className="text-[14px] text-foreground group-hover:text-accent transition-colors leading-snug">
                     {next.title}
                   </span>
                 </Link>

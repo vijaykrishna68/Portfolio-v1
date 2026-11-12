@@ -45,11 +45,11 @@ export function Hero() {
               fontSize: "clamp(3.75rem, 10vw, 9rem)",
             }}
           >
-            <span className={`inline-block ${showAltName ? "text-[#68b1f5]" : "text-foreground"} group-hover:text-[#68b1f5] transition-colors duration-700 ease-in-out`}>
+            <span className={`inline-block ${showAltName ? "text-accent" : "text-foreground"} group-hover:text-accent transition-colors duration-700 ease-in-out`}>
               Vijay
             </span>
             <br />
-            <span className={`inline-block ${showAltName ? "text-[#ffdf60]" : "text-foreground"} group-hover:text-[#ffdf60] transition-colors duration-700 ease-in-out delay-75`}>
+            <span className={`inline-block ${showAltName ? "text-tension" : "text-foreground"} group-hover:text-tension transition-colors duration-700 ease-in-out delay-75`}>
               Krishna.
             </span>
           </h1>
@@ -65,9 +65,9 @@ export function Hero() {
 
           <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-muted-foreground text-[13px] font-mono">
             <span>Full Stack Engineer</span>
-            <span className="text-[#68b1f5]">·</span>
+            <span className="text-accent">·</span>
             <span>Pragmatic Developer</span>
-            <span className="text-[#68b1f5]">·</span>
+            <span className="text-accent">·</span>
             <span>Open to Freelance Work</span>
           </div>
 
@@ -97,7 +97,7 @@ export function Hero() {
       <Reveal delay={500} className="mt-auto pb-12 pt-20 flex items-center gap-3">
         <div className="w-10 h-px bg-border" />
         <span
-          className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-mono"
+          className="text-label uppercase tracking-[0.2em] text-muted-foreground font-mono"
         >
           Scroll to explore
         </span>

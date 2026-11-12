@@ -48,9 +48,9 @@ const TECH_BY_ID: Record<TechId, (typeof TECHNOLOGIES)[number]> = Object.fromEnt
 ) as Record<TechId, (typeof TECHNOLOGIES)[number]>;
 
 const TIER_STYLES: Record<Tier, { pad: string; text: string; icon: number }> = {
-  sm: { pad: "px-2.5 py-2", text: "text-[8.5px]", icon: 13 },
-  md: { pad: "px-3 py-2.5", text: "text-[9px]", icon: 15 },
-  lg: { pad: "px-3.5 py-3", text: "text-[9.5px]", icon: 17 },
+  sm: { pad: "px-2.5 py-2", text: "text-label", icon: 13 },
+  md: { pad: "px-3 py-2.5", text: "text-label", icon: 15 },
+  lg: { pad: "px-3.5 py-3", text: "text-label", icon: 17 },
 };
 
 // Rotation cadence: one slot swap somewhere in the cluster every ~3.5–5s
@@ -72,7 +72,7 @@ function StaticChip({ techId, tier }: { techId: TechId; tier: Tier }) {
   const tierStyle = TIER_STYLES[tier];
   return (
     <div
-      className={`inline-flex flex-col items-center justify-center gap-1 ${tierStyle.pad} rounded-2xl border border-border-strong bg-surface-glass text-foreground/70 select-none`}
+      className={`inline-flex flex-col items-center justify-center gap-1 ${tierStyle.pad} rounded-slab border border-border-strong bg-surface-glass text-foreground/70 select-none`}
     >
       {tech.icon(tierStyle.icon)}
       <span className={`${tierStyle.text} uppercase tracking-wider text-muted-foreground font-mono`}>
@@ -101,7 +101,7 @@ function MobileChip({ techId, tier }: { techId: TechId; tier: Tier }) {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: CROSSFADE_SECONDS, ease: "easeInOut" }}
-        className={`inline-flex flex-col items-center justify-center gap-1 ${tierStyle.pad} rounded-2xl border border-border-strong bg-surface-glass text-foreground/70 select-none`}
+        className={`inline-flex flex-col items-center justify-center gap-1 ${tierStyle.pad} rounded-slab border border-border-strong bg-surface-glass text-foreground/70 select-none`}
       >
         {tech.icon(tierStyle.icon)}
         <span className={`${tierStyle.text} uppercase tracking-wider text-muted-foreground font-mono`}>
@@ -132,7 +132,7 @@ function AnimatedSlot({ slot, techId }: { slot: Slot; techId: TechId }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: CROSSFADE_SECONDS, ease: "easeInOut" }}
-          className={`inline-flex flex-col items-center justify-center gap-1 ${tierStyle.pad} rounded-2xl border border-border-strong bg-surface-glass text-foreground/70 select-none`}
+          className={`inline-flex flex-col items-center justify-center gap-1 ${tierStyle.pad} rounded-slab border border-border-strong bg-surface-glass text-foreground/70 select-none`}
         >
           {tech.icon(tierStyle.icon)}
           <span className={`${tierStyle.text} uppercase tracking-wider text-muted-foreground font-mono`}>

@@ -8,7 +8,7 @@ export default function NotFound() {
     <section className="pt-48 pb-36">
       <Container>
         <p
-          className="text-[10px] uppercase tracking-widest text-[#68b1f5] mb-4 font-mono"
+          className="text-label uppercase tracking-widest text-accent mb-4 font-mono"
         >
           404
         </p>
@@ -22,7 +22,7 @@ export default function NotFound() {
         </p>
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-[13px] text-foreground border border-border px-5 py-2.5 hover:border-[#68b1f5] hover:text-[#68b1f5] transition-colors duration-200"
+          className="inline-flex items-center gap-2 text-[13px] text-foreground border border-border px-5 py-2.5 hover:border-accent hover:text-accent transition-colors duration-200"
         >
           Back to home
         </Link>

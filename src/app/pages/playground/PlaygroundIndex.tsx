@@ -34,7 +34,7 @@ export default function PlaygroundIndex() {
               to={`/playground/${item.slug}`}
               className="block group"
             >
-              <div className="relative overflow-hidden bg-muted aspect-[4/3] border border-dashed border-transparent transition-[transform,border-color] duration-200 ease-out hover:z-10 hover:scale-[1.015] hover:-rotate-[0.4deg] hover:border-[#68b1f5]/45">
+              <div className="relative overflow-hidden bg-muted aspect-[4/3] border border-dashed border-transparent transition-[transform,border-color] duration-200 ease-out hover:z-10 hover:scale-[1.015] hover:-rotate-[0.4deg] hover:border-accent/45">
                 {item.cover && (
                   <img
                     src={item.cover}
@@ -47,12 +47,12 @@ export default function PlaygroundIndex() {
                 <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/30 transition-colors duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5">
                   <span
-                    className="text-[9px] tracking-widest uppercase text-white/55 mb-1 block font-mono"
+                    className="text-label tracking-widest uppercase text-glass-ink/80 mb-1 block font-mono"
                   >
                     {item.tags[0]}
                   </span>
-                  <h2 className="text-[15px] font-medium text-white leading-tight">{item.title}</h2>
-                  <p className="text-[12px] text-white/55 mt-0.5 line-clamp-1">{item.summary}</p>
+                  <h2 className="text-[15px] font-medium text-glass-ink leading-tight">{item.title}</h2>
+                  <p className="text-[12px] text-glass-ink/80 mt-0.5 line-clamp-1">{item.summary}</p>
                 </div>
               </div>
             </Link>

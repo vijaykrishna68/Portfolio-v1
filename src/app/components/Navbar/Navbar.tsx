@@ -49,7 +49,7 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
         <div className="h-[58px] flex items-center justify-between">
           <Link
             to="/"
-            className="text-[17px] text-foreground hover:opacity-60 transition-opacity leading-none select-none font-display"
+            className="text-xl text-foreground hover:opacity-60 transition-opacity leading-none select-none font-display"
           >
             VK
           </Link>

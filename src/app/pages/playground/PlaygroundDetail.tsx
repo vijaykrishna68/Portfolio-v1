@@ -38,7 +38,7 @@ export default function PlaygroundDetail() {
           <div className="max-w-2xl">
             <div className="flex flex-wrap items-center gap-2 mb-6">
               <span
-                className="text-[10px] uppercase tracking-widest text-[#68b1f5] font-mono"
+                className="text-label uppercase tracking-widest text-accent font-mono"
               >
                 {item.tags[0]}
               </span>
@@ -60,7 +60,7 @@ export default function PlaygroundDetail() {
                   href={item.demoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 bg-foreground text-background hover:bg-[#68b1f5] hover:text-white ${INTERACTION.border}`}
+                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 bg-foreground text-background hover:bg-accent hover:text-white ${INTERACTION.border}`}
                 >
                   Live demo <ArrowUpRight size={12} />
                 </a>
@@ -70,7 +70,7 @@ export default function PlaygroundDetail() {
                   href={item.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 border border-border text-foreground hover:border-[#68b1f5] hover:text-[#68b1f5] ${INTERACTION.border}`}
+                  className={`inline-flex items-center gap-1.5 text-[13px] px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
                 >
                   Source <ArrowUpRight size={12} />
                 </a>

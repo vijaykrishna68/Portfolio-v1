@@ -30,30 +30,30 @@ export default function JournalIndex() {
           {posts.map((post) => (
             <Link key={post.slug} to={`/journal/${post.slug}`} className="block">
               <div
-                className={`group/card py-6 border-t border-border hover:border-[#68b1f5]/25 ${INTERACTION.subtleLift}`}
+                className={`group/card py-6 border-t border-border hover:border-accent/25 ${INTERACTION.subtleLift}`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
                       <span
-                        className="text-[10px] tracking-wider text-muted-foreground uppercase font-mono"
+                        className="text-label tracking-wider text-muted-foreground uppercase font-mono"
                       >
                         {post.tags[0]}
                       </span>
-                      <span className="text-muted-foreground/40 text-[10px]">·</span>
+                      <span className="text-muted-foreground/40 text-label">·</span>
                       <span
-                        className="text-[10px] text-muted-foreground font-mono"
+                        className="text-label text-muted-foreground font-mono"
                       >
                         {formatDate(post.publishedAt)}
                       </span>
-                      <span className="text-muted-foreground/40 text-[10px]">·</span>
+                      <span className="text-muted-foreground/40 text-label">·</span>
                       <span
-                        className="text-[10px] text-muted-foreground font-mono"
+                        className="text-label text-muted-foreground font-mono"
                       >
                         {post.readTime}
                       </span>
                     </div>
-                    <h2 className="text-[17px] font-medium text-foreground leading-snug group-hover/card:text-[#68b1f5] transition-colors duration-200">
+                    <h2 className="text-body font-medium text-foreground leading-snug group-hover/card:text-accent transition-colors duration-200">
                       {post.title}
                     </h2>
                     <p className="mt-1.5 text-[13px] text-muted-foreground leading-[1.6] line-clamp-2">
@@ -62,7 +62,7 @@ export default function JournalIndex() {
                   </div>
                   <ArrowUpRight
                     size={14}
-                    className="flex-shrink-0 mt-1 text-muted-foreground group-hover/card:text-[#68b1f5] transition-colors duration-200"
+                    className="flex-shrink-0 mt-1 text-muted-foreground group-hover/card:text-accent transition-colors duration-200"
                   />
                 </div>
               </div>

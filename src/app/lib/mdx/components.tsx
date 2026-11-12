@@ -40,7 +40,7 @@ export const MDX_COMPONENTS = {
   code: (props: ComponentPropsWithoutRef<"code">) => (
     <code
       {...props}
-      className="px-1.5 py-0.5 text-[13px] bg-muted border border-border text-[#68b1f5] font-mono"
+      className="px-1.5 py-0.5 text-[13px] bg-muted border border-border text-accent font-mono"
     />
   ),
   pre: (props: ComponentPropsWithoutRef<"pre">) => (
@@ -52,7 +52,7 @@ export const MDX_COMPONENTS = {
   blockquote: (props: ComponentPropsWithoutRef<"blockquote">) => (
     <blockquote
       {...props}
-      className="pl-4 border-l-2 border-[#68b1f5]/30 text-foreground/60 italic my-6"
+      className="pl-4 border-l-2 border-accent/30 text-foreground/60 italic my-6"
     />
   ),
   hr: (props: ComponentPropsWithoutRef<"hr">) => (
@@ -61,7 +61,7 @@ export const MDX_COMPONENTS = {
   a: (props: ComponentPropsWithoutRef<"a">) => (
     <a
       {...props}
-      className="text-[#68b1f5] underline underline-offset-2 hover:opacity-75 transition-opacity"
+      className="text-accent underline underline-offset-2 hover:opacity-75 transition-opacity"
     />
   ),
   img: (props: ComponentPropsWithoutRef<"img">) => (
