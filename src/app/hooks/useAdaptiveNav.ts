@@ -4,8 +4,10 @@ import type { RefObject } from "react";
 /**
  * Adaptive nav text. For every element marked `data-nav-item` inside the nav we
  * look at what sits beneath its centre, work out the effective background
- * luminance (clear glass is the ground colour at 77% over that backdrop), and
- * give the item dark ink or bone, whichever contrasts more. Runs on scroll,
+ * luminance, and give the item dark ink or bone, whichever contrasts more. The
+ * glass fill is adaptive: the theme ground colour at 40%, rising through
+ * 55%, 66% and 77% only as far as needed for every item to reach 4.5:1
+ * (link text is 78% strength, so the weaker muted ratio is what must pass). Runs on scroll,
  * resize, load, image load and theme change, throttled with requestAnimationFrame.
  *
  * Backdrop detection, top layer first (document.elementsFromPoint, ignoring the nav):
@@ -21,7 +23,10 @@ type Rgb = [number, number, number];
 
 const DARK_TEXT: Rgb = [32, 39, 42]; // #20272A
 const LIGHT_TEXT: Rgb = [233, 230, 218]; // #E9E6DA
-const CLEAR_GLASS_ALPHA = 0.77; // keep in sync with --nav-glass-fill in theme.css (raised from 40% to clear 4.5:1 worst case)
+/** Fill steps (share of the theme ground colour in the glass). The bar uses the lowest step at which every item reaches MIN_CONTRAST. */
+const FILL_STEPS = [0.4, 0.55, 0.66, 0.77] as const;
+const MIN_CONTRAST = 4.5;
+const DROP_MARGIN = 1.08; // hysteresis: only step down when the lower step clears 4.5 by 8%
 const MUTED_ALPHA = 0.78;
 
 function lin(c: number) {
@@ -198,6 +203,7 @@ function paint(item: HTMLElement, fg: Rgb) {
 function clear(item: HTMLElement) {
   for (const v of VARS) item.style.removeProperty(v);
   delete item.dataset.navInk;
+  delete item.dataset.navContrast;
 }
 
 function glassIsSolid() {
@@ -219,11 +225,24 @@ export function useAdaptiveNav(navRef: RefObject<HTMLElement | null>, glass: boo
     // Static fallback: solid ground and theme text. No adaptation.
     if (glassIsSolid()) {
       items().forEach(clear);
+      nav.style.removeProperty("--nav-glass-fill");
       return;
     }
 
     let frame = 0;
-    const last = new WeakMap<HTMLElement, { fg: Rgb; ratio: number }>();
+    let stepIndex = 0;
+    const lastInk = new WeakMap<HTMLElement, Rgb>();
+
+    // Contrast of the item's text over the effective background, for a given fill share.
+    const evaluate = (ground: Rgb, behind: Rgb, share: number) => {
+      const effective = glass ? mix(ground, behind, share) : behind;
+      const cDark = contrast(DARK_TEXT, effective);
+      const cLight = contrast(LIGHT_TEXT, effective);
+      const fg = cDark >= cLight ? DARK_TEXT : LIGHT_TEXT;
+      const strong = Math.max(cDark, cLight);
+      const muted = contrast(mix(fg, effective, MUTED_ALPHA), effective);
+      return { fg, strong, muted, cDark, cLight };
+    };
 
     const run = () => {
       frame = 0;
@@ -231,27 +250,47 @@ export function useAdaptiveNav(navRef: RefObject<HTMLElement | null>, glass: boo
       const groundParsed = parseColor(root.getPropertyValue("--ground"));
       const ground: Rgb = groundParsed ? [groundParsed[0], groundParsed[1], groundParsed[2]] : LIGHT_TEXT;
 
+      const measured: Array<{ item: HTMLElement; behind: Rgb }> = [];
       for (const item of items()) {
         const r = item.getBoundingClientRect();
         if (r.width === 0) continue;
-        const x = r.left + r.width / 2;
-        const y = r.top + r.height / 2;
-        const behind = backdropAt(x, y, nav, ground);
-        const effective = glass ? mix(ground, behind, CLEAR_GLASS_ALPHA) : behind;
+        measured.push({ item, behind: backdropAt(r.left + r.width / 2, r.top + r.height / 2, nav, ground) });
+      }
 
-        const cDark = contrast(DARK_TEXT, effective);
-        const cLight = contrast(LIGHT_TEXT, effective);
-        let fg = cDark >= cLight ? DARK_TEXT : LIGHT_TEXT;
-
-        // hysteresis: only flip when the other colour wins by a clear margin
-        const prev = last.get(item);
-        if (prev) {
-          const prevNow = prev.fg === DARK_TEXT ? cDark : cLight;
-          const other = prev.fg === DARK_TEXT ? cLight : cDark;
-          if (other < prevNow * 1.15) fg = prev.fg;
+      // Lowest step at which every item reaches MIN_CONTRAST (weaker of strong/muted text).
+      const passes = (i: number, margin: number) =>
+        measured.every(({ behind }) => {
+          const e = evaluate(ground, behind, FILL_STEPS[i]);
+          return Math.min(e.strong, e.muted) >= MIN_CONTRAST * margin;
+        });
+      let needed = FILL_STEPS.length - 1;
+      for (let i = 0; i < FILL_STEPS.length; i++) {
+        if (passes(i, 1)) {
+          needed = i;
+          break;
         }
-        last.set(item, { fg, ratio: Math.max(cDark, cLight) });
+      }
+      // Step up immediately; step down only with margin (avoids flicker).
+      if (needed > stepIndex) stepIndex = needed;
+      else if (needed < stepIndex && passes(needed, DROP_MARGIN)) stepIndex = needed;
+
+      const share = glass ? FILL_STEPS[stepIndex] : 0;
+      nav.style.setProperty("--nav-glass-fill", `color-mix(in srgb, var(--ground) ${Math.round(share * 100)}%, transparent)`);
+      nav.dataset.navFill = String(share);
+
+      for (const { item, behind } of measured) {
+        const e = evaluate(ground, behind, FILL_STEPS[stepIndex]);
+        // keep the previous ink unless the other colour wins by a clear margin
+        const prev = lastInk.get(item);
+        let fg = e.fg;
+        if (prev && prev !== fg) {
+          const prevC = prev === DARK_TEXT ? e.cDark : e.cLight;
+          const otherC = prev === DARK_TEXT ? e.cLight : e.cDark;
+          if (otherC < prevC * 1.15) fg = prev;
+        }
+        lastInk.set(item, fg);
         paint(item, fg);
+        item.dataset.navContrast = Math.min(e.strong, e.muted).toFixed(2);
       }
     };
 
@@ -280,6 +319,8 @@ export function useAdaptiveNav(navRef: RefObject<HTMLElement | null>, glass: boo
       mo.disconnect();
       ro.disconnect();
       items().forEach(clear);
+      nav.style.removeProperty("--nav-glass-fill");
+      delete nav.dataset.navFill;
     };
   }, [navRef, glass, key]);
 }

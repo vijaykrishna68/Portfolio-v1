@@ -2,7 +2,7 @@ import type { HTMLAttributes, RefObject } from "react";
 
 type GlassNavProps = HTMLAttributes<HTMLElement> & {
   /**
-   * true: clear glass (ground at 77%, 18px blur, 1px edge). Text colour adapts per
+   * true: clear glass (ground at 40%, rising to 55/66/77% only as needed; 18px blur, 1px edge). Text colour adapts per
    * item to what is beneath (useAdaptiveNav). false: fully transparent.
    * Glass falls back to solid ground when backdrop-filter is unsupported or
    * prefers-reduced-transparency is set (see .glass-nav in theme.css).
@@ -21,7 +21,7 @@ export function GlassNav({ glass = true, navRef, className = "", children, ...re
   return (
     <nav
       ref={navRef as RefObject<HTMLElement>}
-      className={`fixed inset-x-0 top-0 z-50 pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] transition-[background-color,border-color] duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 pl-[env(safe-area-inset-left)] pr-[env(safe-area-inset-right)] ${
         glass ? "glass-nav" : "bg-transparent"
       } ${className}`.trim()}
       {...rest}

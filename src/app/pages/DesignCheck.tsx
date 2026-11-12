@@ -353,7 +353,7 @@ function Showcase({ scheme }: { scheme: "light" | "dark" }) {
           </div>
         </Section>
 
-        <Section title="Glass: clear nav glass (ground 77%, 18px blur; text adapts live in the real nav), then the solid fallback">
+        <Section title="Glass: clear nav glass (ground 40% rising to 77% as needed, 18px blur; fill and text adapt live in the real nav), then the solid fallback">
           <div className="space-y-6">
             <div className="relative h-[120px] overflow-hidden rounded-slab" style={{ background: "linear-gradient(115deg, var(--stone) 0 45%, var(--accent) 45% 70%, var(--tension) 70% 85%, var(--lit) 85%)" }}>
               <GlassNav className="!absolute !inset-x-4 !top-4 rounded-slab border border-[var(--glass-edge)] !border-b text-foreground" aria-label="Glass nav demo">
