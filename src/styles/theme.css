@@ -436,9 +436,4 @@
     background: linear-gradient(to top, var(--scrim) 0%, var(--scrim) 45%, transparent 100%);
   }
 
-  /* Pegboard: hairline dots every 24px (decorative). */
-  .pegboard {
-    background-image: radial-gradient(var(--hairline) 1px, transparent 1.2px);
-    background-size: 24px 24px;
-  }
 }

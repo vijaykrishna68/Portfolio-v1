@@ -12,6 +12,8 @@ type ToolCellProps = {
   label?: string;
   /** Glyph size in px (default 96). Stroke width scales so lines stay legible. */
   size?: number;
+  /** Optional caption under the glyph, e.g. the technologies this tool stands for. */
+  caption?: string;
   /** Controlled lit state. Ignored inside a ToolWallProvider, which owns it. */
   lit?: boolean;
   className?: string;
@@ -23,7 +25,7 @@ type ToolCellProps = {
  * Hover lifts the cell 8px (280ms, settle 360ms) only where hover exists and
  * motion is allowed; the gold fill takes 240ms (see symbol .hi in theme.css).
  */
-export function ToolCell({ glyph, label, size = 96, lit: litProp = false, className = "" }: ToolCellProps) {
+export function ToolCell({ glyph, label, size = 96, caption, lit: litProp = false, className = "" }: ToolCellProps) {
   const wall = useToolWall();
   const noHover = useNoHover();
   const reduced = usePrefersReducedMotion();
@@ -65,6 +67,7 @@ export function ToolCell({ glyph, label, size = 96, lit: litProp = false, classN
       >
         <use href={`#${glyph}`} />
       </svg>
+      {caption ? <span className="text-caption text-ink-muted">{caption}</span> : null}
     </button>
   );
 }

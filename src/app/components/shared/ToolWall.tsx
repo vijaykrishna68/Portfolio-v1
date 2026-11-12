@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useId, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 
 import spriteMarkup from "../../../assets/glyphs/glyph-sprite.svg?raw";
@@ -48,8 +48,24 @@ export function ToolWallProvider({
   );
 }
 
-/** The pegboard: 1.5px line border, 2px radius, hairline dots every 24px. */
+/**
+ * The pegboard: 1.5px line border, 2px radius, hairline dots every 24px. The
+ * dots are an SVG pattern of circles (no CSS gradient), behind the cells.
+ */
 export function ToolWall({ columns = 3, className = "", children }: { columns?: 2 | 3 | 4; className?: string; children: ReactNode }) {
   const cols = columns === 4 ? "grid-cols-2 md:grid-cols-4" : columns === 3 ? "grid-cols-2 md:grid-cols-3" : "grid-cols-2";
-  return <div className={`pegboard grid ${cols} border-stroke border-line rounded-slab ${className}`.trim()}>{children}</div>;
+  const id = `wall-peg-${useId().replace(/:/g, "")}`;
+  return (
+    <div className={`relative grid ${cols} border-stroke border-line rounded-slab ${className}`.trim()}>
+      <svg className="absolute inset-0 h-full w-full pointer-events-none" aria-hidden="true" focusable="false">
+        <defs>
+          <pattern id={id} width="24" height="24" patternUnits="userSpaceOnUse">
+            <circle cx="12" cy="12" r="1.2" className="fill-hairline" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill={`url(#${id})`} />
+      </svg>
+      {children}
+    </div>
+  );
 }

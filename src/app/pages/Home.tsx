@@ -1,4 +1,5 @@
 import { Hero } from "../components/Hero/Hero";
+import { ToolWallSection } from "../components/ToolWall/ToolWallSection";
 import { SelectedWork } from "../components/SelectedWork/SelectedWork";
 import { Timeline } from "../components/Timeline/Timeline";
 import { Journal } from "../components/Journal/Journal";
@@ -11,6 +12,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <ToolWallSection />
       <SelectedWork />
       <Timeline />
       <Journal />
