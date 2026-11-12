@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#1a1714"/>
-  <text x="16" y="22" font-family="serif" font-size="13" font-weight="bold" text-anchor="middle" fill="#68b1f5">VK</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120"><rect width="120" height="120" fill="#20272A"></rect><path d="M88 0A32 32 0 0 0 120 32L120 0Z" fill="#FFB400"></path><path fill="#E9E6DA" transform="translate(2.79 128) scale(0.06 -0.06)" d="M190.476806640625 0H757.276123046875L927.353271484375 1350H547.1943359375L475.87646484375 266.559326171875H472.116455078125L400.318603515625 1350H20.15966796875Z"></path><path fill="#E9E6DA" transform="translate(61.61 128) scale(0.06 -0.06)" d="M27.359375 0H397.75830078125V555.280029296875L523.515380859375 0H909.913818359375L729.71728515625 674L908.15380859375 1350H521.75537109375L397.75830078125 793.719970703125V1350H27.359375Z"></path></svg>
