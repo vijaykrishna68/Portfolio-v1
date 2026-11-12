@@ -5,6 +5,7 @@ import { Moon, Sun } from "lucide-react";
 import { ButtonLink } from "../shared/Button";
 import { NAV_LINKS, NAV_SCROLL_THRESHOLD, THEME_MODES } from "../../lib/constants";
 import { Container } from "../shared/Container";
+import { GlassNav } from "../shared/GlassNav";
 import type { ThemeMode } from "../../types/portfolio";
 import { INTERACTION } from "../../lib/interaction";
 
@@ -31,23 +32,19 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
   function linkClassName(href: string) {
     const active = isActive(href);
     return `text-[13px] relative group ${INTERACTION.color} ${
-      active ? "text-[#68b1f5]" : "text-muted-foreground hover:text-foreground"
+      active ? "text-accent" : "text-muted-foreground hover:text-foreground"
     }`;
   }
 
   function underlineClassName(href: string) {
     const active = isActive(href);
-    return `absolute -bottom-0.5 left-0 h-px bg-[#68b1f5] ${INTERACTION.underline} ${
+    return `absolute -bottom-0.5 left-0 h-px bg-accent ${INTERACTION.underline} ${
       active ? "w-full" : "w-0 group-hover:w-full"
     }`;
   }
 
   return (
-    <nav
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/95 backdrop-blur-sm border-b border-border" : "bg-transparent"
-      }`}
-    >
+    <GlassNav glass={scrolled}>
       <Container>
         <div className="h-[58px] flex items-center justify-between">
           <Link
@@ -104,6 +101,6 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
           </div>
         </div>
       </Container>
-    </nav>
+    </GlassNav>
   );
 }
