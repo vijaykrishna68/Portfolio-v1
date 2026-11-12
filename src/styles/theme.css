@@ -1,55 +1,84 @@
 @custom-variant dark (&:is(.dark *));
 
+/* ==========================================================================
+   Earned Light (v1) design tokens. Source of truth: the Earned Light brand
+   sheet (tokens.json). Light values live on :root, dark values on .dark.
+   The shadcn-style semantic names (--background, --foreground, --border, ...)
+   are kept and pointed at the brand tokens so existing components restyle
+   without edits.
+   ========================================================================== */
+
 :root {
   --font-size: 16px;
   --font-display: 'DM Serif Display', Georgia, serif;
   --font-sans: 'DM Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 
-  --background: #f7f5f0;
-  --foreground: #1a1714;
-  --card: #f0ede8;
-  --card-foreground: #1a1714;
-  --popover: #f7f5f0;
-  --popover-foreground: #1a1714;
-  --primary: #1a1714;
-  --primary-foreground: #f7f5f0;
-  --secondary: #ede9e2;
-  --secondary-foreground: #1a1714;
-  --muted: #e6e2da;
-  --muted-foreground: #7a7570;
-  --accent: #68b1f5;
-  --accent-foreground: #1a1714;
-  --destructive: #c92b2b;
-  --destructive-foreground: #f7f5f0;
-  --border: rgba(26, 23, 20, 0.1);
-  --input: transparent;
-  --input-background: #ede9e2;
-  --switch-background: #c8c4bc;
+  /* ---- Brand colour tokens (light) ---- */
+  --ground: #E9E6DA;
+  --panel: #F2F0E7;
+  --stone: #D8CDB6;
+  --ink: #20272A;
+  --ink-muted: #4A5456;
+  --line: #20272A;
+  --hairline: #A9AEAB;
+  --slab: #20272A;
+  --on-slab: #E9E6DA;
+  --accent: #2F6557;
+  --on-accent: #E9E6DA;
+  --tension: #A64B2A;
+  --on-tension: #E9E6DA;
+  --lit: #FFB400;
+  --on-lit: #20272A;
+  --mist: #CAD8CC;
+  --wash: #EBD3C5;
+  --aluminium: #A9AEAB;
+
+  /* ---- Spacing, shape, stroke ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-18: 72px;
+  --radius-slab: 2px;
+  --stroke-slab: 1.5px;
+  --radius: var(--radius-slab);
+
+  /* ---- Smoky glass (nav bar and tool-wall labels only) ---- */
+  --glass-fill: rgba(32, 39, 42, 0.70);
+  --glass-blur: 14px;
+  --glass-saturate: 120%;
+  --glass-edge: rgba(233, 230, 218, 0.30);
+
+  /* ---- Semantic aliases used by existing components ---- */
+  --background: var(--ground);
+  --foreground: var(--ink);
+  --card: var(--panel);
+  --card-foreground: var(--ink);
+  --popover: var(--panel);
+  --popover-foreground: var(--ink);
+  --primary: var(--accent);
+  --primary-foreground: var(--on-accent);
+  --secondary: var(--stone);
+  --secondary-foreground: var(--ink);
+  --muted: var(--stone);
+  --muted-foreground: var(--ink-muted);
+  --accent-foreground: var(--on-accent);
+  --destructive: var(--tension);
+  --destructive-foreground: var(--on-tension);
+  --border: var(--line);
+  --input: var(--hairline);
+  --input-background: var(--panel);
+  --switch-background: var(--aluminium);
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: #68b1f5;
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.25rem;
-  --sidebar: #f0ede8;
-  --sidebar-foreground: #1a1714;
-  --sidebar-primary: #1a1714;
-  --sidebar-primary-foreground: #f7f5f0;
-  --sidebar-accent: #ede9e2;
-  --sidebar-accent-foreground: #1a1714;
-  --sidebar-border: rgba(26, 23, 20, 0.1);
-  --sidebar-ring: #68b1f5;
-
-  /* ---- Redesign Phase 1: additive tokens, not yet consumed by any component ---- */
+  --ring: var(--accent);
 
   /* Type scale — values extracted verbatim from existing inline clamp()
-     declarations (Hero h1, JournalCard featured title, About quote), so
-     adopting these later moves nothing. --text-display-section documents
-     the text-3xl/md:text-4xl pattern already shared by every section heading. */
+     declarations (Hero h1, JournalCard featured title, About quote). */
   --text-display-hero: clamp(3.75rem, 10vw, 9rem);
   --text-display-section: clamp(1.875rem, 1.5rem + 1.5vw, 2.25rem);
   --text-display-card: clamp(1.6rem, 3vw, 2.35rem);
@@ -57,69 +86,47 @@
   --text-body: 1rem;
   --text-body-lg: 1.0625rem;
 
-  /* Surface system — restrained elevation, no new blur/shadow default */
-  --surface-elevated: #f4f1ec;
-  --surface-glass: rgba(247, 245, 240, 0.55);
-  --border-subtle: rgba(26, 23, 20, 0.08);
-  --border-strong: rgba(26, 23, 20, 0.22);
-  --shadow-glow: 0 12px 28px rgba(79, 143, 214, 0.16);
+  /* Surface helpers. No soft shadows and no glass on content in this system,
+     so these resolve to flat brand surfaces. */
+  --surface-elevated: var(--panel);
+  --surface-glass: var(--panel);
+  --border-subtle: var(--hairline);
+  --border-strong: var(--line);
 
-  /* Signal color — same value as the yellow already used in ProjectCard/About;
-     reserved strictly for impact/outcome markers, never decorative */
-  --signal: #ffdf60;
-  --signal-soft: rgba(255, 223, 96, 0.08);
+  /* Signal (impact / outcome markers) now resolves to the lit tokens. */
+  --signal: var(--lit);
+  --signal-soft: var(--mist);
 }
 
 .dark {
-  --background: #131118;
-  --foreground: #ece9e4;
-  --card: #1c1927;
-  --card-foreground: #ece9e4;
-  --popover: #1c1927;
-  --popover-foreground: #ece9e4;
-  --primary: #ece9e4;
-  --primary-foreground: #131118;
-  --secondary: #26213f;
-  --secondary-foreground: #ece9e4;
-  --muted: #201d2c;
-  --muted-foreground: #8b8599;
-  --accent: #68b1f5;
-  --accent-foreground: #131118;
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: rgba(236, 233, 228, 0.1);
-  --input: rgba(236, 233, 228, 0.08);
-  --ring: #68b1f5;
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: #1c1927;
-  --sidebar-foreground: #ece9e4;
-  --sidebar-primary: #68b1f5;
-  --sidebar-primary-foreground: #131118;
-  --sidebar-accent: #26213f;
-  --sidebar-accent-foreground: #ece9e4;
-  --sidebar-border: rgba(236, 233, 228, 0.1);
-  --sidebar-ring: #68b1f5;
+  --ground: #1A2023;
+  --panel: #242C30;
+  --stone: #3B3A32;
+  --ink: #E9E6DA;
+  --ink-muted: #A9AEAB;
+  --line: #A9AEAB;
+  --hairline: #3F484C;
+  --slab: #E9E6DA;
+  --on-slab: #20272A;
+  --accent: #79BBA6;
+  --on-accent: #1A2023;
+  --tension: #E48A63;
+  --on-tension: #1A2023;
+  --lit: #FFB400;
+  --on-lit: #20272A;
+  --mist: #2B3A35;
+  --wash: #3E2E27;
+  --aluminium: #A9AEAB;
 
-  /* ---- Redesign Phase 1: additive tokens (dark values) ---- */
-  --surface-elevated: #211d31;
-  --surface-glass: rgba(28, 25, 39, 0.55);
-  --border-subtle: rgba(236, 233, 228, 0.08);
-  --border-strong: rgba(236, 233, 228, 0.24);
-  --shadow-glow: 0 16px 32px rgba(127, 180, 238, 0.22);
-  --signal: #ffdf60;
-  --signal-soft: rgba(255, 223, 96, 0.1);
+  --glass-fill: rgba(233, 230, 218, 0.12);
 }
 
 @theme inline {
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+
+  /* shadcn-style semantic colours */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -141,38 +148,55 @@
   --color-input-background: var(--input-background);
   --color-switch-background: var(--switch-background);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 
-  /* ---- Redesign Phase 1: register new tokens as Tailwind utilities ---- */
+  /* Earned Light brand colours as utilities: bg-slab, text-on-slab, ... */
+  --color-ground: var(--ground);
+  --color-panel: var(--panel);
+  --color-stone: var(--stone);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-hairline: var(--hairline);
+  --color-slab: var(--slab);
+  --color-on-slab: var(--on-slab);
+  --color-on-accent: var(--on-accent);
+  --color-tension: var(--tension);
+  --color-on-tension: var(--on-tension);
+  --color-lit: var(--lit);
+  --color-on-lit: var(--on-lit);
+  --color-mist: var(--mist);
+  --color-wash: var(--wash);
+  --color-aluminium: var(--aluminium);
+
+  /* Existing helper colours */
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-glass: var(--surface-glass);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
+
+  /* Radius: 2px everywhere. Circles (rounded-full) are still allowed. */
+  --radius-slab: var(--radius-slab);
+  --radius-xs: var(--radius-slab);
+  --radius-sm: var(--radius-slab);
+  --radius-md: var(--radius-slab);
+  --radius-lg: var(--radius-slab);
+  --radius-xl: var(--radius-slab);
+  --radius-2xl: var(--radius-slab);
+  --radius-3xl: var(--radius-slab);
+  --radius-4xl: var(--radius-slab);
+
+  /* No soft shadows in this system: remove Tailwind's default shadow scale. */
+  --shadow-*: initial;
+
+  /* Type scale utilities */
   --text-display-hero: var(--text-display-hero);
   --text-display-section: var(--text-display-section);
   --text-display-card: var(--text-display-card);
   --text-display-quote: var(--text-display-quote);
   --text-body: var(--text-body);
   --text-body-lg: var(--text-body-lg);
-  --color-surface-elevated: var(--surface-elevated);
-  --color-surface-glass: var(--surface-glass);
-  --color-border-subtle: var(--border-subtle);
-  --color-border-strong: var(--border-strong);
-  --shadow-glow: var(--shadow-glow);
-  --color-signal: var(--signal);
-  --color-signal-soft: var(--signal-soft);
 }
 
 @layer base {
