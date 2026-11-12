@@ -1,36 +1,12 @@
-import { useEffect, useState } from "react";
 import { ArrowRight, ExternalLink } from "lucide-react";
 
 import { ButtonLink } from "../shared/Button";
 import { Reveal } from "../shared/Reveal";
 import { SectionLabel } from "../shared/SectionLabel";
-import { usePrefersReducedMotion } from "../../hooks/usePrefersReducedMotion";
-import { useNoHover } from "../../hooks/useNoHover";
 import { HeroStatus } from "./HeroStatus";
-import { HeroTechCluster } from "./HeroTechCluster";
-
-// Touch devices have no cursor, so the hover-driven name-color interaction
-// never fires there. Instead, on devices with no hover capability, the two
-// existing color states simply alternate on a fixed 3s timer — desktop is
-// completely unaffected (showAltName never becomes true when hover works).
-const NAME_ALT_INTERVAL_MS = 3000;
+import { HeroComposition } from "./HeroComposition";
 
 export function Hero() {
-  const noHover = useNoHover();
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const [showAltName, setShowAltName] = useState(false);
-
-  useEffect(() => {
-    if (!noHover || prefersReducedMotion) {
-      setShowAltName(false);
-      return;
-    }
-    const id = window.setInterval(() => {
-      setShowAltName((current) => !current);
-    }, NAME_ALT_INTERVAL_MS);
-    return () => window.clearInterval(id);
-  }, [noHover, prefersReducedMotion]);
-
   return (
     <section className="min-h-[100svh] flex flex-col justify-center px-6 md:px-10 max-w-[1320px] mx-auto pt-20 pb-14 md:pb-16">
 
@@ -40,18 +16,14 @@ export function Hero() {
           <SectionLabel>Portfolio · 2026</SectionLabel>
 
           <h1
-            className="mt-9 leading-[0.9] tracking-[-0.03em] group cursor-default select-none max-w-[10ch] font-display"
+            className="mt-9 leading-[0.9] tracking-[-0.03em] cursor-default select-none max-w-[10ch] font-display text-ink"
             style={{
               fontSize: "clamp(3.75rem, 10vw, 9rem)",
             }}
           >
-            <span className={`inline-block ${showAltName ? "text-accent" : "text-foreground"} group-hover:text-accent transition-colors duration-700 ease-in-out`}>
-              Vijay
-            </span>
+            <span className="inline-block">Vijay</span>
             <br />
-            <span className={`inline-block ${showAltName ? "text-tension" : "text-foreground"} group-hover:text-tension transition-colors duration-700 ease-in-out delay-75`}>
-              Krishna.
-            </span>
+            <span className="inline-block">Krishna.</span>
           </h1>
 
           <p
@@ -65,9 +37,9 @@ export function Hero() {
 
           <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-muted-foreground text-[13px] font-mono">
             <span>Full Stack Engineer</span>
-            <span className="text-accent">·</span>
+            <span>·</span>
             <span>Pragmatic Developer</span>
-            <span className="text-accent">·</span>
+            <span>·</span>
             <span>Open to Freelance Work</span>
           </div>
 
@@ -80,16 +52,13 @@ export function Hero() {
             </ButtonLink>
           </div>
 
-          {/* Mobile: same technology chips, static and unanimated */}
-          <HeroTechCluster variant="mobile" className="mt-12 md:hidden" />
+          {/* Mobile: the composition sits under the text */}
+          <HeroComposition className="mt-12 md:hidden" />
         </Reveal>
 
-        {/* Technology ecosystem visual — reduced cluster on tablet, full cluster on desktop */}
-        <Reveal delay={200} className="hidden md:block lg:hidden md:col-span-5">
-          <HeroTechCluster variant="tablet" />
-        </Reveal>
-        <Reveal delay={200} className="hidden lg:block lg:col-span-5">
-          <HeroTechCluster variant="desktop" />
+        {/* Right column: one accent slab with the VK mark, one tension block, one lit sun */}
+        <Reveal delay={200} className="hidden md:block md:col-span-5">
+          <HeroComposition className="ml-auto" />
         </Reveal>
       </div>
 

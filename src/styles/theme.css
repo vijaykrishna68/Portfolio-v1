@@ -334,6 +334,8 @@
      text-foreground / border-border etc. read as bone on slate. */
   .glass-nav {
     --foreground: var(--glass-ink);
+    --ink: var(--glass-ink);
+    --ink-muted: color-mix(in srgb, var(--glass-ink) 78%, transparent);
     --muted-foreground: color-mix(in srgb, var(--glass-ink) 78%, transparent);
     --border: var(--glass-edge);
     --line: var(--glass-ink);
