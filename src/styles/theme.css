@@ -2,13 +2,14 @@
 
 /* ==========================================================================
    Earned Light (v1) design tokens. Source of truth: the Earned Light brand
-   sheet (tokens.json). Light values live on :root, dark values on .dark.
+   sheet (tokens.json). Light values live on :root (and .light), dark values on .dark.
    The shadcn-style semantic names (--background, --foreground, --border, ...)
    are kept and pointed at the brand tokens so existing components restyle
    without edits.
    ========================================================================== */
 
-:root {
+:root,
+.light {
   --font-size: 16px;
   /* Font stacks from tokens.json (type.families) */
   --font-display: "Anybody", "Archivo Narrow", "Arial Narrow", Impact, sans-serif;
@@ -58,29 +59,6 @@
   --glass-ink: #E9E6DA; /* text on glass is always bone */
   --glass-solid: #20272A; /* opaque fallback: slate (light) */
 
-  /* ---- Semantic aliases used by existing components ---- */
-  --background: var(--ground);
-  --foreground: var(--ink);
-  --card: var(--panel);
-  --card-foreground: var(--ink);
-  --popover: var(--panel);
-  --popover-foreground: var(--ink);
-  --primary: var(--accent);
-  --primary-foreground: var(--on-accent);
-  --secondary: var(--stone);
-  --secondary-foreground: var(--ink);
-  --muted: var(--stone);
-  --muted-foreground: var(--ink-muted);
-  --accent-foreground: var(--on-accent);
-  --destructive: var(--tension);
-  --destructive-foreground: var(--on-tension);
-  --border: var(--line);
-  --input: var(--hairline);
-  --input-background: var(--panel);
-  --switch-background: var(--aluminium);
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --ring: var(--accent);
 
   /* Type scale — values extracted verbatim from existing inline clamp()
      declarations (Hero h1, JournalCard featured title, About quote). */
@@ -89,17 +67,6 @@
   --text-display-card: clamp(1.6rem, 3vw, 2.35rem);
   --text-display-quote: clamp(1.9rem, 3.5vw, 3rem);
   --text-body-lg: 1.0625rem;
-
-  /* Surface helpers. No soft shadows and no glass on content in this system,
-     so these resolve to flat brand surfaces. */
-  --surface-elevated: var(--panel);
-  --surface-glass: var(--panel);
-  --border-subtle: var(--hairline);
-  --border-strong: var(--line);
-
-  /* Signal (impact / outcome markers) resolves to accent: lit is reserved for the single lit part per view. */
-  --signal: var(--accent);
-  --signal-soft: var(--mist);
 }
 
 .dark {
@@ -124,6 +91,47 @@
 
   --glass-fill: rgba(233, 230, 218, 0.12);
   --glass-solid: var(--panel); /* opaque fallback in dark */
+}
+
+/* Aliases are declared on :root and .dark so a nested .dark scope (e.g. the
+   /design-check page) recomputes them from its own palette values. */
+:root,
+.light,
+.dark {
+  /* ---- Semantic aliases used by existing components ---- */
+  --background: var(--ground);
+  --foreground: var(--ink);
+  --card: var(--panel);
+  --card-foreground: var(--ink);
+  --popover: var(--panel);
+  --popover-foreground: var(--ink);
+  --primary: var(--accent);
+  --primary-foreground: var(--on-accent);
+  --secondary: var(--stone);
+  --secondary-foreground: var(--ink);
+  --muted: var(--stone);
+  --muted-foreground: var(--ink-muted);
+  --accent-foreground: var(--on-accent);
+  --destructive: var(--tension);
+  --destructive-foreground: var(--on-tension);
+  --border: var(--line);
+  --input: var(--hairline);
+  --input-background: var(--panel);
+  --switch-background: var(--aluminium);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: var(--accent);
+
+  /* Surface helpers. No soft shadows and no glass on content in this system,
+     so these resolve to flat brand surfaces. */
+  --surface-elevated: var(--panel);
+  --surface-glass: var(--panel);
+  --border-subtle: var(--hairline);
+  --border-strong: var(--line);
+
+  /* Signal (impact / outcome markers) resolves to accent: lit is reserved for the single lit part per view. */
+  --signal: var(--accent);
+  --signal-soft: var(--mist);
 }
 
 @theme inline {

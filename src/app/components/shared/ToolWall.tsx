@@ -22,13 +22,27 @@ export function useToolWall() {
   return useContext(ToolWallContext);
 }
 
-export function ToolWallProvider({ defaultLit = null, children }: { defaultLit?: GlyphId | null; children: ReactNode }) {
+/** The glyph sprite, inlined once. ToolWallProvider mounts it unless sprite={false}. */
+export function GlyphSprite() {
+  return <div aria-hidden="true" className="absolute h-0 w-0 overflow-hidden" dangerouslySetInnerHTML={{ __html: spriteMarkup }} />;
+}
+
+export function ToolWallProvider({
+  defaultLit = null,
+  sprite = true,
+  children,
+}: {
+  defaultLit?: GlyphId | null;
+  /** Set false when GlyphSprite is mounted elsewhere on the page. */
+  sprite?: boolean;
+  children: ReactNode;
+}) {
   const [litId, setLitId] = useState<GlyphId | null>(defaultLit);
   const light = useCallback((id: GlyphId) => setLitId(id), []);
   const value = useMemo(() => ({ litId, light }), [litId, light]);
   return (
     <ToolWallContext.Provider value={value}>
-      <div aria-hidden="true" className="absolute h-0 w-0 overflow-hidden" dangerouslySetInnerHTML={{ __html: spriteMarkup }} />
+      {sprite ? <GlyphSprite /> : null}
       {children}
     </ToolWallContext.Provider>
   );
