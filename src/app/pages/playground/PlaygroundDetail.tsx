@@ -24,8 +24,7 @@ export default function PlaygroundDetail() {
         <Container>
           <Link
             to="/playground"
-            className={`inline-flex items-center gap-2 text-[12px] text-muted-foreground hover:text-foreground ${INTERACTION.color}`}
-            style={{ fontFamily: "var(--font-mono)" }}
+            className={`inline-flex items-center gap-2 text-[12px] text-muted-foreground hover:text-foreground ${INTERACTION.color} font-mono`}
           >
             <ArrowLeft size={12} />
             Playground
@@ -39,16 +38,14 @@ export default function PlaygroundDetail() {
           <div className="max-w-2xl">
             <div className="flex flex-wrap items-center gap-2 mb-6">
               <span
-                className="text-[10px] uppercase tracking-widest text-[#68b1f5]"
-                style={{ fontFamily: "var(--font-mono)" }}
+                className="text-[10px] uppercase tracking-widest text-[#68b1f5] font-mono"
               >
                 {item.tags[0]}
               </span>
             </div>
 
             <h1
-              className="text-4xl md:text-5xl text-foreground leading-[1.05] mb-5"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="text-4xl md:text-5xl text-foreground leading-[1.05] mb-5 font-display"
             >
               {item.title}
             </h1>

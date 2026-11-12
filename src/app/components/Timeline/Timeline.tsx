@@ -17,7 +17,7 @@ export function Timeline() {
 
           <Reveal delay={0} className="lg:col-span-3">
             <SectionLabel>Timeline</SectionLabel>
-            <h2 className="mt-3 max-w-[10ch] text-display-section text-foreground leading-[1.08]" style={{ fontFamily: "var(--font-display)" }}>
+            <h2 className="mt-3 max-w-[10ch] text-display-section text-foreground leading-[1.08] font-display">
               How I got here.
             </h2>
             <p className="mt-4 text-[14px] text-muted-foreground leading-[1.7] max-w-[20rem]">

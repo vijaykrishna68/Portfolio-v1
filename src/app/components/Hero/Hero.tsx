@@ -40,9 +40,8 @@ export function Hero() {
           <SectionLabel>Portfolio · 2026</SectionLabel>
 
           <h1
-            className="mt-9 leading-[0.9] tracking-[-0.03em] group cursor-default select-none max-w-[10ch]"
+            className="mt-9 leading-[0.9] tracking-[-0.03em] group cursor-default select-none max-w-[10ch] font-display"
             style={{
-              fontFamily: "var(--font-display)",
               fontSize: "clamp(3.75rem, 10vw, 9rem)",
             }}
           >
@@ -64,7 +63,7 @@ export function Hero() {
 
           <HeroStatus />
 
-          <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-muted-foreground text-[13px]" style={{ fontFamily: "var(--font-mono)" }}>
+          <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-muted-foreground text-[13px] font-mono">
             <span>Full Stack Engineer</span>
             <span className="text-[#68b1f5]">·</span>
             <span>Pragmatic Developer</span>
@@ -98,8 +97,7 @@ export function Hero() {
       <Reveal delay={500} className="mt-auto pb-12 pt-20 flex items-center gap-3">
         <div className="w-10 h-px bg-border" />
         <span
-          className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground"
-          style={{ fontFamily: "var(--font-mono)" }}
+          className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-mono"
         >
           Scroll to explore
         </span>

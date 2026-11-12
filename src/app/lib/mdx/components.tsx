@@ -4,22 +4,19 @@ export const MDX_COMPONENTS = {
   h1: (props: ComponentPropsWithoutRef<"h1">) => (
     <h1
       {...props}
-      style={{ fontFamily: "var(--font-display)" }}
-      className="text-3xl text-foreground mt-12 mb-4 leading-tight"
+      className="text-3xl text-foreground mt-12 mb-4 leading-tight font-display"
     />
   ),
   h2: (props: ComponentPropsWithoutRef<"h2">) => (
     <h2
       {...props}
-      style={{ fontFamily: "var(--font-display)" }}
-      className="text-2xl text-foreground mt-10 mb-3 leading-tight"
+      className="text-2xl text-foreground mt-10 mb-3 leading-tight font-display"
     />
   ),
   h3: (props: ComponentPropsWithoutRef<"h3">) => (
     <h3
       {...props}
-      style={{ fontFamily: "var(--font-display)" }}
-      className="text-xl text-foreground mt-8 mb-2 leading-tight"
+      className="text-xl text-foreground mt-8 mb-2 leading-tight font-display"
     />
   ),
   p: (props: ComponentPropsWithoutRef<"p">) => (
@@ -43,15 +40,13 @@ export const MDX_COMPONENTS = {
   code: (props: ComponentPropsWithoutRef<"code">) => (
     <code
       {...props}
-      className="px-1.5 py-0.5 text-[13px] bg-muted border border-border text-[#68b1f5]"
-      style={{ fontFamily: "var(--font-mono)" }}
+      className="px-1.5 py-0.5 text-[13px] bg-muted border border-border text-[#68b1f5] font-mono"
     />
   ),
   pre: (props: ComponentPropsWithoutRef<"pre">) => (
     <pre
       {...props}
-      className="p-5 bg-muted border border-border overflow-x-auto mb-6 text-[13px] leading-relaxed"
-      style={{ fontFamily: "var(--font-mono)" }}
+      className="p-5 bg-muted border border-border overflow-x-auto mb-6 text-[13px] leading-relaxed font-mono"
     />
   ),
   blockquote: (props: ComponentPropsWithoutRef<"blockquote">) => (

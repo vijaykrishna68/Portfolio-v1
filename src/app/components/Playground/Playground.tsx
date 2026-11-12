@@ -18,7 +18,7 @@ export function Playground() {
           <Reveal>
             <div>
               <SectionLabel>Playground</SectionLabel>
-              <h2 className="mt-3 max-w-[12ch] text-3xl md:text-4xl text-foreground leading-[1.08]" style={{ fontFamily: "var(--font-display)" }}>
+              <h2 className="mt-3 max-w-[12ch] text-3xl md:text-4xl text-foreground leading-[1.08] font-display">
                 Experiments & explorations.
               </h2>
               <p className="mt-3 text-[14px] text-muted-foreground max-w-[22rem] leading-[1.7]">

@@ -75,7 +75,7 @@ function StaticChip({ techId, tier }: { techId: TechId; tier: Tier }) {
       className={`inline-flex flex-col items-center justify-center gap-1 ${tierStyle.pad} rounded-2xl border border-border-strong bg-surface-glass text-foreground/70 select-none`}
     >
       {tech.icon(tierStyle.icon)}
-      <span className={`${tierStyle.text} uppercase tracking-wider text-muted-foreground`} style={{ fontFamily: "var(--font-mono)" }}>
+      <span className={`${tierStyle.text} uppercase tracking-wider text-muted-foreground font-mono`}>
         {tech.name}
       </span>
     </div>
@@ -104,7 +104,7 @@ function MobileChip({ techId, tier }: { techId: TechId; tier: Tier }) {
         className={`inline-flex flex-col items-center justify-center gap-1 ${tierStyle.pad} rounded-2xl border border-border-strong bg-surface-glass text-foreground/70 select-none`}
       >
         {tech.icon(tierStyle.icon)}
-        <span className={`${tierStyle.text} uppercase tracking-wider text-muted-foreground`} style={{ fontFamily: "var(--font-mono)" }}>
+        <span className={`${tierStyle.text} uppercase tracking-wider text-muted-foreground font-mono`}>
           {tech.name}
         </span>
       </motion.div>
@@ -135,7 +135,7 @@ function AnimatedSlot({ slot, techId }: { slot: Slot; techId: TechId }) {
           className={`inline-flex flex-col items-center justify-center gap-1 ${tierStyle.pad} rounded-2xl border border-border-strong bg-surface-glass text-foreground/70 select-none`}
         >
           {tech.icon(tierStyle.icon)}
-          <span className={`${tierStyle.text} uppercase tracking-wider text-muted-foreground`} style={{ fontFamily: "var(--font-mono)" }}>
+          <span className={`${tierStyle.text} uppercase tracking-wider text-muted-foreground font-mono`}>
             {tech.name}
           </span>
         </motion.div>

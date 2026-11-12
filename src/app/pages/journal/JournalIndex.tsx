@@ -17,8 +17,7 @@ export default function JournalIndex() {
         <div className="mb-[4.5rem]">
           <SectionLabel>Engineering Journal</SectionLabel>
           <h1
-            className="mt-3 text-3xl md:text-4xl text-foreground tracking-tight"
-            style={{ fontFamily: "var(--font-display)" }}
+            className="mt-3 text-3xl md:text-4xl text-foreground tracking-tight font-display"
           >
             All articles
           </h1>
@@ -37,22 +36,19 @@ export default function JournalIndex() {
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-1.5">
                       <span
-                        className="text-[10px] tracking-wider text-muted-foreground uppercase"
-                        style={{ fontFamily: "var(--font-mono)" }}
+                        className="text-[10px] tracking-wider text-muted-foreground uppercase font-mono"
                       >
                         {post.tags[0]}
                       </span>
                       <span className="text-muted-foreground/40 text-[10px]">·</span>
                       <span
-                        className="text-[10px] text-muted-foreground"
-                        style={{ fontFamily: "var(--font-mono)" }}
+                        className="text-[10px] text-muted-foreground font-mono"
                       >
                         {formatDate(post.publishedAt)}
                       </span>
                       <span className="text-muted-foreground/40 text-[10px]">·</span>
                       <span
-                        className="text-[10px] text-muted-foreground"
-                        style={{ fontFamily: "var(--font-mono)" }}
+                        className="text-[10px] text-muted-foreground font-mono"
                       >
                         {post.readTime}
                       </span>

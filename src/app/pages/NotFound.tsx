@@ -8,14 +8,12 @@ export default function NotFound() {
     <section className="pt-48 pb-36">
       <Container>
         <p
-          className="text-[10px] uppercase tracking-widest text-[#68b1f5] mb-4"
-          style={{ fontFamily: "var(--font-mono)" }}
+          className="text-[10px] uppercase tracking-widest text-[#68b1f5] mb-4 font-mono"
         >
           404
         </p>
         <h1
-          className="text-4xl md:text-5xl text-foreground mb-6 leading-[1.05]"
-          style={{ fontFamily: "var(--font-display)" }}
+          className="text-4xl md:text-5xl text-foreground mb-6 leading-[1.05] font-display"
         >
           Page not found.
         </h1>

@@ -20,7 +20,7 @@ export function TimelineItem({ item, isOpen, onToggle }: TimelineItemProps) {
       <button onClick={onToggle} aria-expanded={isOpen} className={`w-full text-left py-6 border-b border-border group/btn ${INTERACTION.fast}`}>
         <div className="flex items-start justify-between gap-4">
           <div>
-            <span className="text-[10px] tracking-[0.2em] text-[#68b1f5] uppercase" style={{ fontFamily: "var(--font-mono)" }}>
+            <span className="text-[10px] tracking-[0.2em] text-[#68b1f5] uppercase font-mono">
               {item.year}
             </span>
             <h3 className="mt-1 text-body font-medium text-foreground group-hover/btn:text-[#68b1f5] transition-colors duration-200">

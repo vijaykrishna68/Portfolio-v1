@@ -29,8 +29,7 @@ export default function JournalDetail() {
         <Container>
           <Link
             to="/journal"
-            className={`inline-flex items-center gap-2 text-[12px] text-muted-foreground hover:text-foreground ${INTERACTION.color}`}
-            style={{ fontFamily: "var(--font-mono)" }}
+            className={`inline-flex items-center gap-2 text-[12px] text-muted-foreground hover:text-foreground ${INTERACTION.color} font-mono`}
           >
             <ArrowLeft size={12} />
             All articles
@@ -43,8 +42,7 @@ export default function JournalDetail() {
         <Container>
           <div className="max-w-2xl mx-auto">
             <div
-              className="flex flex-wrap items-center gap-3 mb-8 text-[11px] text-muted-foreground"
-              style={{ fontFamily: "var(--font-mono)" }}
+              className="flex flex-wrap items-center gap-3 mb-8 text-[11px] text-muted-foreground font-mono"
             >
               <span className="text-[#68b1f5]">{post.tags[0]}</span>
               <span className="text-muted-foreground/40">·</span>
@@ -54,8 +52,7 @@ export default function JournalDetail() {
             </div>
 
             <h1
-              className="text-4xl md:text-5xl text-foreground leading-[1.05] mb-6"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="text-4xl md:text-5xl text-foreground leading-[1.05] mb-6 font-display"
             >
               {post.title}
             </h1>
@@ -87,8 +84,7 @@ export default function JournalDetail() {
                   className={`group flex-1 text-left ${INTERACTION.color}`}
                 >
                   <span
-                    className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 flex items-center gap-1.5"
-                    style={{ fontFamily: "var(--font-mono)" }}
+                    className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 flex items-center gap-1.5 font-mono"
                   >
                     <ArrowLeft size={10} /> Older
                   </span>
@@ -105,8 +101,7 @@ export default function JournalDetail() {
                   className={`group flex-1 text-right ${INTERACTION.color}`}
                 >
                   <span
-                    className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 flex items-center justify-end gap-1.5"
-                    style={{ fontFamily: "var(--font-mono)" }}
+                    className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 flex items-center justify-end gap-1.5 font-mono"
                   >
                     Newer <ArrowRight size={10} />
                   </span>

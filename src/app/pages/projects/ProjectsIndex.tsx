@@ -16,8 +16,7 @@ export default function ProjectsIndex() {
         <div className="mb-[4.5rem]">
           <SectionLabel>All Work</SectionLabel>
           <h1
-            className="mt-3 text-3xl md:text-4xl text-foreground tracking-tight"
-            style={{ fontFamily: "var(--font-display)" }}
+            className="mt-3 text-3xl md:text-4xl text-foreground tracking-tight font-display"
           >
             Projects
           </h1>

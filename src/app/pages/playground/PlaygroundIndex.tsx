@@ -15,8 +15,7 @@ export default function PlaygroundIndex() {
         <div className="mb-16">
           <SectionLabel>Playground</SectionLabel>
           <h1
-            className="mt-3 text-3xl md:text-4xl text-foreground tracking-tight"
-            style={{ fontFamily: "var(--font-display)" }}
+            className="mt-3 text-3xl md:text-4xl text-foreground tracking-tight font-display"
           >
             Experiments & explorations.
           </h1>
@@ -48,8 +47,7 @@ export default function PlaygroundIndex() {
                 <div className="absolute inset-0 bg-foreground/50 group-hover:bg-foreground/30 transition-colors duration-300" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5">
                   <span
-                    className="text-[9px] tracking-widest uppercase text-white/55 mb-1 block"
-                    style={{ fontFamily: "var(--font-mono)" }}
+                    className="text-[9px] tracking-widest uppercase text-white/55 mb-1 block font-mono"
                   >
                     {item.tags[0]}
                   </span>

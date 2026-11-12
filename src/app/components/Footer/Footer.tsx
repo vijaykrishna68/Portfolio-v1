@@ -12,10 +12,10 @@ export function Footer() {
         <Reveal className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0 items-end">
 
           <div>
-            <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
+            <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground font-mono">
               Contact
             </p>
-            <h2 className="mt-3 max-w-[10ch] text-3xl md:text-4xl text-foreground leading-[1.08]" style={{ fontFamily: "var(--font-display)" }}>
+            <h2 className="mt-3 max-w-[10ch] text-3xl md:text-4xl text-foreground leading-[1.08] font-display">
               Let's build something
               <br />
               worth building.
@@ -44,7 +44,7 @@ export function Footer() {
                 </a>
               ))}
             </div>
-            <p className="mt-10 text-[11px] text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
+            <p className="mt-10 text-[11px] text-muted-foreground font-mono">
               Vijay Krishna · {new Date().getFullYear()} · Bengaluru, India
             </p>
           </div>

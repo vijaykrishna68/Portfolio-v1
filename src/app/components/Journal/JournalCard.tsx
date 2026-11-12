@@ -17,22 +17,20 @@ export function JournalCard({ article, featured = false, className = "" }: Journ
       <Link to={`/journal/${article.slug}`} className={`lg:col-span-6 border-t-2 border-foreground pt-8 group/card cursor-pointer rounded-[12px] ${INTERACTION.subtleLift} ${className}`.trim()}>
         <div className="flex flex-wrap items-center gap-3 mb-5">
           <Tag
-            className={`px-2 py-0.5 text-[10px] border border-[#68b1f5] text-[#68b1f5] tracking-wider bg-[rgba(104,177,245,0.04)] ${INTERACTION.border}`}
-            style={{ fontFamily: "var(--font-mono)" }}
+            className={`px-2 py-0.5 text-[10px] border border-[#68b1f5] text-[#68b1f5] tracking-wider bg-[rgba(104,177,245,0.04)] ${INTERACTION.border} font-mono`}
           >
             {article.tags[0]}
           </Tag>
-          <span className="text-[11px] text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
+          <span className="text-[11px] text-muted-foreground font-mono">
             {formatDate(article.publishedAt)}
           </span>
-          <span className="text-[11px] text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
+          <span className="text-[11px] text-muted-foreground font-mono">
             · {article.readTime} read
           </span>
         </div>
 
         <h3
-          className="text-display-card text-foreground leading-[1.08] mb-4 group-hover/card:text-[#68b1f5] transition-colors duration-200 max-w-[13ch]"
-          style={{ fontFamily: "var(--font-display)" }}
+          className="text-display-card text-foreground leading-[1.08] mb-4 group-hover/card:text-[#68b1f5] transition-colors duration-200 max-w-[13ch] font-display"
         >
           {article.title}
         </h3>
@@ -54,11 +52,11 @@ export function JournalCard({ article, featured = false, className = "" }: Journ
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1.5">
-            <span className="text-[10px] tracking-wider text-muted-foreground uppercase" style={{ fontFamily: "var(--font-mono)" }}>
+            <span className="text-[10px] tracking-wider text-muted-foreground uppercase font-mono">
               {article.tags[0]}
             </span>
             <span className="text-muted-foreground/40 text-[10px]">·</span>
-            <span className="text-[10px] text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
+            <span className="text-[10px] text-muted-foreground font-mono">
               {article.readTime}
             </span>
           </div>

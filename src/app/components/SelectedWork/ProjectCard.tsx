@@ -26,8 +26,7 @@ function TechPills({ project }: { project: Project }) {
       {project.technologies.map((tech) => (
         <span
           key={tech}
-          className={`px-2.5 py-1 text-[11px] border border-border text-muted-foreground hover:border-[#68b1f5] hover:bg-[rgba(104,177,245,0.06)] ${INTERACTION.border}`}
-          style={{ fontFamily: "var(--font-mono)" }}
+          className={`px-2.5 py-1 text-[11px] border border-border text-muted-foreground hover:border-[#68b1f5] hover:bg-[rgba(104,177,245,0.06)] ${INTERACTION.border} font-mono`}
         >
           {tech}
         </span>
@@ -45,13 +44,13 @@ function IndexMeta({ project, showIndex = true }: { project: Project; showIndex?
     <div className="flex items-center gap-3">
       {showIndex && (
         <>
-          <span className="text-[10px] text-[#68b1f5] tracking-widest uppercase" style={{ fontFamily: "var(--font-mono)" }}>
+          <span className="text-[10px] text-[#68b1f5] tracking-widest uppercase font-mono">
             {project.displayIndex}
           </span>
           <div className="w-6 h-px bg-border" />
         </>
       )}
-      <span className="text-[10px] text-muted-foreground tracking-wider" style={{ fontFamily: "var(--font-mono)" }}>
+      <span className="text-[10px] text-muted-foreground tracking-wider font-mono">
         {project.year}
       </span>
     </div>
@@ -70,14 +69,14 @@ function DefaultCard({ project, isLast }: { project: Project; isLast: boolean })
             <IndexMeta project={project} />
           </div>
 
-          <h3 className="text-2xl md:text-[1.875rem] text-foreground leading-snug mb-5" style={{ fontFamily: "var(--font-display)" }}>
+          <h3 className="text-2xl md:text-[1.875rem] text-foreground leading-snug mb-5 font-display">
             {project.title}
           </h3>
 
           <p className="text-[15px] text-muted-foreground leading-relaxed mb-8">{project.description}</p>
 
           <div className="mb-8 pl-4 border-l-2 border-[#68b1f5]/25">
-            <p className="text-[10px] uppercase tracking-widest text-[#68b1f5] mb-1.5" style={{ fontFamily: "var(--font-mono)" }}>
+            <p className="text-[10px] uppercase tracking-widest text-[#68b1f5] mb-1.5 font-mono">
               Engineering Challenge
             </p>
             <p className="text-[14px] text-foreground/75 leading-relaxed">{project.challenge}</p>
@@ -88,7 +87,7 @@ function DefaultCard({ project, isLast }: { project: Project; isLast: boolean })
           </div>
 
           <div className="p-4 border-l-2 border-[#ffdf60] bg-[#ffdf60]/5">
-            <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1.5" style={{ fontFamily: "var(--font-mono)" }}>
+            <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1.5 font-mono">
               Impact
             </p>
             <p className="text-[14px] text-foreground font-medium leading-snug">{project.impact}</p>
@@ -138,7 +137,7 @@ function DominantCard({ project }: { project: Project }) {
 
       <div className="mt-9 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         <div className="lg:col-span-7">
-          <h3 className="text-display-section text-foreground leading-[1.08]" style={{ fontFamily: "var(--font-display)" }}>
+          <h3 className="text-display-section text-foreground leading-[1.08] font-display">
             {project.title}
           </h3>
           <p className="mt-4 text-[15px] text-muted-foreground leading-relaxed max-w-[42rem]">{project.description}</p>
@@ -149,7 +148,7 @@ function DominantCard({ project }: { project: Project }) {
 
         <div className="lg:col-span-5">
           <div className="p-5 border border-signal/30 bg-signal-soft">
-            <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2" style={{ fontFamily: "var(--font-mono)" }}>
+            <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2 font-mono">
               Impact
             </p>
             <p className="text-[15px] text-foreground font-medium leading-snug">{project.impact}</p>
@@ -181,7 +180,7 @@ function CompactCard({ project }: { project: Project }) {
           <IndexMeta project={project} showIndex={false} />
         </div>
 
-        <h3 className="text-[17px] text-foreground leading-snug" style={{ fontFamily: "var(--font-display)" }}>
+        <h3 className="text-[17px] text-foreground leading-snug font-display">
           {project.title}
         </h3>
 

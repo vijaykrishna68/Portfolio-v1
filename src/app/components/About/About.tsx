@@ -25,11 +25,7 @@ export function About() {
             <SectionLabel>About</SectionLabel>
             <div className="mt-10">
               <p
-                className="text-display-quote text-foreground leading-[1.08] tracking-tight max-w-[11ch]"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontStyle: "italic",
-                }}
+                className="text-display-quote text-foreground leading-[1.08] tracking-tight max-w-[11ch] font-display"
               >
                 "Software should solve problems, not create them."
               </p>
@@ -62,7 +58,7 @@ export function About() {
             <div className="mt-11 grid grid-cols-1 sm:grid-cols-3 gap-6 pt-7 border-t border-border">
               {aboutStats.map(({ label, value }) => (
                 <div key={label}>
-                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1" style={{ fontFamily: "var(--font-mono)" }}>
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1 font-mono">
                     {label}
                   </p>
                   <p className="text-[13px] text-foreground">{value}</p>

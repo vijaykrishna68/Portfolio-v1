@@ -18,7 +18,7 @@ export function SelectedWork() {
           <Reveal>
             <div>
               <SectionLabel>Selected Work</SectionLabel>
-              <h2 className="mt-3 text-3xl md:text-4xl text-foreground tracking-tight" style={{ fontFamily: "var(--font-display)" }}>
+              <h2 className="mt-3 text-3xl md:text-4xl text-foreground tracking-tight font-display">
                 Three projects that shaped me.
               </h2>
             </div>

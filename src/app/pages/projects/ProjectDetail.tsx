@@ -30,8 +30,7 @@ export default function ProjectDetail() {
         <Container>
           <Link
             to="/projects"
-            className={`inline-flex items-center gap-2 text-[12px] text-muted-foreground hover:text-foreground ${INTERACTION.color}`}
-            style={{ fontFamily: "var(--font-mono)" }}
+            className={`inline-flex items-center gap-2 text-[12px] text-muted-foreground hover:text-foreground ${INTERACTION.color} font-mono`}
           >
             <ArrowLeft size={12} />
             All projects
@@ -45,15 +44,13 @@ export default function ProjectDetail() {
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-8">
               <span
-                className="text-[10px] text-[#68b1f5] tracking-widest uppercase"
-                style={{ fontFamily: "var(--font-mono)" }}
+                className="text-[10px] text-[#68b1f5] tracking-widest uppercase font-mono"
               >
                 {project.displayIndex}
               </span>
               <div className="w-6 h-px bg-border" />
               <span
-                className="text-[10px] text-muted-foreground tracking-wider"
-                style={{ fontFamily: "var(--font-mono)" }}
+                className="text-[10px] text-muted-foreground tracking-wider font-mono"
               >
                 {project.year}
               </span>
@@ -61,8 +58,7 @@ export default function ProjectDetail() {
                 <>
                   <div className="w-6 h-px bg-border" />
                   <span
-                    className="text-[10px] text-muted-foreground tracking-wider"
-                    style={{ fontFamily: "var(--font-mono)" }}
+                    className="text-[10px] text-muted-foreground tracking-wider font-mono"
                   >
                     {project.role}
                   </span>
@@ -71,8 +67,7 @@ export default function ProjectDetail() {
             </div>
 
             <h1
-              className="text-4xl md:text-5xl text-foreground leading-[1.05] mb-5"
-              style={{ fontFamily: "var(--font-display)" }}
+              className="text-4xl md:text-5xl text-foreground leading-[1.05] mb-5 font-display"
             >
               {project.title}
             </h1>
@@ -111,8 +106,7 @@ export default function ProjectDetail() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl">
             <div>
               <p
-                className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1.5"
-                style={{ fontFamily: "var(--font-mono)" }}
+                className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1.5 font-mono"
               >
                 Engineering Challenge
               </p>
@@ -123,8 +117,7 @@ export default function ProjectDetail() {
             <div className="md:col-span-2">
               <div className="p-5 border border-signal/30 bg-signal-soft">
                 <p
-                  className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1.5"
-                  style={{ fontFamily: "var(--font-mono)" }}
+                  className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1.5 font-mono"
                 >
                   Impact
                 </p>
@@ -151,8 +144,7 @@ export default function ProjectDetail() {
         <Container>
           <div className="max-w-2xl mx-auto">
             <p
-              className="text-[10px] uppercase tracking-widest text-muted-foreground mb-5"
-              style={{ fontFamily: "var(--font-mono)" }}
+              className="text-[10px] uppercase tracking-widest text-muted-foreground mb-5 font-mono"
             >
               Technologies
             </p>
@@ -160,8 +152,7 @@ export default function ProjectDetail() {
               {project.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className={`px-2.5 py-1 text-[11px] border border-border text-muted-foreground hover:border-[#68b1f5] hover:bg-[rgba(104,177,245,0.06)] ${INTERACTION.border}`}
-                  style={{ fontFamily: "var(--font-mono)" }}
+                  className={`px-2.5 py-1 text-[11px] border border-border text-muted-foreground hover:border-[#68b1f5] hover:bg-[rgba(104,177,245,0.06)] ${INTERACTION.border} font-mono`}
                 >
                   {tech}
                 </span>
@@ -228,15 +219,13 @@ export default function ProjectDetail() {
           <Container>
             <div className="max-w-2xl mx-auto">
               <p
-                className="text-[10px] uppercase tracking-widest text-muted-foreground mb-4"
-                style={{ fontFamily: "var(--font-mono)" }}
+                className="text-[10px] uppercase tracking-widest text-muted-foreground mb-4 font-mono"
               >
                 Next project
               </p>
               <Link
                 to={`/projects/${next.slug}`}
-                className={`group inline-flex items-center gap-2 text-foreground hover:text-[#68b1f5] ${INTERACTION.color}`}
-                style={{ fontFamily: "var(--font-display)" }}
+                className={`group inline-flex items-center gap-2 text-foreground hover:text-[#68b1f5] ${INTERACTION.color} font-display`}
               >
                 <span className="text-2xl">{next.title}</span>
                 <ArrowUpRight
