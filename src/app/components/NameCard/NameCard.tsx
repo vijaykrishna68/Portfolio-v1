@@ -46,16 +46,18 @@ const LINKS = buildLinks();
 const CARD_PORTRAIT_SRC = "/portrait-card.jpg";
 
 const STYLES = `
-.nc-screen{min-height:100vh;min-height:100dvh}
-.nc-block{border:2px solid var(--foreground);border-radius:2px;box-shadow:6px 6px 0 var(--foreground);color:var(--foreground)}
-.nc-row{display:flex;align-items:center;gap:14px;min-height:56px;padding:8px 12px;background:var(--card);transition:transform 120ms ease-out,box-shadow 120ms ease-out}
-.nc-row-yellow{background:var(--signal);color:var(--accent-foreground)}
-.nc-tile{display:flex;flex:none;align-items:center;justify-content:center;width:40px;height:40px;background:var(--background);color:var(--foreground);border:2px solid var(--foreground);border-radius:2px;box-shadow:3px 3px 0 var(--foreground)}
+.nc-screen{min-height:100vh;min-height:100dvh;--nc-edge:var(--foreground);--nc-shadow:var(--foreground);--nc-hi-edge:var(--foreground);--nc-hi-shadow:var(--foreground);--nc-ybd:var(--foreground);--nc-pt-shadow:0 0 0 transparent}
+.dark .nc-screen{--nc-edge:#757274;--nc-edge:color-mix(in srgb,var(--foreground) 45%,var(--background));--nc-shadow:var(--nc-edge);--nc-hi-shadow:var(--signal);--nc-ybd:var(--accent-foreground);--nc-pt-shadow:4px 4px 0 var(--nc-edge)}
+.nc-block{border:2px solid var(--nc-edge);border-radius:2px;box-shadow:6px 6px 0 var(--nc-shadow);color:var(--foreground)}
+.nc-row{display:flex;align-items:center;gap:14px;min-height:56px;padding:8px 12px;background:var(--card);transition:transform 120ms ease-out,box-shadow 120ms ease-out,border-color 120ms ease-out}
+.nc-row-yellow{background:var(--signal);color:var(--accent-foreground);--nc-edge:var(--nc-ybd);--nc-hi-edge:var(--nc-ybd);--nc-hi-shadow:var(--foreground)}
+.nc-tile{display:flex;flex:none;align-items:center;justify-content:center;width:40px;height:40px;background:var(--background);color:var(--foreground);border:2px solid var(--nc-edge);border-radius:2px;box-shadow:3px 3px 0 var(--nc-shadow)}
 .nc-row:focus-visible,.nc-toggle:focus-visible{outline:3px solid var(--foreground);outline-offset:3px}
-.nc-row:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--foreground)}
+.nc-row:focus-visible{border-color:var(--nc-hi-edge);box-shadow:6px 6px 0 var(--nc-hi-shadow)}
+.nc-row:active{transform:translate(4px,4px);border-color:var(--nc-hi-edge);box-shadow:2px 2px 0 var(--nc-hi-shadow)}
 @media (hover:hover){
-.nc-row:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--foreground)}
-.nc-row:hover:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--foreground)}
+.nc-row:hover{transform:translate(-2px,-2px);border-color:var(--nc-hi-edge);box-shadow:8px 8px 0 var(--nc-hi-shadow)}
+.nc-row:hover:active{transform:translate(4px,4px);border-color:var(--nc-hi-edge);box-shadow:2px 2px 0 var(--nc-hi-shadow)}
 }
 @keyframes nc-in{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:no-preference){.nc-in{animation:nc-in .4s ease-out both}}
@@ -82,8 +84,8 @@ export function NameCard({ theme, toggleTheme }: Props) {
           <div className="relative h-[128px] w-[96px]">
             <div
               aria-hidden="true"
-              className="absolute inset-0 border-2 border-foreground bg-signal"
-              style={{ transform: "translate(8px, 8px)", borderRadius: 2 }}
+              className="absolute inset-0 border-2 bg-signal"
+              style={{ transform: "translate(8px, 8px)", borderRadius: 2, borderColor: "var(--nc-ybd)", boxShadow: "var(--nc-pt-shadow)" }}
             />
             <img
               src={CARD_PORTRAIT_SRC}
@@ -92,8 +94,8 @@ export function NameCard({ theme, toggleTheme }: Props) {
               height={640}
               loading="eager"
               decoding="async"
-              className="relative h-full w-full border-2 border-foreground bg-muted object-cover object-top"
-              style={{ borderRadius: 2 }}
+              className="relative h-full w-full border-2 bg-muted object-cover object-top"
+              style={{ borderRadius: 2, borderColor: "var(--nc-ybd)" }}
             />
           </div>
           <h1 className="mt-6 text-[34px] leading-none" style={{ fontFamily: "var(--font-display)" }}>
@@ -104,7 +106,7 @@ export function NameCard({ theme, toggleTheme }: Props) {
           </p>
           <p
             className="nc-block mt-5 inline-block bg-signal px-3 py-1.5 text-[15px] font-medium"
-            style={{ boxShadow: "4px 4px 0 var(--foreground)", color: "var(--accent-foreground)" }}
+            style={{ boxShadow: "4px 4px 0 var(--nc-shadow)", color: "var(--accent-foreground)", borderColor: "var(--nc-ybd)" }}
           >
             Good to meet you.
           </p>
