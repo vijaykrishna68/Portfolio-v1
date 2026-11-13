@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 
 import { Container } from "../shared/Container";
+import { Headline } from "../shared/Headline";
 import { Reveal } from "../shared/Reveal";
 import { SectionLabel } from "../shared/SectionLabel";
 import { getPlaygroundItems } from "../../lib/content";
@@ -35,9 +36,9 @@ export function Playground() {
           <Reveal>
             <div>
               <SectionLabel>Playground</SectionLabel>
-              <h2 className="mt-3 max-w-[12ch] text-3xl md:text-4xl text-foreground leading-[1.08] font-display">
+              <Headline as="h2" className="mt-3 max-w-[12ch] text-3xl md:text-4xl text-foreground leading-[1.08]">
                 Experiments & explorations.
-              </h2>
+              </Headline>
               <p className="mt-3 text-caption text-muted-foreground max-w-[22rem] leading-[1.7]">
                 Tools, visualizations, and prototypes built to understand things better.
               </p>

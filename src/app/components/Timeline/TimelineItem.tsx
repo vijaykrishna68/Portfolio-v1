@@ -17,7 +17,7 @@ export function TimelineItem({ item, isOpen, onToggle }: TimelineItemProps) {
           isOpen ? "bg-accent border-accent scale-110" : "bg-background border-line scale-100"
         }`}
       />
-      <button onClick={onToggle} aria-expanded={isOpen} className={`w-full text-left py-6 border-b border-hairline group/btn ${INTERACTION.fast}`}>
+      <button onClick={onToggle} aria-expanded={isOpen} className={`w-full text-left py-6 border-b border-hairline group/btn ${INTERACTION.color}`}>
         <div className="flex items-start justify-between gap-4">
           <div>
             <span className="type-label text-accent">{item.year}</span>
@@ -31,7 +31,7 @@ export function TimelineItem({ item, isOpen, onToggle }: TimelineItemProps) {
           </span>
         </div>
 
-        <div className={`overflow-hidden transition-all duration-300 ease-out`} style={{ maxHeight: isOpen ? "200px" : "0px" }}>
+        <div className={`overflow-hidden transition-[max-height] duration-300 ease-out`} style={{ maxHeight: isOpen ? "200px" : "0px" }}>
           <p className="mt-4 pt-4 border-t border-hairline text-caption text-ink-muted leading-[1.7] max-w-[40rem]">
             {item.detail}
           </p>

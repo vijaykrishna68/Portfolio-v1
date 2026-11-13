@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { Container } from "../shared/Container";
+import { Headline } from "../shared/Headline";
 import { Reveal } from "../shared/Reveal";
 import { SectionLabel } from "../shared/SectionLabel";
 import { timeline } from "../../content/projects";
@@ -17,9 +18,9 @@ export function Timeline() {
 
           <Reveal delay={0} className="lg:col-span-3">
             <SectionLabel>Timeline</SectionLabel>
-            <h2 className="mt-3 max-w-[10ch] text-display-section text-foreground leading-[1.08] font-display">
+            <Headline as="h2" className="mt-3 max-w-[10ch] text-display-section text-foreground leading-[1.08]">
               How I got here.
-            </h2>
+            </Headline>
             <p className="mt-4 text-caption text-muted-foreground leading-[1.7] max-w-[20rem]">
               A non-linear path through code, curiosity, and occasional chaos.
             </p>
