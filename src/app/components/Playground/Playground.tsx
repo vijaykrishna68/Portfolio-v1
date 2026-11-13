@@ -8,6 +8,23 @@ import { getPlaygroundItems } from "../../lib/content";
 
 import { PlaygroundCard } from "./PlaygroundCard";
 
+/**
+ * Desktop layout: a 3-column, 2-row grid that three tiles fill exactly: the
+ * largest tile spans 2x2 on the left, the other two stack in the third column.
+ * The MDX `layout.desktop` classes still say how big each tile is (col-span-N,
+ * row-span-N); their explicit start positions (col-start-N, row-start-N) are
+ * ignored so the tiles auto-place, largest first, with no empty cell. No MDX
+ * frontmatter is touched. With a different number of tiles the grid still
+ * flows, but may leave a gap: rebalance the spans in the MDX if that happens.
+ */
+function desktopTiles(items: ReturnType<typeof getPlaygroundItems>) {
+  const area = (cls: string) =>
+    Number(cls.match(/col-span-(\d+)/)?.[1] ?? 1) * Number(cls.match(/row-span-(\d+)/)?.[1] ?? 1);
+  return [...items]
+    .sort((a, b) => area(b.layout.desktop) - area(a.layout.desktop))
+    .map((item) => ({ item, cls: item.layout.desktop.replace(/\b(?:col|row)-start-\d+\b/g, "").replace(/\s+/g, " ").trim() }));
+}
+
 export function Playground() {
   const items = getPlaygroundItems();
 
@@ -36,9 +53,9 @@ export function Playground() {
         </div>
 
         {/* Desktop grid — Reveal wraps the container; PlaygroundCard keeps its placement class */}
-        <Reveal className="hidden md:grid grid-cols-4 grid-rows-2 gap-6 h-[520px]">
-          {items.map((item) => (
-            <PlaygroundCard key={item.slug} item={item} className={item.layout.desktop} />
+        <Reveal className="hidden md:grid grid-cols-3 grid-rows-2 gap-6 h-[520px]">
+          {desktopTiles(items).map(({ item, cls }) => (
+            <PlaygroundCard key={item.slug} item={item} className={cls} />
           ))}
         </Reveal>
 
