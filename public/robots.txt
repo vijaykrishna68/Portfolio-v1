@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vijaykrishna.dev/sitemap.xml
+Sitemap: https://portfolio-v1-blush-eight.vercel.app/sitemap.xml

@@ -8,21 +8,8 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import remarkGfm from 'remark-gfm'
 import { remarkContentImages } from './src/app/lib/mdx/remarkContentImages'
 
-function figmaAssetResolver() {
-  return {
-    name: 'figma-asset-resolver',
-    resolveId(id) {
-      if (id.startsWith('figma:asset/')) {
-        const filename = id.replace('figma:asset/', '')
-        return path.resolve(__dirname, 'src/assets', filename)
-      }
-    },
-  }
-}
-
 export default defineConfig({
   plugins: [
-    figmaAssetResolver(),
     {
       enforce: 'pre',
       ...mdx({
