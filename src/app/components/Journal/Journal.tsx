@@ -15,7 +15,7 @@ export function Journal() {
   if (!featured) return null;
 
   return (
-    <section id="journal" className="py-36 border-t border-border">
+    <section id="journal" className="py-36 border-t border-hairline">
       <Container>
         <div className="flex items-end justify-between mb-[4.5rem]">
           <Reveal>

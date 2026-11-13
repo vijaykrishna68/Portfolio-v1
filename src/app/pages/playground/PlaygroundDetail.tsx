@@ -33,7 +33,7 @@ export default function PlaygroundDetail() {
       </div>
 
       {/* Header */}
-      <section className="pt-10 pb-16 border-b border-border">
+      <section className="pt-10 pb-16 border-b border-hairline">
         <Container>
           <div className="max-w-2xl">
             <div className="flex flex-wrap items-center gap-2 mb-6">
@@ -82,7 +82,7 @@ export default function PlaygroundDetail() {
 
       {/* Cover */}
       {item.cover && (
-        <div className="border-b border-border bg-muted">
+        <div className="border-b border-hairline bg-muted">
           <div className="max-w-4xl mx-auto">
             <img
               src={item.cover}

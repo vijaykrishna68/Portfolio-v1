@@ -52,7 +52,7 @@ function ToolWallBody() {
 
 export function ToolWallSection() {
   return (
-    <section id="tools" className="py-36 border-t border-border">
+    <section id="tools" className="py-36 border-t border-hairline">
       <Container>
         <ToolWallProvider>
           <ToolWallBody />

@@ -30,7 +30,7 @@ export default function JournalIndex() {
           {posts.map((post) => (
             <Link key={post.slug} to={`/journal/${post.slug}`} className="block">
               <div
-                className={`group/card py-6 border-t border-border hover:border-accent/25 ${INTERACTION.subtleLift}`}
+                className={`group/card py-6 border-t border-hairline hover:border-accent/25 ${INTERACTION.subtleLift}`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
@@ -68,7 +68,7 @@ export default function JournalIndex() {
               </div>
             </Link>
           ))}
-          {posts.length > 0 && <div className="border-b border-border" />}
+          {posts.length > 0 && <div className="border-b border-hairline" />}
         </div>
       </Container>
     </section>

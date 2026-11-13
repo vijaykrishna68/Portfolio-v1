@@ -11,7 +11,7 @@ export function Timeline() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section id="timeline" className="py-36 border-t border-border bg-secondary/30">
+    <section id="timeline" className="py-36 border-t border-hairline">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
 

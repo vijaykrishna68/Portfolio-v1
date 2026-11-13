@@ -39,7 +39,7 @@ export default function ProjectDetail() {
       </div>
 
       {/* Hero */}
-      <section className="pt-10 pb-16 border-b border-border">
+      <section className="pt-10 pb-16 border-b border-hairline">
         <Container>
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-8">
@@ -48,7 +48,7 @@ export default function ProjectDetail() {
               >
                 {project.displayIndex}
               </span>
-              <div className="w-6 h-px bg-border" />
+              <div className="w-6 h-px bg-hairline" />
               <span
                 className="text-label text-muted-foreground tracking-wider font-mono"
               >
@@ -56,7 +56,7 @@ export default function ProjectDetail() {
               </span>
               {project.role && (
                 <>
-                  <div className="w-6 h-px bg-border" />
+                  <div className="w-6 h-px bg-hairline" />
                   <span
                     className="text-label text-muted-foreground tracking-wider font-mono"
                   >
@@ -87,7 +87,7 @@ export default function ProjectDetail() {
 
       {/* Cover */}
       {project.cover && (
-        <div className="border-b border-border bg-muted">
+        <div className="border-b border-hairline bg-muted">
           <div className="max-w-5xl mx-auto">
             <img
               src={project.cover}
@@ -101,7 +101,7 @@ export default function ProjectDetail() {
       )}
 
       {/* Impact row */}
-      <section className="py-10 border-b border-border">
+      <section className="py-10 border-b border-hairline">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl">
             <div>
@@ -131,7 +131,7 @@ export default function ProjectDetail() {
       </section>
 
       {/* MDX Body */}
-      <section className="py-16 border-b border-border">
+      <section className="py-16 border-b border-hairline">
         <Container>
           <div className="max-w-2xl mx-auto">
             <Body components={MDX_COMPONENTS} />
@@ -140,7 +140,7 @@ export default function ProjectDetail() {
       </section>
 
       {/* Technologies */}
-      <section className="py-12 border-b border-border">
+      <section className="py-12 border-b border-hairline">
         <Container>
           <div className="max-w-2xl mx-auto">
             <p
@@ -165,7 +165,7 @@ export default function ProjectDetail() {
       {/* External links */}
       {project.links &&
         (project.links.github || project.links.live || project.links.writeup || project.links.caseStudy) && (
-        <section className="py-10 border-b border-border">
+        <section className="py-10 border-b border-hairline">
           <Container>
             <div className="max-w-2xl mx-auto flex flex-wrap gap-3">
               {project.links.github && (

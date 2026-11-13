@@ -38,7 +38,7 @@ export default function JournalDetail() {
       </div>
 
       {/* Header */}
-      <section className="pt-10 pb-16 border-b border-border">
+      <section className="pt-10 pb-16 border-b border-hairline">
         <Container>
           <div className="max-w-2xl mx-auto">
             <div
@@ -65,7 +65,7 @@ export default function JournalDetail() {
       </section>
 
       {/* Body */}
-      <section className="py-16 border-b border-border">
+      <section className="py-16 border-b border-hairline">
         <Container>
           <div className="max-w-2xl mx-auto">
             <Body components={MDX_COMPONENTS} />

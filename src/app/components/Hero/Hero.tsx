@@ -64,7 +64,7 @@ export function Hero() {
 
       {/* Scroll indicator — delayed so it appears after the heading settles */}
       <Reveal delay={500} className="mt-auto pb-12 pt-20 flex items-center gap-3">
-        <div className="w-10 h-px bg-border" />
+        <div className="w-10 h-px bg-hairline" />
         <span
           className="text-label uppercase tracking-[0.2em] text-muted-foreground font-mono"
         >

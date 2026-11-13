@@ -1,20 +1,19 @@
 import { ArrowRight } from "lucide-react";
 
 import { Container } from "../shared/Container";
+import { Label } from "../shared/Label";
 import { Reveal } from "../shared/Reveal";
 import { CONTACT_EMAIL, SOCIAL_LINKS } from "../../content/site";
 import { INTERACTION } from "../../lib/interaction";
 
 export function Footer() {
   return (
-    <footer id="contact" className="py-24 border-t border-border">
+    <footer id="contact" className="py-24 border-t border-hairline">
       <Container>
         <Reveal className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0 items-end">
 
           <div>
-            <p className="text-label uppercase tracking-[0.22em] text-muted-foreground font-mono">
-              Contact
-            </p>
+            <Label as="p">Contact</Label>
             <h2 className="mt-3 max-w-[10ch] text-3xl md:text-4xl text-foreground leading-[1.08] font-display">
               Let's build something
               <br />
@@ -44,9 +43,9 @@ export function Footer() {
                 </a>
               ))}
             </div>
-            <p className="mt-10 text-label text-muted-foreground font-mono">
+            <Label as="p" className="mt-10 block">
               Vijay Krishna · {new Date().getFullYear()} · Bengaluru, India
-            </p>
+            </Label>
           </div>
 
         </Reveal>

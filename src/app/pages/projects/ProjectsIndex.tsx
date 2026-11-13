@@ -11,7 +11,7 @@ export default function ProjectsIndex() {
   const projects = getProjects();
 
   return (
-    <section className="pt-36 pb-24 border-t border-border">
+    <section className="pt-36 pb-24 border-t border-hairline">
       <Container>
         <div className="mb-[4.5rem]">
           <SectionLabel>All Work</SectionLabel>

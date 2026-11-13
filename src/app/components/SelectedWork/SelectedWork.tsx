@@ -12,7 +12,7 @@ export function SelectedWork() {
   const [primary, ...rest] = getFeaturedProjects();
 
   return (
-    <section id="work" className="py-36 border-t border-border">
+    <section id="work" className="py-36 border-t border-hairline">
       <Container>
         <div className="flex items-end justify-between mb-[4.5rem]">
           <Reveal>

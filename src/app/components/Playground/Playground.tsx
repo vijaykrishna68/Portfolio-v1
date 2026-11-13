@@ -12,7 +12,7 @@ export function Playground() {
   const items = getPlaygroundItems();
 
   return (
-    <section id="playground" className="py-36 border-t border-border bg-secondary/30">
+    <section id="playground" className="py-36 border-t border-hairline">
       <Container>
         <div className="flex items-end justify-between mb-16">
           <Reveal>
