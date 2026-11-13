@@ -220,12 +220,14 @@ function AutoLightDemo() {
         <div>wall in view: {pct(s.wall)} (needs 60%)</div>
         <div>hero in view: {pct(s.hero)} (needs under 20%)</div>
         <div>lit cell: {wall?.litId ?? "none"}</div>
+        <div>last chosen: {wall?.chosenId ?? "none"}</div>
+        <div>faded out for the sun: {s.suppressed ? "yes" : "no"}</div>
         <div>auto-light fired: {s.done ? "yes" : "no"}</div>
       </div>
       {/* Stand-in for the Hero composition: same data attribute the real one carries */}
       <div data-hero-composition className="relative h-[360px] overflow-hidden border-stroke border-line rounded-slab bg-panel mb-6">
         <div className="absolute left-12 top-8 h-48 w-56 rounded-slab bg-accent" />
-        <div className="absolute right-0 bottom-0 h-32 w-32 rounded-tl-full bg-lit" />
+        <div data-hero-sun className="absolute right-0 bottom-0 h-32 w-32 rounded-tl-full bg-lit" />
         <Label className="absolute left-4 bottom-4">stand-in for the Hero composition (has the lit sun)</Label>
       </div>
       <div ref={s.wallRef}>
@@ -243,10 +245,10 @@ function AutoLightCheck() {
   const [run, setRun] = useState(0);
   return (
     <Container>
-      <Section title="Auto-light check: nothing lit at load; A1 lights once when the wall is 60% in view and the hero is under 20%">
+      <Section title="Single lit part: A1 lights at wall 60% / hero under 20%; fades out when the hero is over 50% or its sun shows">
         <p className="text-ink-muted text-caption max-w-[62ch] mb-4">
-          Scroll down until the wall fills the view and the stand-in is out of sight: A1 lights once. Scroll back up and nothing changes. Hover or tab to another
-          cell and the light stays on your choice.
+          Scroll down until the wall fills the view and the stand-in is out of sight: A1 lights once. Scroll back up: the light fades out as soon as the stand-in's sun
+          appears (and whenever the stand-in is over 50% in view) and comes back on your last choice once it is under 20% and its sun is gone. Never two gold parts.
         </p>
         <Button variant="outline" onClick={() => setRun((r) => r + 1)} className="mb-6">
           Reset check

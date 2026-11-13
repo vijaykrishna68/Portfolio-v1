@@ -65,7 +65,7 @@ export function HeroComposition({ className = "" }: { className?: string }) {
         <rect x="312" y="312" width="96" height="96" rx={R} className="fill-tension" />
 
         {/* The single lit sun, cut by the frame's bottom-right corner */}
-        <circle cx={VIEW} cy={VIEW} r="64" className="fill-lit" />
+        <circle data-hero-sun cx={VIEW} cy={VIEW} r="64" className="fill-lit" />
       </svg>
     </div>
   );
