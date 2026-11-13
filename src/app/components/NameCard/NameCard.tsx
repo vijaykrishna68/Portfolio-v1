@@ -1,10 +1,7 @@
-import { Link } from "react-router";
-import { Download, Globe, Moon, Sun } from "lucide-react";
+import { Download, Globe } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import { CONTACT_EMAIL, SOCIAL_LINKS } from "../../content/site";
-import { THEME_MODES } from "../../lib/constants";
-import type { ThemeMode } from "../../types/portfolio";
 
 export const SITE_URL = "https://portfolio-v1-blush-eight.vercel.app";
 
@@ -64,20 +61,10 @@ const STYLES = `
 @media (prefers-reduced-motion:reduce){.nc-row{transition:none}.nc-row:hover,.nc-row:active,.nc-row:hover:active{transform:none}}
 `;
 
-type Props = { theme: ThemeMode; toggleTheme: () => void };
-
-export function NameCard({ theme, toggleTheme }: Props) {
+export function NameCard() {
   return (
     <div className="nc-screen bg-background text-foreground">
       <style>{STYLES}</style>
-      <button
-        type="button"
-        onClick={toggleTheme}
-        aria-label="Toggle theme"
-        className="nc-toggle fixed top-2 right-2 z-10 inline-flex h-11 w-11 items-center justify-center text-foreground"
-      >
-        {theme === THEME_MODES.DARK ? <Sun size={18} strokeWidth={2} /> : <Moon size={18} strokeWidth={2} />}
-      </button>
 
       <main className="nc-in mx-auto flex w-full max-w-[460px] flex-col pl-5 pr-7 pt-8 pb-10">
         <div className="flex flex-col items-center text-center">
@@ -130,7 +117,7 @@ export function NameCard({ theme, toggleTheme }: Props) {
             return (
               <li key={name}>
                 {internal ? (
-                  <Link to={href} className="nc-block nc-row">{inner}</Link>
+                  <a href={href} className="nc-block nc-row">{inner}</a>
                 ) : (
                   <a href={href} target="_blank" rel="noopener noreferrer" className="nc-block nc-row">{inner}</a>
                 )}
