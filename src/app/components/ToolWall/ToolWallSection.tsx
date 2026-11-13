@@ -20,7 +20,7 @@ function ToolWallBody() {
   return (
     <>
       <Reveal>
-        <SectionLabel>Tool wall</SectionLabel>
+        <SectionLabel>Toolkit</SectionLabel>
         <Headline as="h2" hover={HEADLINE_HOVER_NAME} className="mt-3 mb-[4.5rem] text-3xl md:text-4xl text-foreground">
           What I build with.
         </Headline>
