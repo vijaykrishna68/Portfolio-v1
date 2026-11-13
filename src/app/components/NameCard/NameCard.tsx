@@ -119,7 +119,7 @@ export function NameCard({ theme, toggleTheme }: Props) {
                 </span>
                 <span className="min-w-0 py-1">
                   <span className="block text-[15px] font-medium leading-tight">{name}</span>
-                  <span className="block break-all text-[12px] leading-tight" style={{ fontFamily: "var(--font-mono)" }}>
+                  <span className="block truncate text-[12px] leading-tight" style={{ fontFamily: "var(--font-mono)" }}>
                     {detail}
                   </span>
                 </span>
