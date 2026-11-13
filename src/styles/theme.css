@@ -94,8 +94,8 @@
   --glass-solid: var(--panel); /* opaque fallback in dark */
 }
 
-/* Aliases are declared on :root and .dark so a nested .dark scope (e.g. the
-   /design-check page) recomputes them from its own palette values. */
+/* Aliases are declared on :root and .dark so a nested .dark or .light scope
+   recomputes them from its own palette values. */
 :root,
 .light,
 .dark {
