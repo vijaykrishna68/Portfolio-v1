@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { Globe, Moon, Sun } from "lucide-react";
+import { Download, Globe, Moon, Sun } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import { CONTACT_EMAIL, PORTRAIT_SRC, SOCIAL_LINKS } from "../../content/site";
@@ -109,6 +109,14 @@ export function NameCard({ theme, toggleTheme }: Props) {
             </li>
           ))}
         </ul>
+        <a
+          href="/vijay-krishna.vcf"
+          download="vijay-krishna.vcf"
+          className="mt-3 flex min-h-[56px] items-center justify-center gap-2 bg-foreground px-4 text-[13px] font-medium tracking-wide text-background hover:bg-[#68b1f5] hover:text-white focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#68b1f5] transition-colors duration-200"
+        >
+          <Download size={16} strokeWidth={1.5} aria-hidden="true" />
+          Save contact
+        </a>
       </main>
     </div>
   );
