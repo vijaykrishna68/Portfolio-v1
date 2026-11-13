@@ -13,7 +13,7 @@ import { Headline } from "../components/shared/Headline";
 import { Label } from "../components/shared/Label";
 import { Slab } from "../components/shared/Slab";
 import { ToolCell } from "../components/shared/ToolCell";
-import { GlyphSprite, ToolWall, ToolWallProvider } from "../components/shared/ToolWall";
+import { GlyphSprite, ToolWall, ToolWallProvider, useAutoLight, useToolWall } from "../components/shared/ToolWall";
 import { GLYPHS } from "../lib/glyphs";
 
 /* ---------- colour maths ---------- */
@@ -207,6 +207,57 @@ function Swatches({ values }: { values: Record<string, string> }) {
 }
 
 const SPACING = ["space-1", "space-2", "space-3", "space-4", "space-6", "space-8", "space-10", "space-18"] as const;
+
+/* ---------- auto-light check ---------- */
+
+function AutoLightDemo() {
+  const s = useAutoLight("A1-gear-train");
+  const wall = useToolWall();
+  const pct = (n: number) => `${Math.round(n * 100)}%`;
+  return (
+    <>
+      <div className="fixed bottom-4 right-4 z-40 border-stroke border-line rounded-slab bg-panel p-3 type-label text-ink space-y-1" role="status">
+        <div>wall in view: {pct(s.wall)} (needs 60%)</div>
+        <div>hero in view: {pct(s.hero)} (needs under 20%)</div>
+        <div>lit cell: {wall?.litId ?? "none"}</div>
+        <div>auto-light fired: {s.done ? "yes" : "no"}</div>
+      </div>
+      {/* Stand-in for the Hero composition: same data attribute the real one carries */}
+      <div data-hero-composition className="relative h-[360px] overflow-hidden border-stroke border-line rounded-slab bg-panel mb-6">
+        <div className="absolute left-12 top-8 h-48 w-56 rounded-slab bg-accent" />
+        <div className="absolute right-0 bottom-0 h-32 w-32 rounded-tl-full bg-lit" />
+        <Label className="absolute left-4 bottom-4">stand-in for the Hero composition (has the lit sun)</Label>
+      </div>
+      <div ref={s.wallRef}>
+        <ToolWall columns={4}>
+          {GLYPHS.slice(0, 8).map((g) => (
+            <ToolCell key={g.id} glyph={g.id} />
+          ))}
+        </ToolWall>
+      </div>
+    </>
+  );
+}
+
+function AutoLightCheck() {
+  const [run, setRun] = useState(0);
+  return (
+    <Container>
+      <Section title="Auto-light check: nothing lit at load; A1 lights once when the wall is 60% in view and the hero is under 20%">
+        <p className="text-ink-muted text-caption max-w-[62ch] mb-4">
+          Scroll down until the wall fills the view and the stand-in is out of sight: A1 lights once. Scroll back up and nothing changes. Hover or tab to another
+          cell and the light stays on your choice.
+        </p>
+        <Button variant="outline" onClick={() => setRun((r) => r + 1)} className="mb-6">
+          Reset check
+        </Button>
+        <ToolWallProvider key={run} sprite={false}>
+          <AutoLightDemo />
+        </ToolWallProvider>
+      </Section>
+    </Container>
+  );
+}
 
 /* ---------- one full showcase, rendered once per scheme ---------- */
 
@@ -416,6 +467,7 @@ export default function DesignCheck() {
           Every shared component and token in light and dark. The two panels below force their own scheme, whatever the site toggle says.
         </p>
       </Container>
+      <AutoLightCheck />
       <Showcase scheme="light" />
       <Showcase scheme="dark" />
     </main>

@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useId, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 
 import spriteMarkup from "../../../assets/glyphs/glyph-sprite.svg?raw";
@@ -20,6 +20,87 @@ const ToolWallContext = createContext<ToolWallContextValue | null>(null);
 
 export function useToolWall() {
   return useContext(ToolWallContext);
+}
+
+export type AutoLightState = {
+  /** Fraction of the watched wall in view (0 to 1; counts as 0.6 when it fills 60% of the viewport height). */
+  wall: number;
+  /** Largest fraction of any [data-hero-composition] element in view. */
+  hero: number;
+  /** True once the automatic light has fired (or the user lit something first). */
+  done: boolean;
+};
+
+const AUTO_LIGHT_WALL_MIN = 0.6; // wall at least 60% in view
+const AUTO_LIGHT_HERO_MAX = 0.2; // Hero composition less than 20% in view
+
+/**
+ * Light one cell once, automatically: when the wall is at least 60% in view AND
+ * no [data-hero-composition] is 20% or more in view, so the Hero sun and a lit
+ * cell are never mostly on screen together. After that the light only moves on
+ * hover, focus or tap and stays on the user's last choice. Nothing is lit at load.
+ * Under reduced motion the fill has no animation (symbol .hi in theme.css).
+ */
+export function useAutoLight(glyph: GlyphId): AutoLightState & { wallRef: (el: HTMLElement | null) => void } {
+  // Callback ref held in state: Reveal swaps its wrapper element when reduced motion is detected,
+  // so the observer must follow whichever element is current.
+  const [wallEl, setWallEl] = useState<HTMLElement | null>(null);
+  const wall = useToolWall();
+  const wallApi = useRef(wall);
+  wallApi.current = wall;
+  const done = useRef(false);
+  const [state, setState] = useState<AutoLightState>({ wall: 0, hero: 0, done: false });
+
+  useEffect(() => {
+    const el = wallEl;
+    if (!el) return;
+    let wallRatio = 0;
+    const heroRatios = new Map<Element, number>();
+
+    const evaluate = () => {
+      const hero = Math.max(0, ...heroRatios.values());
+      const api = wallApi.current;
+      if (!done.current && api) {
+        if (api.litId !== null) done.current = true; // the user got there first
+        else if (wallRatio >= AUTO_LIGHT_WALL_MIN && hero < AUTO_LIGHT_HERO_MAX) {
+          done.current = true;
+          api.light(glyph);
+        }
+      }
+      setState({ wall: wallRatio, hero, done: done.current });
+    };
+
+    const thresholds = Array.from({ length: 21 }, (_, i) => i / 20);
+    const wallIO = new IntersectionObserver(
+      (entries) => {
+        const e = entries[entries.length - 1];
+        const fillsViewport = e.intersectionRect.height >= AUTO_LIGHT_WALL_MIN * window.innerHeight;
+        wallRatio = fillsViewport ? Math.max(e.intersectionRatio, AUTO_LIGHT_WALL_MIN) : e.intersectionRatio;
+        evaluate();
+      },
+      { threshold: thresholds },
+    );
+    wallIO.observe(el);
+
+    const heroIO = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) heroRatios.set(e.target, e.intersectionRatio);
+        evaluate();
+      },
+      { threshold: thresholds },
+    );
+    document.querySelectorAll("[data-hero-composition]").forEach((h) => {
+      heroRatios.set(h, 0);
+      heroIO.observe(h);
+    });
+
+    return () => {
+      wallIO.disconnect();
+      heroIO.disconnect();
+    };
+  }, [wallEl, glyph]);
+
+  return { ...state, wallRef: setWallEl };
 }
 
 /** The glyph sprite, inlined once. ToolWallProvider mounts it unless sprite={false}. */

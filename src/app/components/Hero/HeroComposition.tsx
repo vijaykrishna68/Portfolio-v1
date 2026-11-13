@@ -36,6 +36,7 @@ export function HeroComposition({ className = "" }: { className?: string }) {
   return (
     <div
       ref={ref}
+      data-hero-composition
       className={`relative w-full max-w-[480px] aspect-square overflow-hidden border-stroke border-line rounded-slab ${className}`.trim()}
       aria-hidden="true"
     >
