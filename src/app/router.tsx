@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import { Layout } from "./components/layout/Layout";
 
 const Home = lazy(() => import("./pages/Home"));
@@ -10,8 +10,10 @@ const JournalDetail = lazy(() => import("./pages/journal/JournalDetail"));
 const PlaygroundIndex = lazy(() => import("./pages/playground/PlaygroundIndex"));
 const PlaygroundDetail = lazy(() => import("./pages/playground/PlaygroundDetail"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const NameCard = lazy(() => import("./pages/NameCard"));
 
 export const router = createBrowserRouter([
+  { path: "/name-card", element: <Suspense fallback={null}><NameCard /></Suspense> },
   {
     path: "/",
     element: <Layout />,
