@@ -1,25 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 import { NameCard } from "../components/NameCard/NameCard";
-import { THEME_MODES, THEME_STORAGE_KEY } from "../lib/constants";
-import type { ThemeMode } from "../types/portfolio";
-
-function resolveInitialTheme(): ThemeMode {
-  try {
-    const saved = localStorage.getItem(THEME_STORAGE_KEY);
-    if (saved === THEME_MODES.DARK || saved === THEME_MODES.LIGHT) return saved;
-    return window.matchMedia("(prefers-color-scheme: dark)").matches ? THEME_MODES.DARK : THEME_MODES.LIGHT;
-  } catch {
-    return THEME_MODES.LIGHT;
-  }
-}
 
 export default function NameCardPage() {
-  const [theme, setTheme] = useState<ThemeMode>(resolveInitialTheme);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === THEME_MODES.DARK);
-  }, [theme]);
+  // The card is always light. Leave the saved theme alone and put the page
+  // back exactly as it was on the way out.
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    const previousClass = root.className;
+    const previousScheme = root.style.colorScheme;
+    root.classList.remove("dark");
+    root.style.colorScheme = "light";
+    return () => {
+      root.className = previousClass;
+      root.style.colorScheme = previousScheme;
+    };
+  }, []);
 
   // Title and noindex apply to this route only; restore both on leave.
   useEffect(() => {
@@ -34,13 +30,5 @@ export default function NameCardPage() {
     };
   }, []);
 
-  function toggleTheme() {
-    setTheme((prev) => {
-      const next = prev === THEME_MODES.LIGHT ? THEME_MODES.DARK : THEME_MODES.LIGHT;
-      try { localStorage.setItem(THEME_STORAGE_KEY, next); } catch {}
-      return next;
-    });
-  }
-
-  return <NameCard theme={theme} toggleTheme={toggleTheme} />;
+  return <NameCard />;
 }
