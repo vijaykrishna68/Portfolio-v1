@@ -40,19 +40,19 @@ export default function JournalDetail() {
       {/* Header */}
       <section className="pt-10 pb-16 border-b border-hairline">
         <Container>
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-[62ch] mx-auto">
             <div
               className="flex flex-wrap items-center gap-3 mb-8 text-label text-muted-foreground font-mono"
             >
               <span className="text-accent">{post.tags[0]}</span>
-              <span className="text-muted-foreground/40">·</span>
+              <span className="text-ink-muted">·</span>
               <span>{formatDate(post.publishedAt)}</span>
-              <span className="text-muted-foreground/40">·</span>
+              <span className="text-ink-muted">·</span>
               <span>{post.readTime} read</span>
             </div>
 
             <h1
-              className="text-4xl md:text-5xl text-foreground leading-[1.05] mb-6 font-display"
+              className="text-4xl md:text-5xl text-foreground leading-[0.95] mb-6 font-display"
             >
               {post.title}
             </h1>
@@ -67,7 +67,7 @@ export default function JournalDetail() {
       {/* Body */}
       <section className="py-16 border-b border-hairline">
         <Container>
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-[62ch] mx-auto">
             <Body components={MDX_COMPONENTS} />
           </div>
         </Container>

@@ -51,7 +51,7 @@ export function JournalCard({ article, featured = false, className = "" }: Journ
             <span className="text-label tracking-wider text-muted-foreground uppercase font-mono">
               {article.tags[0]}
             </span>
-            <span className="text-muted-foreground/40 text-label">·</span>
+            <span className="text-ink-muted text-label">·</span>
             <span className="text-label text-muted-foreground font-mono">
               {article.readTime}
             </span>

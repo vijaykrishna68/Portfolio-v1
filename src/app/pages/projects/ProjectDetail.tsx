@@ -1,7 +1,10 @@
 import { Link, useParams, Navigate } from "react-router";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
+import { ButtonLink } from "../../components/shared/Button";
 import { Container } from "../../components/shared/Container";
+import { Label } from "../../components/shared/Label";
+import { Outcome } from "../../components/SelectedWork/ProjectCard";
 import { getProjectBySlug, getProjects } from "../../lib/content";
 import { MDX_COMPONENTS } from "../../lib/mdx/components";
 import { INTERACTION } from "../../lib/interaction";
@@ -67,7 +70,7 @@ export default function ProjectDetail() {
             </div>
 
             <h1
-              className="text-4xl md:text-5xl text-foreground leading-[1.05] mb-5 font-display"
+              className="text-4xl md:text-5xl text-foreground leading-[0.95] mb-5 font-display"
             >
               {project.title}
             </h1>
@@ -87,17 +90,19 @@ export default function ProjectDetail() {
 
       {/* Cover */}
       {project.cover && (
-        <div className="border-b border-hairline bg-muted">
-          <div className="max-w-5xl mx-auto">
-            <img
-              src={project.cover}
-              alt={project.coverAlt ?? project.title}
-              loading="lazy"
-              decoding="async"
-              className="w-full object-cover aspect-[16/9]"
-            />
-          </div>
-        </div>
+        <section className="py-10 border-b border-hairline">
+          <Container>
+            <div className="max-w-5xl mx-auto overflow-hidden border-stroke border-line rounded-slab bg-stone">
+              <img
+                src={project.cover}
+                alt={project.coverAlt ?? project.title}
+                loading="lazy"
+                decoding="async"
+                className="w-full object-cover aspect-[16/9]"
+              />
+            </div>
+          </Container>
+        </section>
       )}
 
       {/* Impact row */}
@@ -105,26 +110,11 @@ export default function ProjectDetail() {
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl">
             <div>
-              <p
-                className="text-label uppercase tracking-widest text-muted-foreground mb-1.5 font-mono"
-              >
-                Engineering Challenge
-              </p>
-              <p className="text-caption text-foreground/75 leading-relaxed">
-                {project.challenge}
-              </p>
+              <Label className="block mb-1.5">Engineering Challenge</Label>
+              <p className="text-caption text-ink-muted">{project.challenge}</p>
             </div>
             <div className="md:col-span-2">
-              <div className="p-5 border border-signal/30 bg-signal-soft">
-                <p
-                  className="text-label uppercase tracking-widest text-muted-foreground mb-1.5 font-mono"
-                >
-                  Impact
-                </p>
-                <p className="text-caption text-foreground font-medium leading-snug">
-                  {project.impact}
-                </p>
-              </div>
+              <Outcome project={project} />
             </div>
           </div>
         </Container>
@@ -133,7 +123,7 @@ export default function ProjectDetail() {
       {/* MDX Body */}
       <section className="py-16 border-b border-hairline">
         <Container>
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-[62ch] mx-auto">
             <Body components={MDX_COMPONENTS} />
           </div>
         </Container>
@@ -150,10 +140,7 @@ export default function ProjectDetail() {
             </p>
             <div className="flex flex-wrap gap-1.5">
               {project.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className={`px-2.5 py-1 text-label border border-border text-muted-foreground hover:border-accent hover:bg-accent/5 ${INTERACTION.border} font-mono`}
-                >
+                <span key={tech} className="type-label px-2.5 py-1 rounded-slab bg-stone text-ink">
                   {tech}
                 </span>
               ))}
@@ -169,44 +156,24 @@ export default function ProjectDetail() {
           <Container>
             <div className="max-w-2xl mx-auto flex flex-wrap gap-3">
               {project.links.github && (
-                <a
-                  href={project.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
-                >
+                <ButtonLink variant="outline" href={project.links.github} target="_blank" rel="noopener noreferrer">
                   GitHub <ArrowUpRight size={12} />
-                </a>
+                </ButtonLink>
               )}
               {project.links.live && (
-                <a
-                  href={project.links.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
-                >
+                <ButtonLink variant="outline" href={project.links.live} target="_blank" rel="noopener noreferrer">
                   Live demo <ArrowUpRight size={12} />
-                </a>
+                </ButtonLink>
               )}
               {project.links.writeup && (
-                <a
-                  href={project.links.writeup}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
-                >
+                <ButtonLink variant="outline" href={project.links.writeup} target="_blank" rel="noopener noreferrer">
                   Writeup <ArrowUpRight size={12} />
-                </a>
+                </ButtonLink>
               )}
               {project.links.caseStudy && (
-                <a
-                  href={project.links.caseStudy}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
-                >
+                <ButtonLink variant="outline" href={project.links.caseStudy} target="_blank" rel="noopener noreferrer">
                   Case study <ArrowUpRight size={12} />
-                </a>
+                </ButtonLink>
               )}
             </div>
           </Container>

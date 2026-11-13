@@ -1,6 +1,7 @@
 import { Link, useParams, Navigate } from "react-router";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
+import { ButtonLink } from "../../components/shared/Button";
 import { Container } from "../../components/shared/Container";
 import { getPlaygroundItem } from "../../lib/content";
 import { MDX_COMPONENTS } from "../../lib/mdx/components";
@@ -45,7 +46,7 @@ export default function PlaygroundDetail() {
             </div>
 
             <h1
-              className="text-4xl md:text-5xl text-foreground leading-[1.05] mb-5 font-display"
+              className="text-4xl md:text-5xl text-foreground leading-[0.95] mb-5 font-display"
             >
               {item.title}
             </h1>
@@ -56,24 +57,14 @@ export default function PlaygroundDetail() {
 
             <div className="flex flex-wrap gap-3">
               {item.demoUrl && (
-                <a
-                  href={item.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 bg-foreground text-background hover:bg-accent hover:text-white ${INTERACTION.border}`}
-                >
+                <ButtonLink variant="solid" href={item.demoUrl} target="_blank" rel="noopener noreferrer">
                   Live demo <ArrowUpRight size={12} />
-                </a>
+                </ButtonLink>
               )}
               {item.sourceUrl && (
-                <a
-                  href={item.sourceUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-1.5 text-caption px-4 py-2 border border-border text-foreground hover:border-accent hover:text-accent ${INTERACTION.border}`}
-                >
+                <ButtonLink variant="outline" href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
                   Source <ArrowUpRight size={12} />
-                </a>
+                </ButtonLink>
               )}
             </div>
           </div>
@@ -82,23 +73,25 @@ export default function PlaygroundDetail() {
 
       {/* Cover */}
       {item.cover && (
-        <div className="border-b border-hairline bg-muted">
-          <div className="max-w-4xl mx-auto">
-            <img
-              src={item.cover}
-              alt={item.title}
-              loading="lazy"
-              decoding="async"
-              className="w-full aspect-[16/9] object-cover"
-            />
-          </div>
-        </div>
+        <section className="py-10 border-b border-hairline">
+          <Container>
+            <div className="max-w-4xl mx-auto overflow-hidden border-stroke border-line rounded-slab bg-stone">
+              <img
+                src={item.cover}
+                alt={item.title}
+                loading="lazy"
+                decoding="async"
+                className="w-full aspect-[16/9] object-cover"
+              />
+            </div>
+          </Container>
+        </section>
       )}
 
       {/* Body */}
       <section className="py-16">
         <Container>
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-[62ch] mx-auto">
             <Body components={MDX_COMPONENTS} />
           </div>
         </Container>

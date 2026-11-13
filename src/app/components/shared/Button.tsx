@@ -34,6 +34,11 @@ const VARIANTS: Record<ButtonVariant, string> = {
   lit: "px-5 py-3.5 bg-lit text-on-lit border-on-lit",
 };
 
+/** The button look as a class string, for router <Link>s and other elements that cannot be <ButtonLink>. */
+export function buttonClassName(variant: ButtonVariant = "solid", className = "") {
+  return classes(variant, className);
+}
+
 function classes(variant: ButtonVariant, className: string) {
   return `${BASE} ${VARIANTS[variant]} ${className}`.trim();
 }

@@ -58,7 +58,7 @@ function IndexMeta({ project, showIndex = true }: { project: Project; showIndex?
  * copied from the impact sentence) it is a Figure: Doto digits, label, and the
  * impact sentence as the caption. Otherwise it is a quiet mist band with the text.
  */
-function Outcome({ project, size }: { project: Project; size?: number }) {
+export function Outcome({ project, size }: { project: Project; size?: number }) {
   if (project.figure) {
     return (
       <Figure

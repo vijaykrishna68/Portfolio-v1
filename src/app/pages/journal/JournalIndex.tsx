@@ -40,13 +40,13 @@ export default function JournalIndex() {
                       >
                         {post.tags[0]}
                       </span>
-                      <span className="text-muted-foreground/40 text-label">·</span>
+                      <span className="text-ink-muted text-label">·</span>
                       <span
                         className="text-label text-muted-foreground font-mono"
                       >
                         {formatDate(post.publishedAt)}
                       </span>
-                      <span className="text-muted-foreground/40 text-label">·</span>
+                      <span className="text-ink-muted text-label">·</span>
                       <span
                         className="text-label text-muted-foreground font-mono"
                       >
