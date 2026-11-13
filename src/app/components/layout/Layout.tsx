@@ -47,7 +47,7 @@ export function Layout() {
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-background focus:border focus:border-border focus:text-foreground focus:text-sm"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-3 focus:bg-panel focus:text-ink focus:border-stroke focus:border-line focus:rounded-slab focus:type-label"
       >
         Skip to content
       </a>

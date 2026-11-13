@@ -197,7 +197,7 @@ export default function ProjectDetail() {
                 <span className="text-2xl">{next.title}</span>
                 <ArrowUpRight
                   size={18}
-                  className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0"
                 />
               </Link>
             </div>

@@ -86,7 +86,7 @@ export function Navbar({ theme, toggleTheme }: NavbarProps) {
               onClick={toggleTheme}
               data-nav-item
               aria-label="Toggle theme"
-              className={`p-1.5 text-muted-foreground hover:text-foreground ${INTERACTION.icon}`}
+              className={`inline-flex h-10 w-10 items-center justify-center rounded-slab text-muted-foreground hover:text-foreground ${INTERACTION.icon}`}
             >
               <span className="relative block h-[15px] w-[15px]">
                 <Moon

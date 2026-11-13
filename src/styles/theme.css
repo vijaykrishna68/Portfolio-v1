@@ -302,8 +302,8 @@
     line-height: 1.5;
   }
 
-  /* Visible focus for every interactive element: 3px accent ring, 3px offset. */
-  :where(a, button, input, select, textarea, summary, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+  /* Visible focus for every interactive element (and keyboard-scrollable code blocks): 3px accent ring, 3px offset. */
+  :where(a, button, input, select, textarea, summary, pre, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
     outline: 3px solid var(--accent);
     outline-offset: 3px;
   }

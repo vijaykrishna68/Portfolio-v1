@@ -31,7 +31,7 @@ export function Journal() {
             className="hidden md:flex items-center gap-1.5 text-caption text-muted-foreground hover:text-foreground transition-colors group"
           >
             All articles
-            <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+            <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
           </Link>
         </div>
 
