@@ -100,7 +100,7 @@ export function NameCard({ theme, toggleTheme }: Props) {
             Vijay Krishna
           </h1>
           <p className="mt-3 text-[12px] text-muted-foreground" style={{ fontFamily: "var(--font-mono)" }}>
-            Full Stack Engineer · Open to Freelance Work
+            Full Stack Engineer Â· Open to Freelance Work
           </p>
           <p
             className="nc-block mt-5 inline-block bg-signal px-3 py-1.5 text-[15px] font-medium"
@@ -119,7 +119,7 @@ export function NameCard({ theme, toggleTheme }: Props) {
                 </span>
                 <span className="min-w-0 py-1">
                   <span className="block text-[15px] font-medium leading-tight">{name}</span>
-                  <span className="block truncate text-[12px] leading-tight" style={{ fontFamily: "var(--font-mono)" }}>
+                  <span className="block break-all text-[12px] leading-tight" style={{ fontFamily: "var(--font-mono)" }}>
                     {detail}
                   </span>
                 </span>
