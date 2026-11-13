@@ -27,25 +27,25 @@ export default function PlaygroundIndex() {
         {items.length === 0 && (
           <p className="text-body text-muted-foreground py-16">No experiments yet.</p>
         )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {items.map((item) => (
             <Link
               key={item.slug}
               to={`/playground/${item.slug}`}
               className="block group"
             >
-              <div className="relative overflow-hidden bg-muted aspect-[4/3] border border-dashed border-transparent transition-[transform,border-color] duration-200 ease-out hover:z-10 hover:scale-[1.015] hover:-rotate-[0.4deg] hover:border-accent/45">
+              <div className="relative overflow-hidden bg-stone aspect-[4/3] border-stroke border-line rounded-slab transition-transform duration-200 ease-out hover:z-10 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
                 {item.cover && (
                   <img
                     src={item.cover}
                     alt={item.title}
                     loading="lazy"
                     decoding="async"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
                   />
                 )}
                 <div className="playground-scrim absolute inset-0 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5">
+                <div className="absolute bottom-0 left-0 right-0 p-4">
                   <span
                     className="text-label tracking-widest uppercase text-glass-ink mb-1 block font-mono"
                   >

@@ -1,6 +1,8 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router";
 
+import { Label } from "../shared/Label";
+import { Slab } from "../shared/Slab";
 import { Tag } from "../shared/Tag";
 import { type JournalPost, formatDate } from "../../lib/content";
 import { INTERACTION } from "../../lib/interaction";
@@ -14,32 +16,26 @@ type JournalCardProps = {
 export function JournalCard({ article, featured = false, className = "" }: JournalCardProps) {
   if (featured) {
     return (
-      <Link to={`/journal/${article.slug}`} className={`lg:col-span-6 border-t-2 border-foreground pt-8 group/card cursor-pointer rounded-slab ${INTERACTION.subtleLift} ${className}`.trim()}>
+      <Link to={`/journal/${article.slug}`} className={`lg:col-span-6 block group/card cursor-pointer ${INTERACTION.subtleLift} ${className}`.trim()}>
+        <Slab padded={false} className="p-6 md:p-8 h-full">
         <div className="flex flex-wrap items-center gap-3 mb-5">
-          <Tag
-            className={`px-2 py-0.5 text-label border border-accent text-accent tracking-wider bg-accent/5 ${INTERACTION.border} font-mono`}
-          >
-            {article.tags[0]}
-          </Tag>
-          <span className="text-label text-muted-foreground font-mono">
-            {formatDate(article.publishedAt)}
-          </span>
-          <span className="text-label text-muted-foreground font-mono">
-            · {article.readTime} read
-          </span>
+          <Tag className="type-label px-2 py-0.5 rounded-slab bg-stone text-ink">{article.tags[0]}</Tag>
+          <Label>{formatDate(article.publishedAt)}</Label>
+          <Label>· {article.readTime} read</Label>
         </div>
 
         <h3
-          className="text-display-card text-foreground leading-[1.08] mb-4 group-hover/card:text-accent transition-colors duration-200 max-w-[13ch] font-display"
+          className="text-display-card text-foreground leading-[0.95] mb-4 group-hover/card:text-accent transition-colors duration-200 max-w-[13ch] font-display"
         >
           {article.title}
         </h3>
 
-        <p className="text-body text-muted-foreground leading-[1.7] mb-7 max-w-[34rem]">{article.excerpt}</p>
+        <p className="text-body text-ink-muted mb-7 max-w-[62ch]">{article.excerpt}</p>
 
         <span className="inline-flex items-center gap-2 text-caption text-foreground font-medium group-hover/card:gap-3 group-hover/card:text-accent transition-all duration-200">
           Read article <ArrowRight size={13} />
         </span>
+        </Slab>
       </Link>
     );
   }
@@ -47,7 +43,7 @@ export function JournalCard({ article, featured = false, className = "" }: Journ
   return (
     <Link
       to={`/journal/${article.slug}`}
-      className={`group/card cursor-pointer py-5 border-t border-border hover:border-accent/25 ${INTERACTION.subtleLift} ${className}`.trim()}
+      className={`group/card cursor-pointer py-5 border-t border-hairline ${INTERACTION.subtleLift} ${className}`.trim()}
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">

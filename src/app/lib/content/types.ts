@@ -48,6 +48,8 @@ export interface Project extends SharedFrontmatter {
   challenge: string;
   technologies: Technology[];
   impact: string;
+  /** Optional headline metric. Every value must come from a number already stated in `impact`; never invent one. */
+  figure?: { value: string; unit?: string; label: string };
   cover: string;
   coverAlt: string;
   displayIndex: string;                  // "01", "02" — controls sort order on /projects

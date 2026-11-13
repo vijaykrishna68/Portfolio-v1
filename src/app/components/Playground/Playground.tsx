@@ -36,14 +36,14 @@ export function Playground() {
         </div>
 
         {/* Desktop grid — Reveal wraps the container; PlaygroundCard keeps its placement class */}
-        <Reveal className="hidden md:grid grid-cols-4 grid-rows-2 gap-3 h-[520px]">
+        <Reveal className="hidden md:grid grid-cols-4 grid-rows-2 gap-6 h-[520px]">
           {items.map((item) => (
             <PlaygroundCard key={item.slug} item={item} className={item.layout.desktop} />
           ))}
         </Reveal>
 
         {/* Mobile grid */}
-        <Reveal className="md:hidden grid grid-cols-2 gap-3">
+        <Reveal className="md:hidden grid grid-cols-2 gap-6">
           {items.map((item) => (
             <PlaygroundCard key={item.slug} item={item} className={item.layout.mobile} />
           ))}

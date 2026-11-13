@@ -41,9 +41,9 @@ export function SelectedWork() {
         )}
 
         {rest.length > 0 && (
-          <Reveal delay={100} className="grid grid-cols-1 md:grid-cols-2 border-b border-border">
+          <Reveal delay={100} className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             {rest.map((project) => (
-              <Link key={project.slug} to={`/projects/${project.slug}`} className="block">
+              <Link key={project.slug} to={`/projects/${project.slug}`} className="block h-full">
                 <ProjectCard project={project} variant="compact" />
               </Link>
             ))}

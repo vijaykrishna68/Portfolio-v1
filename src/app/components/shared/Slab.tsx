@@ -2,7 +2,7 @@ import type { ElementType, HTMLAttributes, ReactNode } from "react";
 
 import { Label } from "./Label";
 
-export type SlabVariant = "panel" | "stone" | "slab" | "accent";
+export type SlabVariant = "panel" | "stone" | "mist" | "slab" | "accent";
 
 type SlabProps = HTMLAttributes<HTMLElement> & {
   as?: ElementType;
@@ -17,6 +17,7 @@ type SlabProps = HTMLAttributes<HTMLElement> & {
 const VARIANTS: Record<SlabVariant, { surface: string; labelTone: string }> = {
   panel: { surface: "bg-panel text-ink border-line", labelTone: "" },
   stone: { surface: "bg-stone text-ink border-line", labelTone: "" },
+  mist: { surface: "bg-mist text-ink border-line", labelTone: "" },
   slab: { surface: "bg-slab text-on-slab border-slab", labelTone: "!text-on-slab" },
   accent: { surface: "bg-accent text-on-accent border-accent", labelTone: "!text-on-accent" },
 };

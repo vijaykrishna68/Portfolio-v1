@@ -25,7 +25,7 @@ export default function ProjectsIndex() {
         {projects.length === 0 ? (
           <p className="text-body text-muted-foreground py-16">No projects yet.</p>
         ) : (
-          <div>
+          <div className="space-y-6">
             {projects.map((project, index) => (
               <Link key={project.slug} to={`/projects/${project.slug}`} className="block">
                 <ProjectCard project={project} isLast={index === projects.length - 1} />

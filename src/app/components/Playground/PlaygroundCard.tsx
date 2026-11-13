@@ -16,7 +16,7 @@ export function PlaygroundCard({ item, className }: PlaygroundCardProps) {
   return (
     <Link
       to={`/playground/${item.slug}`}
-      className={`relative group overflow-hidden bg-muted cursor-pointer border border-dashed border-transparent transition-[transform,border-color] duration-200 ease-out hover:z-10 hover:scale-[1.015] hover:-rotate-[0.4deg] hover:border-accent/45 ${className} md:min-h-0 min-h-[160px]`}
+      className={`relative group overflow-hidden bg-stone cursor-pointer border-stroke border-line rounded-slab transition-transform duration-200 ease-out hover:z-10 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${className} md:min-h-0 min-h-[160px]`}
     >
       {item.cover && (
         <img
@@ -24,11 +24,11 @@ export function PlaygroundCard({ item, className }: PlaygroundCardProps) {
           alt={item.title}
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
         />
       )}
       <div className="playground-scrim absolute inset-0 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-200 ease-out group-hover:-translate-y-0.5">
+      <div className="absolute bottom-0 left-0 right-0 p-4">
         <span className="text-label tracking-widest uppercase text-glass-ink mb-1 block font-mono">
           {item.tags[0]}
         </span>
