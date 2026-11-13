@@ -79,7 +79,6 @@ export function NameCard({ theme, toggleTheme }: Props) {
               height={84}
               loading="eager"
               decoding="async"
-              fetchPriority="high"
               className="h-[84px] w-[84px] rounded-full bg-muted object-cover object-top"
             />
           )}
